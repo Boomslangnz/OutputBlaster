@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Outputs">
+      <UniqueIdentifier>{f09d75f8-8d03-42b1-89dd-329554325015}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFiles">
+      <UniqueIdentifier>{55cc206b-b0b0-422c-8d43-8c7776261432}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -20,6 +26,18 @@
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Outputs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOutput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WinOutputs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SegaRacingClassic.h">
+      <Filter>GameFiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -32,5 +50,19 @@
     <ClCompile Include="dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Outputs.cpp">
+      <Filter>Outputs</Filter>
+    </ClCompile>
+    <ClCompile Include="WinOutputs.cpp">
+      <Filter>Outputs</Filter>
+    </ClCompile>
+    <ClCompile Include="SegaRacingClassic.cpp">
+      <Filter>GameFiles</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="LICENSE.txt">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
