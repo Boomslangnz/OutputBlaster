@@ -13,56 +13,45 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Outputs">
-      <UniqueIdentifier>{f09d75f8-8d03-42b1-89dd-329554325015}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameFiles">
-      <UniqueIdentifier>{55cc206b-b0b0-422c-8d43-8c7776261432}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
+    <ClInclude Include="Game Files\SegaRacingClassic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="targetver.h">
+    <ClInclude Include="Output Files\GameOutput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Outputs.h">
+    <ClInclude Include="Output Files\Outputs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameOutput.h">
+    <ClInclude Include="Output Files\WinOutputs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WinOutputs.h">
+    <ClInclude Include="Common Files\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SegaRacingClassic.h">
-      <Filter>GameFiles</Filter>
+    <ClInclude Include="Common Files\CRCCheck.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OutputsBlaster.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Outputs.cpp">
-      <Filter>Outputs</Filter>
+    <ClCompile Include="Game Files\SegaRacingClassic.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WinOutputs.cpp">
-      <Filter>Outputs</Filter>
+    <ClCompile Include="Output Files\Outputs.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SegaRacingClassic.cpp">
-      <Filter>GameFiles</Filter>
+    <ClCompile Include="Output Files\WinOutputs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Common Files\Game.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="LICENSE.txt">
-      <Filter>Source Files</Filter>
-    </Text>
+    <Text Include="LICENSE.txt" />
   </ItemGroup>
 </Project>

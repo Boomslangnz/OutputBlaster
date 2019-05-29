@@ -24,9 +24,7 @@ along with Outputs Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
-
 #include "Outputs.h"
-
 #include <vector>
 
 using namespace std;
@@ -103,8 +101,6 @@ private:
 	UINT m_regClient;
 	UINT m_unregClient;
 	UINT m_getIdString;
-
-
 
 	vector<RegisteredClient> m_clients;
 

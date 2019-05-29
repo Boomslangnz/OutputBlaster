@@ -13,4 +13,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Outputs Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
-#include "stdafx.h"
+#pragma once
+
+class Game {
+public:
+	virtual void OutputsGameLoop();
+};

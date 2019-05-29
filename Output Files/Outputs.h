@@ -18,7 +18,6 @@ along with Outputs Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "GameOutput.h"
 /*
  * EOutputs enumeration of all available outputs.
- * Currently just contains the outputs for the driving games - more will need to be added for the other games.
  */
 enum EOutputs
 {

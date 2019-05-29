@@ -13,34 +13,45 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Outputs Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
-#include "stdafx.h"
-#include <string>
-#include <algorithm>
 #include <windows.h>
-using namespace std;
+#include "Common Files/Game.h"
+#include "Common Files/CRCCheck.h"
+#include "Game Files/SegaRacingClassic.h"
+Game* game;
 bool OutputsRunning = true;
 
-
 DWORD WINAPI OutputsLoop(LPVOID lpParam)
-{
-	return 0;	
+{		
+	uint32_t crcResult = GetCRC32(GetModuleHandle(nullptr), 0x400);
+	switch (crcResult) 
+	{
+	case 0xF8CEEC5D:
+		game = new SegaRacingClassic;
+		break;
+	}
+		if (game != 0)
+		{
+			game->OutputsGameLoop();
+			Sleep(16);
+		}
+	return 0;
 }
 
-BOOL APIENTRY DllMain( HMODULE hModule,DWORD  ul_reason_for_call,LPVOID lpReserved)
+BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved)
 {
 	BOOL result = TRUE;
-    switch (ul_reason_for_call)
-    {
-    case DLL_PROCESS_ATTACH:
+	switch (ul_reason_for_call)
+	{
+	case DLL_PROCESS_ATTACH:
 		CreateThread(NULL, 0, OutputsLoop, (LPVOID)&OutputsRunning, 0, NULL);
 		break;
-    case DLL_THREAD_ATTACH:
+	case DLL_THREAD_ATTACH:
 		break;
-    case DLL_THREAD_DETACH:
+	case DLL_THREAD_DETACH:
 		break;
-    case DLL_PROCESS_DETACH:
+	case DLL_PROCESS_DETACH:
 		OutputsRunning = false;
-        break;
-    }
-    return TRUE;
+		break;
+	}
+	return TRUE;
 }
