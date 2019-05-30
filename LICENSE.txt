@@ -1,10 +1,10 @@
 
-							OUTPUTS BLASTER
+							OUTPUT BLASTER
 
-                LICENSE AGREEMENT FOR OUTPUTS BLASTER
+                LICENSE AGREEMENT FOR OUTPUT BLASTER
 
                       
-Outputs Blaster is distributed as free software under the terms of the GNU 
+Output Blaster is distributed as free software under the terms of the GNU 
 General Public License, included below. 
 
 
