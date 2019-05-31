@@ -157,7 +157,26 @@
   <ItemGroup>
     <ClInclude Include="Common Files\CRCCheck.h" />
     <ClInclude Include="Common Files\Game.h" />
+    <ClInclude Include="Game Files\AfterburnerClimax.h" />
+    <ClInclude Include="Game Files\BattleGear4Tuned.h" />
+    <ClInclude Include="Game Files\ChaseHQ2.h" />
+    <ClInclude Include="Game Files\DaytonaChampionshipUSA.h" />
+    <ClInclude Include="Game Files\GTIClubSuperminiFesta.h" />
+    <ClInclude Include="Game Files\InitialD4.h" />
+    <ClInclude Include="Game Files\InitialD4Japan.h" />
+    <ClInclude Include="Game Files\InitialD5.h" />
+    <ClInclude Include="Game Files\InitialD6.h" />
+    <ClInclude Include="Game Files\InitialD7.h" />
+    <ClInclude Include="Game Files\InitialD8.h" />
+    <ClInclude Include="Game Files\LGI.h" />
+    <ClInclude Include="Game Files\LGI3D.h" />
+    <ClInclude Include="Game Files\Machstorm.h" />
+    <ClInclude Include="Game Files\MarioKartGPDXJP1.10.h" />
+    <ClInclude Include="Game Files\Outrun2SP.h" />
     <ClInclude Include="Game Files\SegaRacingClassic.h" />
+    <ClInclude Include="Game Files\SonicAllStarsRacing.h" />
+    <ClInclude Include="Game Files\WackyRaces.h" />
+    <ClInclude Include="Game Files\WMMT5.h" />
     <ClInclude Include="Output Files\GameOutput.h" />
     <ClInclude Include="Output Files\Outputs.h" />
     <ClInclude Include="Output Files\WinOutputs.h" />
@@ -165,7 +184,26 @@
   <ItemGroup>
     <ClCompile Include="Common Files\Game.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Game Files\AfterburnerClimax.cpp" />
+    <ClCompile Include="Game Files\BattleGear4Tuned.cpp" />
+    <ClCompile Include="Game Files\ChaseHQ2.cpp" />
+    <ClCompile Include="Game Files\DaytonaChampionshipUSA.cpp" />
+    <ClCompile Include="Game Files\GTIClubSuperminiFesta.cpp" />
+    <ClCompile Include="Game Files\InitialD4.cpp" />
+    <ClCompile Include="Game Files\InitialD4Japan.cpp" />
+    <ClCompile Include="Game Files\InitialD5.cpp" />
+    <ClCompile Include="Game Files\InitialD6.cpp" />
+    <ClCompile Include="Game Files\InitialD7.cpp" />
+    <ClCompile Include="Game Files\InitialD8.cpp" />
+    <ClCompile Include="Game Files\LGI.cpp" />
+    <ClCompile Include="Game Files\LGI3D.cpp" />
+    <ClCompile Include="Game Files\Machstorm.cpp" />
+    <ClCompile Include="Game Files\MarioKartGPDXJP1.10.cpp" />
+    <ClCompile Include="Game Files\Outrun2SP.cpp" />
     <ClCompile Include="Game Files\SegaRacingClassic.cpp" />
+    <ClCompile Include="Game Files\SonicAllStarsRacing.cpp" />
+    <ClCompile Include="Game Files\WackyRaces.cpp" />
+    <ClCompile Include="Game Files\WMMT5.cpp" />
     <ClCompile Include="Output Files\Outputs.cpp" />
     <ClCompile Include="Output Files\WinOutputs.cpp" />
   </ItemGroup>

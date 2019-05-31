@@ -14,18 +14,9 @@ You should have received a copy of the GNU General Public License
 along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #pragma once
-#include <windows.h>
-#include "../Output Files/WinOutputs.h"
+#include "../Common Files/Game.h"
+class Outrun2SP : public Game {
 
-static GameOutput m_game;
-static COutputs  *Outputs;
-static uintptr_t imageBase;
-static MSG Msg1;
-static UINT Output_Time;
-
-static bool init = false;
-
-class Game {
 public:
-	virtual void OutputsGameLoop();
+	void OutputsGameLoop();
 };

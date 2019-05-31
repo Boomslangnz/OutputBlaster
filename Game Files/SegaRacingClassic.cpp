@@ -13,18 +13,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
-#include <string>
 #include "SegaRacingClassic.h"
-#include "../Output Files/WinOutputs.h"
-GameOutput m_game;
-COutputs  *Outputs;
-static MSG Msg1;
-UINT Output_Time;
-uintptr_t imageBase;
-static bool init = false;
 
-VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
-{	
+static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
+{
 	imageBase = (uintptr_t)GetModuleHandleA(0);
 	BYTE data = *(BYTE *)(imageBase + 0x434C18);
 	Outputs->SetValue(OutputLampStart, !!(data & 0x04));
@@ -45,7 +37,7 @@ void SegaRacingClassic::OutputsGameLoop()
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
 		Outputs->Attached();
-		SetTimer(0, 0, Output_Time, OutputsAreGo);
+		SetTimer(0, 0, Output_Time, (TIMERPROC)OutputsAreGo);
 		while (GetMessage(&Msg1, NULL, NULL, 0))
 		{
 			TranslateMessage(&Msg1);

@@ -13,19 +13,28 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
-#pragma once
-#include <windows.h>
-#include "../Output Files/WinOutputs.h"
+#include "InitialD5.h"
 
-static GameOutput m_game;
-static COutputs  *Outputs;
-static uintptr_t imageBase;
-static MSG Msg1;
-static UINT Output_Time;
+static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
+{
 
-static bool init = false;
+}
 
-class Game {
-public:
-	virtual void OutputsGameLoop();
-};
+void InitialD5::OutputsGameLoop()
+{
+	if (!init)
+	{
+		Outputs = new CWinOutputs();
+		m_game.name = "Initial D Arcade Stage 5";
+		Outputs->SetGame(m_game);
+		Outputs->Initialize();
+		Outputs->Attached();
+		SetTimer(0, 0, Output_Time, (TIMERPROC)OutputsAreGo);
+		while (GetMessage(&Msg1, NULL, NULL, 0))
+		{
+			TranslateMessage(&Msg1);
+			DispatchMessage(&Msg1);
+		}
+		init = true;
+	}
+}
