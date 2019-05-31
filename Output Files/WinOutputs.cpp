@@ -48,8 +48,8 @@ bool CWinOutputs::Initialize()
 
 	// Create window
 	m_hwnd = CreateWindowEx(0,
-		"MAMEOutput",
-		"MAMEOutput",
+		L"MAMEOutput",
+		L"MAMEOutput",
 		WS_OVERLAPPEDWINDOW,
 		0, 0,
 		1, 1,
@@ -98,7 +98,7 @@ bool CWinOutputs::CreateWindowClass()
 
 	// Setup description of window class
 	WNDCLASS wc = { 0 };
-	wc.lpszClassName = "MAMEOutput";
+	wc.lpszClassName = L"MAMEOutput";
 	wc.hInstance = GetModuleHandle(NULL);
 	wc.lpfnWndProc = OutputWindowProcCallback;
 
@@ -123,7 +123,11 @@ LRESULT CALLBACK CWinOutputs::OutputWindowProcCallback(HWND hwnd, UINT msg, WPAR
 
 bool CWinOutputs::AllocateMessageId(UINT &regId, LPCSTR str)
 {
-	regId = RegisterWindowMessage(str);
+	USES_CONVERSION;
+	LPCSTR a = str;
+	LPCWSTR w = A2W(a);
+	std::wcout << w << std::endl;
+	regId = RegisterWindowMessage(w);
 	if (regId != 0)
 		return true;
 	MessageBoxA(NULL, "Unable to register window message '%s' for Windows outputs", str, NULL);

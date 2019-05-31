@@ -18,17 +18,6 @@ workspace "OutputBlaster"
 
 	buildoptions { "/MP", "/std:c++17" }
 
-	configuration "Debug*"
-		targetdir "build/bin/debug"
-		defines "NDEBUG"
-		objdir "build/obj/debug"
-
-	configuration "Release*"
-		targetdir "build/bin/release"
-		defines "NDEBUG"
-		optimize "speed"
-		objdir "build/obj/release"
-
 	filter "platforms:x86"
 		architecture "x32"
 
@@ -38,11 +27,10 @@ workspace "OutputBlaster"
 project "OutputBlaster"
 	targetname "OutputBlaster"
 	language "c++"
-	kind "StaticLib"
+	kind "SharedLib"
 
 	files
 	{
 		"**.txt", "**.cpp", "**.h", "Common Files/**.cpp", "Common Files/**.h", "Game Files/**.cpp", "Game Files/**.h", "Output Files/**.cpp", "Output Files/**.h",
 	}
-
 
