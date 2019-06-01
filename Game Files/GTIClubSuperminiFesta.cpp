@@ -17,7 +17,19 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
 {
+	BYTE actiondata = *(BYTE *)(0xA7E794);
+	BYTE startdata = *(BYTE *)(0xA7E790);
+	BYTE view1data = *(BYTE *)(0xA7E7A0);
+	BYTE view2data = *(BYTE *)(0xA7E7A4);
+	BYTE view3data = *(BYTE *)(0xA7E798);
+	BYTE view4data = *(BYTE *)(0xA7E79C);
 
+	Outputs->SetValue(OutputLampLeader, !!(actiondata & 0x1F));
+	Outputs->SetValue(OutputLampStart, !!(startdata & 0x1F));
+	Outputs->SetValue(OutputLampView1, !!(view1data & 0x1F));
+	Outputs->SetValue(OutputLampView2, !!(view2data & 0x1F));
+	Outputs->SetValue(OutputLampView3, !!(view3data & 0x1F));
+	Outputs->SetValue(OutputLampView4, !!(view4data & 0x1F));
 }
 
 void GTIClubSuperminiFesta::OutputsGameLoop()

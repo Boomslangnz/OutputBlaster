@@ -14,7 +14,6 @@ You should have received a copy of the GNU General Public License
 along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #include "Game.h"
-#include <Windows.h>
 
 void Game::OutputsGameLoop()
 {

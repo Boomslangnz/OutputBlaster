@@ -16,7 +16,6 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include <Windows.h>
 #include <atlbase.h>
 #include <iostream>
 #include "WinOutputs.h"

@@ -14,7 +14,6 @@ You should have received a copy of the GNU General Public License
 along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #pragma once
-#include <windows.h>
 #include "../Output Files/WinOutputs.h"
 
 static GameOutput m_game;
