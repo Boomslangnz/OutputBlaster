@@ -83,7 +83,7 @@ void CWinOutputs::Attached()
 }
 
 void CWinOutputs::SendOutput(EOutputs output, UINT8 prevValue, UINT8 value)
-{
+{	
 	// Loop through all registered clients and send them new output value
 	LPARAM param = (LPARAM)output + 1;
 	for (vector<RegisteredClient>::iterator it = m_clients.begin(), end = m_clients.end(); it != end; it++)
@@ -156,38 +156,12 @@ LRESULT CWinOutputs::OutputWindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM
 
 LRESULT CWinOutputs::RegisterClient(HWND hwnd, LPARAM id)
 {
-	// Check that given client is not already registered
-	for (vector<RegisteredClient>::iterator it = m_clients.begin(), end = m_clients.end(); it != end; it++)
-	{
-		if (it->id == id)
-		{
-			it->hwnd = hwnd;
-
-			// If so, just send it current state of all outputs
-			SendAllToClient(*it);
-			return 1;
-		}
-	}
-
-	// If not, store details about client and send it current state of all outputs
 	RegisteredClient client;
 	client.id = id;
 	client.hwnd = hwnd;
 	m_clients.push_back(client);
 
-	SendAllToClient(client);
 	return 0;
-}
-
-void CWinOutputs::SendAllToClient(RegisteredClient &client)
-{
-	// Loop through all known outputs and send their current state to given client
-	for (unsigned i = 0; i < NUM_OUTPUTS; i++)
-	{
-		EOutputs output = (EOutputs)i;
-		LPARAM param = (LPARAM)output + 1;
-		PostMessage(client.hwnd, m_updateState, param, GetValue(output));
-	}
 }
 
 LRESULT CWinOutputs::UnregisterClient(HWND hwnd, LPARAM id)
@@ -208,6 +182,7 @@ LRESULT CWinOutputs::UnregisterClient(HWND hwnd, LPARAM id)
 
 	// Return error if no matches found
 	return (found ? 0 : 1);
+	return 0;
 }
 
 LRESULT CWinOutputs::SendIdString(HWND hwnd, LPARAM id)

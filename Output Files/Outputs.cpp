@@ -25,7 +25,12 @@ const char *COutputs::s_outputNames[] =
 	"LampView4",
 	"LampLeader",
 	"RawDrive",
-	"RawLamps"
+	"RawLamps",
+	"LampAction",
+	"LampSelectUp",
+	"LampSelectDown",
+	"LampSelectLeft",
+	"LampSelectRight"
 };
 
 const char *COutputs::GetOutputName(EOutputs output)

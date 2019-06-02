@@ -124,15 +124,6 @@ private:
 	 * Registers a client (eg MAMEHooker) with the emulator.
 	 */
 	LRESULT RegisterClient(HWND hwnd, LPARAM id);
-
-	/*
-	 * SendAllToClient(client):
-	 *
-	 * Sends the current state of all the outputs to the given registered client.
-	 * Called whenever a client is registered with the emulator.
-	 */
-	void SendAllToClient(RegisteredClient &client);
-
 	/*
 	 * UnregisterClient(hwnd, id):
 	 *

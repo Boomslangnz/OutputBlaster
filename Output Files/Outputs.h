@@ -30,10 +30,15 @@ enum EOutputs
 	OutputLampView4,
 	OutputLampLeader,
 	OutputRawDrive,
-	OutputRawLamps
+	OutputRawLamps,
+	OutputLampAction,
+	OutputLampSelectUp,
+	OutputLampSelectDown,
+	OutputLampSelectLeft,
+	OutputLampSelectRight
 };
 
-#define NUM_OUTPUTS 9
+#define NUM_OUTPUTS 14
 
 class COutputs
 {
