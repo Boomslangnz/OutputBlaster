@@ -30,7 +30,21 @@ const char *COutputs::s_outputNames[] =
 	"LampSelectUp",
 	"LampSelectDown",
 	"LampSelectLeft",
-	"LampSelectRight"
+	"LampSelectRight",
+	"LampHazard",
+	"LampKey",
+	"LampOnline",
+	"LampOverrev",
+	"LampRed",
+	"LampGreen",
+	"LampBlue",
+	"LampYellow",
+	"LampCyan",
+	"LampMagneta",
+	"LampWhite",
+	"LampPatoButtonR",
+	"LampPatoButtonB",
+	"LampPato"
 };
 
 const char *COutputs::GetOutputName(EOutputs output)

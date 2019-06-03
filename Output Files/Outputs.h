@@ -35,10 +35,24 @@ enum EOutputs
 	OutputLampSelectUp,
 	OutputLampSelectDown,
 	OutputLampSelectLeft,
-	OutputLampSelectRight
+	OutputLampSelectRight,
+	OutputLampHazard,
+	OutputLampKey,
+	OutputLampOnline,
+	OutputLampOverrev,
+	OutputLampRed,
+	OutputLampGreen,
+	OutputLampBlue,
+	OutputLampYellow,
+	OutputLampCyan,
+	OutputLampMagneta,
+	OutputLampWhite,
+	OutputLampPatoButtonR,
+	OutputLampPatoButtonB,
+	OutputLampPato
 };
 
-#define NUM_OUTPUTS 14
+#define NUM_OUTPUTS 29
 
 class COutputs
 {

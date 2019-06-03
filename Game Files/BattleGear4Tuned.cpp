@@ -15,9 +15,70 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #include "BattleGear4Tuned.h"
 
-static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
-{
+int OutputValue(int output) {
+	switch (output) {
+	case 0x20:
+		return 8;
+	case 0x1C:
+		return 7;
+	case 0x18:
+		return 6;
+	case 0x14:
+		return 5;
+	case 0x10:
+		return 4;
+	case 0x0C:
+		return 3;
+	case 0x08:
+		return 2;
+	case 0x04:
+		return 1;
+	default:
+		return 0;
+	}
+}
 
+
+static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
+{	
+	int startvaluelamp = 0;
+	int viewvaluelamp = 0;
+	int hazardvaluelamp = 0;
+	int keyvaluelamp = 0;
+	int redvaluelamp = 0;
+	int greenvaluelamp = 0;
+	int bluevaluelamp = 0;
+	BYTE startoutput = *(BYTE *)(0x82D95C);
+	BYTE viewoutput = *(BYTE *)(0x82D956);
+	BYTE hazardoutput = *(BYTE *)(0x82D958);
+	BYTE keyoutput = *(BYTE *)(0x82D95A);
+	BYTE onlineoutput = *(BYTE *)(0x82D966);
+	BYTE overrevoutput = *(BYTE *)(0x82D967);
+	BYTE redoutput = *(BYTE *)(0x82D95E);
+	BYTE greenoutput = *(BYTE *)(0x82D960);
+	BYTE blueoutput = *(BYTE *)(0x82D962);
+	startvaluelamp = OutputValue(startoutput);
+	viewvaluelamp = OutputValue(viewoutput);
+	hazardvaluelamp = OutputValue(hazardoutput);
+	keyvaluelamp = OutputValue(keyoutput);
+	redvaluelamp = OutputValue(redoutput);
+	greenvaluelamp = OutputValue(greenoutput);
+	bluevaluelamp = OutputValue(blueoutput);
+
+	//Max Value 100 on everything except Online & OverRev
+	Outputs->SetValue(OutputLampStart, (startvaluelamp / 8.0) * 100.0); 
+	Outputs->SetValue(OutputLampView1, (viewvaluelamp / 8.0) * 100.0);
+	Outputs->SetValue(OutputLampHazard, (hazardvaluelamp / 8.0) * 100.0);
+	Outputs->SetValue(OutputLampKey, (keyvaluelamp / 8.0) * 100.0);
+	Outputs->SetValue(OutputLampOnline, !!(onlineoutput & 0x01));
+	Outputs->SetValue(OutputLampOverrev, !!(overrevoutput & 0x01));
+	Outputs->SetValue(OutputLampRed, (redvaluelamp / 8.0) * 100.0);
+	Outputs->SetValue(OutputLampGreen, (greenvaluelamp / 8.0) * 100.0);
+	Outputs->SetValue(OutputLampBlue, (bluevaluelamp / 8.0) * 100.0);
+	Outputs->SetValue(OutputLampYellow, ((redvaluelamp & greenvaluelamp) / 8.0) * 100.0);
+	Outputs->SetValue(OutputLampCyan, ((greenvaluelamp & bluevaluelamp) / 8.0) * 100.0);
+	Outputs->SetValue(OutputLampMagneta, ((bluevaluelamp & redvaluelamp) / 8.0) * 100.0);
+	Outputs->SetValue(OutputLampWhite, ((bluevaluelamp & greenvaluelamp & redvaluelamp) / 8.0) * 100.0);
 }
 
 void BattleGear4Tuned::OutputsGameLoop()
