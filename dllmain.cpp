@@ -16,6 +16,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 //General headers go here
 #include "Common Files/Game.h"
 #include "Common Files/CRCCheck.h"
+#include <stdint.h>
 
 //Game headers go here
 #include "Game Files/AfterburnerClimax.h"
@@ -43,8 +44,8 @@ Game* game;
 bool OutputsRunning = true;
 
 DWORD WINAPI OutputsLoop(LPVOID lpParam)
-{
-		uint32_t crcResult = GetCRC32(GetModuleHandle(nullptr), 0x400);
+{		
+	uint32_t crcResult = GetCRC32(GetModuleHandle(nullptr), 0x400);
 		switch (crcResult)
 		{
 		case 0xF8CEEC5D:
@@ -88,12 +89,40 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 			break;
 		}
 
-		if (game != 0)
+		if (game != 0) //Load PC Based Arcade Game
 		{
 			game->OutputsGameLoop();
 			Sleep(16);
 		}
-
+		else
+		{
+			Sleep(2000);
+			if (*(uint32_t*)0x804CA44 == 0x82EED98)
+			{
+				game = new AfterburnerClimax;
+			}
+			else if (*(uint32_t*)0x804B850 == 0x82642C8)
+			{
+				game = new Outrun2SP;
+			}
+			else if (*(uint32_t*)0x804CF84 == 0x1B09)
+			{
+				game = new InitialD4;
+			}
+			else if (*(uint32_t*)0x804CF9C == 0x1AF0)
+			{
+				game = new InitialD4Japan;
+			}
+			else if (*(uint32_t*)0x804D258 == 0x1C5F)
+			{
+				game = new InitialD5;
+			}
+			if (game != 0) //Load Lindbergh Game 
+			{
+				game->OutputsGameLoop();
+				Sleep(16);
+			}
+		}
 	return 0;
 }
 

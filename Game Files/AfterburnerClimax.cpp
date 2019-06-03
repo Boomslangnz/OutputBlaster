@@ -17,11 +17,17 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
 {
+	BYTE data = *(BYTE *)(0x8347A5E);
 
+	Outputs->SetValue(OutputLampStart, !!(data & 0x80));
+	Outputs->SetValue(OutputRawDrive, !!(data & 0x40));	
+	Outputs->SetValue(OutputLampRed, !!(data & 0x10));
+	Outputs->SetValue(OutputLampGreen, !!(data & 0x08));
+	Outputs->SetValue(OutputLampBlue, !!(data & 0x04));
 }
 
 void AfterburnerClimax::OutputsGameLoop()
-{
+{	
 	if (!init)
 	{
 		Outputs = new CWinOutputs();
