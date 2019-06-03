@@ -26,10 +26,10 @@ static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTi
 
 	Outputs->SetValue(OutputLampAction, !!(actionlamp & 0x1F));
 	Outputs->SetValue(OutputLampStart, !!(startlamp & 0x1F));
-	Outputs->SetValue(OutputLampSelectUp, !!(selectuplamp & 0x1F));
-	Outputs->SetValue(OutputLampSelectDown, !!(selectdownlamp & 0x1F));
-	Outputs->SetValue(OutputLampSelectLeft, !!(selectleftlamp & 0x1F));
-	Outputs->SetValue(OutputLampSelectRight, !!(selectrightlamp & 0x1F));
+	Outputs->SetValue(OutputLampSelectUp, (selectuplamp / 31.0) * 100.0);
+	Outputs->SetValue(OutputLampSelectDown, (selectdownlamp / 31.0) * 100.0);
+	Outputs->SetValue(OutputLampSelectLeft, (selectleftlamp / 31.0) * 100.0);
+	Outputs->SetValue(OutputLampSelectRight, (selectrightlamp / 31.0) * 100.0);
 }
 
 void GTIClubSuperminiFesta::OutputsGameLoop()

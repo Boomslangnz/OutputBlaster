@@ -19,6 +19,8 @@ static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTi
 {
 	imageBase = (uintptr_t)GetModuleHandleA(0);
 	BYTE data = *(BYTE *)(imageBase + 0x434C18);
+	BYTE data2 = *(BYTE *)(imageBase + 0x50DBEA);
+
 	Outputs->SetValue(OutputLampStart, !!(data & 0x04));
 	Outputs->SetValue(OutputLampView1, !!(data & 0x08));
 	Outputs->SetValue(OutputLampView2, !!(data & 0x40));
@@ -26,6 +28,12 @@ static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTi
 	Outputs->SetValue(OutputLampView4, !!(data & 0x80));
 	Outputs->SetValue(OutputLampLeader, !!(data & 0x20));
 	Outputs->SetValue(OutputRawLamps, data);
+	Outputs->SetValue(OutputWooferRed, !!(data2 & 0x01));
+	Outputs->SetValue(OutputWooferGreen, !!(data2 & 0x02));
+	Outputs->SetValue(OutputWooferBlue, !!(data2 & 0x04));
+	Outputs->SetValue(OutputRearRed, !!(data2 & 0x08));
+	Outputs->SetValue(OutputRearGreen, !!(data2 & 0x10));
+	Outputs->SetValue(OutputRearBlue, !!(data2 & 0x20));
 }
 
 void SegaRacingClassic::OutputsGameLoop()

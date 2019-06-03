@@ -49,10 +49,16 @@ enum EOutputs
 	OutputLampWhite,
 	OutputLampPatoButtonR,
 	OutputLampPatoButtonB,
-	OutputLampPato
+	OutputLampPato,
+	OutputWooferRed,
+	OutputWooferGreen,
+	OutputWooferBlue,
+	OutputRearRed,
+	OutputRearGreen,
+	OutputRearBlue
 };
 
-#define NUM_OUTPUTS 29
+#define NUM_OUTPUTS 35
 
 class COutputs
 {

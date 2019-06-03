@@ -71,7 +71,7 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		case 0x1cd40f9e:
 			game = new InitialD7;
 			break;
-		case 0xeddea93e:
+		case 0x080d35e3:
 			game = new InitialD8;
 			break;
 		case 0x82FED329:
