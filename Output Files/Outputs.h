@@ -55,10 +55,16 @@ enum EOutputs
 	OutputWooferBlue,
 	OutputRearRed,
 	OutputRearGreen,
-	OutputRearBlue
+	OutputRearBlue,
+	OutputSideRed,
+	OutputSideGreen,
+	OutputSideBlue,
+	OutputItemRed,
+	OutputItemGreen,
+	OutputItemBlue
 };
 
-#define NUM_OUTPUTS 35
+#define NUM_OUTPUTS 41
 
 class COutputs
 {

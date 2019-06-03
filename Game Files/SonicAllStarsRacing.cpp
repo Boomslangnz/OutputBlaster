@@ -17,7 +17,24 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
 {
+	imageBase = (uintptr_t)GetModuleHandleA(0);
+	BYTE data = *(BYTE *)(imageBase + 0x813708);
+	BYTE data2 = *(BYTE *)(imageBase + 0x813709);
 
+	Outputs->SetValue(OutputLampStart, !!(data & 0x80));
+	Outputs->SetValue(OutputLampLeader, !!(data & 0x40));
+	Outputs->SetValue(OutputLampRed, !!(data2 & 0x08));
+	Outputs->SetValue(OutputLampGreen, !!(data2 & 0x04));
+	Outputs->SetValue(OutputLampBlue, !!(data2 & 0x02));
+	Outputs->SetValue(OutputSideRed, !!(data & 0x02));
+	Outputs->SetValue(OutputSideGreen, !!(data & 0x01));
+	Outputs->SetValue(OutputSideBlue, !!(data2 & 0x80));
+	Outputs->SetValue(OutputWooferRed, !!(data2 & 0x40));
+	Outputs->SetValue(OutputWooferGreen, !!(data2 & 0x20));
+	Outputs->SetValue(OutputWooferBlue, !!(data2 & 0x10));
+	Outputs->SetValue(OutputItemRed, !!(data & 0x08));
+	Outputs->SetValue(OutputItemGreen, !!(data & 0x20));
+	Outputs->SetValue(OutputItemBlue, !!(data & 0x04));
 }
 
 void SonicAllStarsRacing::OutputsGameLoop()
