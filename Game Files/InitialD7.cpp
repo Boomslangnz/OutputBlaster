@@ -17,7 +17,15 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
 {
+	BYTE outputdata1 = *(BYTE *)(0x185D152);
+	BYTE outputdata2 = *(BYTE *)(0x185D153);
 
+	Outputs->SetValue(OutputLampStart, !!(outputdata1 & 0x80));
+	Outputs->SetValue(OutputLampView1, !!(outputdata1 & 0x40));
+	Outputs->SetValue(OutputLampSelectUp, !!(outputdata1 & 0x02));
+	Outputs->SetValue(OutputLampSelectDown, !!(outputdata1 & 0x01));
+	Outputs->SetValue(OutputLampSelectLeft, !!(outputdata2 & 0x80));
+	Outputs->SetValue(OutputLampSelectRight, !!(outputdata2 & 0x40));
 }
 
 void InitialD7::OutputsGameLoop()
