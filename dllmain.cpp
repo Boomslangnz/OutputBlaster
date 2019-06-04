@@ -37,6 +37,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/Outrun2SP.h"
 #include "Game Files/SegaRacingClassic.h"
 #include "Game Files/SonicAllStarsRacing.h"
+#include "Game Files/VirtuaTennis4.h"
 #include "Game Files/WackyRaces.h"
 #include "Game Files/WMMT5.h"
 
@@ -83,6 +84,9 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 			break;
 		case 0xE7EAAEAD:
 			game = new SonicAllStarsRacing;
+			break;
+		case 0x6C6CD7D1:
+			game = new VirtuaTennis4;
 			break;
 		case 0x185fd019:
 			game = new WackyRaces;
