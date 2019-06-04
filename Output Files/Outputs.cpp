@@ -56,7 +56,9 @@ const char *COutputs::s_outputNames[] =
 	"SideLEDBlue",
 	"ItemLEDRed",
 	"ItemLEDGreen",
-	"ItemLEDBlue"
+	"ItemLEDBlue",
+	"LampDriverLeft",
+	"LampDriverRight"
 };
 
 const char *COutputs::GetOutputName(EOutputs output)

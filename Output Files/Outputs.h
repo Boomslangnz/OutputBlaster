@@ -61,10 +61,12 @@ enum EOutputs
 	OutputSideBlue,
 	OutputItemRed,
 	OutputItemGreen,
-	OutputItemBlue
+	OutputItemBlue,
+	OutputDriverLampL,
+	OutputDriverLampR
 };
 
-#define NUM_OUTPUTS 41
+#define NUM_OUTPUTS 43
 
 class COutputs
 {

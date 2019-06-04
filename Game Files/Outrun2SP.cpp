@@ -17,7 +17,12 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
 {
+	BYTE outputdata = *(BYTE *)(0x8670E08);
 
+	Outputs->SetValue(OutputLampStart, !!(outputdata & 0x80));
+	Outputs->SetValue(OutputLampView1, !!(outputdata & 0x08));
+	Outputs->SetValue(OutputDriverLampL, !!(outputdata & 0x20));
+	Outputs->SetValue(OutputDriverLampR, !!(outputdata & 0x04));
 }
 
 void Outrun2SP::OutputsGameLoop()
