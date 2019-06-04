@@ -17,7 +17,17 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
 {
+	imageBase = (uintptr_t)GetModuleHandleA(0);
+	BYTE outputBase = *(BYTE *)(imageBase + 0x63BF5C);
+	BYTE outputData = *(BYTE *)(outputBase + 0x44);
 
+	Outputs->SetValue(OutputLampStart, !!(outputData & 0x80));
+	Outputs->SetValue(Output1pKnock, !!(outputData & 0x20));
+	Outputs->SetValue(Output1pMotor, !!(outputData & 0x40));
+	Outputs->SetValue(Output2pKnock, !!(outputData & 0x04));
+	Outputs->SetValue(Output2pMotor, !!(outputData & 0x08));
+	Outputs->SetValue(Output2pLampStart, !!(outputData & 0x10));
+	Outputs->SetValue(OutputRawLamps, outputData);
 }
 
 void LGI::OutputsGameLoop()

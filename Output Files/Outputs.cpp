@@ -58,7 +58,19 @@ const char *COutputs::s_outputNames[] =
 	"ItemLEDGreen",
 	"ItemLEDBlue",
 	"LampDriverLeft",
-	"LampDriverRight"
+	"LampDriverRight",
+	"1pKnock",
+	"1pMotor",
+	"2pKnock",
+	"2pMotor",
+	"2pLampStart"
+	"VisualChange2D/3D",
+	"1pAirFront",
+	"1pAirRear",
+	"2pAirFront",
+	"2pAirRear",
+	"LampInterruptionButton",
+	"LampSide"
 };
 
 const char *COutputs::GetOutputName(EOutputs output)

@@ -17,7 +17,17 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
 {
+	imageBase = (uintptr_t)GetModuleHandleA(0);
+	BYTE outputdata = *(BYTE *)(imageBase + 0x199F0CC);
+	BYTE outputdata2 = *(BYTE *)(imageBase + 0x199F0CC);
 
+	Outputs->SetValue(OutputLampView1, !!(outputdata & 0x08));
+	Outputs->SetValue(OutputInterruption, !!(outputdata & 0x04));
+	Outputs->SetValue(OutputLampRed, !!(outputdata2 & 0x80));
+	Outputs->SetValue(OutputLampGreen, !!(outputdata2 & 0x40));
+	Outputs->SetValue(OutputLampBlue, !!(outputdata2 & 0x20));
+	Outputs->SetValue(OutputLampWhite, !!(outputdata2 & 0xE0));
+	Outputs->SetValue(OutputSideLamp, !!(outputdata2 & 0x10));
 }
 
 void WMMT5::OutputsGameLoop()

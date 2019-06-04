@@ -63,10 +63,22 @@ enum EOutputs
 	OutputItemGreen,
 	OutputItemBlue,
 	OutputDriverLampL,
-	OutputDriverLampR
+	OutputDriverLampR,
+	Output1pKnock,
+	Output1pMotor,
+	Output2pKnock,
+	Output2pMotor,
+	Output2pLampStart,
+	OutputVisualChange3D,
+	Output1pAirFront,
+	Output1pAirRear,
+	Output2pAirFront,
+	Output2pAirRear,
+	OutputInterruption,
+	OutputSideLamp
 };
 
-#define NUM_OUTPUTS 43
+#define NUM_OUTPUTS 55
 
 class COutputs
 {
