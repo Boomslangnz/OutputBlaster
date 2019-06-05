@@ -46,7 +46,19 @@ bool OutputsRunning = true;
 
 DWORD WINAPI OutputsLoop(LPVOID lpParam)
 {		
-	uint32_t crcResult = GetCRC32(GetModuleHandle(nullptr), 0x400);
+	auto moduleBase = (uintptr_t)GetModuleHandle(nullptr);
+	if (*(uint32_t*)(moduleBase + 0x2182) == 0xE995C969)
+	{
+		game = new Machstorm;
+	}
+	if (game != 0)
+	{
+		game->OutputsGameLoop();
+		Sleep(16);
+	}
+	else
+	{
+		uint32_t crcResult = GetCRC32(GetModuleHandle(nullptr), 0x400);
 		switch (crcResult)
 		{
 		case 0xF8CEEC5D:
@@ -101,6 +113,7 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		else
 		{
 			Sleep(2000);
+
 			if (*(uint32_t*)0x804CA44 == 0x82EED98)
 			{
 				game = new AfterburnerClimax;
@@ -127,6 +140,7 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 				Sleep(16);
 			}
 		}
+	}
 	return 0;
 }
 

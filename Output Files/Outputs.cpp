@@ -63,14 +63,17 @@ const char *COutputs::s_outputNames[] =
 	"1pMotor",
 	"2pKnock",
 	"2pMotor",
-	"2pLampStart"
+	"2pLampStart",
 	"VisualChange2D/3D",
 	"1pAirFront",
 	"1pAirRear",
 	"2pAirFront",
 	"2pAirRear",
 	"LampInterruptionButton",
-	"LampSide"
+	"LampSide",
+	"Vibration",
+	"Power",
+	"LEDRearCover"
 };
 
 const char *COutputs::GetOutputName(EOutputs output)

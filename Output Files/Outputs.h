@@ -75,10 +75,13 @@ enum EOutputs
 	Output2pAirFront,
 	Output2pAirRear,
 	OutputInterruption,
-	OutputSideLamp
+	OutputSideLamp,
+	OutputVibration,
+	OutputPower,
+	OutputRearCover
 };
 
-#define NUM_OUTPUTS 55
+#define NUM_OUTPUTS 57
 
 class COutputs
 {
