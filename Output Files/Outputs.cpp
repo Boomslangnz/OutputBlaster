@@ -73,7 +73,18 @@ const char *COutputs::s_outputNames[] =
 	"LampSide",
 	"Vibration",
 	"Power",
-	"LEDRearCover"
+	"LEDRearCover",
+	"PanelLamp",
+	"SlotLamp1",
+	"SlotLamp2",
+	"SlotLamp3",
+	"SeatLamp1",
+	"SeatLamp2",
+	"SeatLamp3",
+	"SeatLamp4",
+	"SeatLamp5",
+	"SeatLamp6",
+	"SeatLamp7"
 };
 
 const char *COutputs::GetOutputName(EOutputs output)

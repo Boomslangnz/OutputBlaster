@@ -17,7 +17,29 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
 {
+	imageBase = (uintptr_t)GetModuleHandleA(0);
+	INT_PTR lampbase = *(INT_PTR *)(imageBase + 0x7E00590);
+	INT_PTR lamps = *(INT_PTR *)(lampbase + 0x45);
+	BYTE Seatlamp1 = *(BYTE *)(lampbase + 0x53);
+	BYTE Seatlamp2 = *(BYTE *)(lampbase + 0x51);
+	BYTE Seatlamp3 = *(BYTE *)(lampbase + 0x23);
+	BYTE Seatlamp4 = *(BYTE *)(lampbase + 0x4D);
+	BYTE Seatlamp5 = *(BYTE *)(lampbase + 0x1F);
+	BYTE Seatlamp6 = *(BYTE *)(lampbase + 0x49);
 
+	Outputs->SetValue(OutputLampStart, !!(lamps & 0x80));
+	Outputs->SetValue(OutputLampView1, !!(lamps & 0x100));
+	Outputs->SetValue(OutputPanelLamp, !!(lamps & 0x08));
+	Outputs->SetValue(OutputSlot1Lamp, !!(lamps & 0x400));
+	Outputs->SetValue(OutputSlot2Lamp, !!(lamps & 0x10));
+	Outputs->SetValue(OutputSlot3Lamp, !!(lamps & 0x200));
+	Outputs->SetValue(OutputSeat1Lamp, !!(Seatlamp1 & 0xFF));
+	Outputs->SetValue(OutputSeat2Lamp, !!(Seatlamp2 & 0xFF));
+	Outputs->SetValue(OutputSeat3Lamp, !!(Seatlamp3 & 0xFF));
+	Outputs->SetValue(OutputSeat4Lamp, !!(Seatlamp4 & 0xFF));
+	Outputs->SetValue(OutputSeat5Lamp, !!(Seatlamp5 & 0xFF));
+	Outputs->SetValue(OutputSeat6Lamp, !!(Seatlamp6 & 0xFF));
+	Outputs->SetValue(OutputSeat7Lamp, !!(lamps & 0x4000));
 }
 
 void WackyRaces::OutputsGameLoop()

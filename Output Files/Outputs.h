@@ -78,10 +78,21 @@ enum EOutputs
 	OutputSideLamp,
 	OutputVibration,
 	OutputPower,
-	OutputRearCover
+	OutputRearCover,
+	OutputPanelLamp,
+	OutputSlot1Lamp,
+	OutputSlot2Lamp,
+	OutputSlot3Lamp,
+	OutputSeat1Lamp,
+	OutputSeat2Lamp,
+	OutputSeat3Lamp,
+	OutputSeat4Lamp,
+	OutputSeat5Lamp,
+	OutputSeat6Lamp,
+	OutputSeat7Lamp
 };
 
-#define NUM_OUTPUTS 57
+#define NUM_OUTPUTS 68
 
 class COutputs
 {
