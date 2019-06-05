@@ -84,7 +84,14 @@ const char *COutputs::s_outputNames[] =
 	"SeatLamp4",
 	"SeatLamp5",
 	"SeatLamp6",
-	"SeatLamp7"
+	"SeatLamp7",
+	"Billboard Red",
+	"Billboard Green",
+	"Billboard Blue",
+	"Billboard White",
+	"Item Button",
+	"Mario Button",
+	"SideLEDWhite"
 };
 
 const char *COutputs::GetOutputName(EOutputs output)

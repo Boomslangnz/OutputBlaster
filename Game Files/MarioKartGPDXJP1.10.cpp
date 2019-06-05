@@ -17,7 +17,29 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
 {
+	imageBase = (uintptr_t)GetModuleHandleA(0);
+	BYTE ButtonData = *(BYTE *)(imageBase + 0xA4528D);
+	BYTE BillboardData = *(BYTE *)(imageBase + 0xA4694C);
+	BYTE BillboardData2 = *(BYTE *)(imageBase + 0xA4694D);
+	BYTE MonitorSideData = *(BYTE *)(imageBase + 0xA469C1);
+	BYTE MonitorSideData2 = *(BYTE *)(imageBase + 0xA469C2);
+	BYTE UnderLampData = *(BYTE *)(imageBase + 0xA452A6);
+	BYTE UnderLampData2 = *(BYTE *)(imageBase + 0xA452A7);
 
+	Outputs->SetValue(OutputItemButton, !!(ButtonData & 0x04));
+	Outputs->SetValue(OutputMarioButton, !!(ButtonData & 0x08));
+	Outputs->SetValue(OutputBillboardRed, !!(BillboardData & 0xF0));
+	Outputs->SetValue(OutputBillboardGreen, !!(BillboardData & 0x0F));
+	Outputs->SetValue(OutputBillboardBlue, !!(BillboardData2 & 0xF0));
+	Outputs->SetValue(OutputBillboardWhite, !!(BillboardData2 & 0xFF));
+	Outputs->SetValue(OutputSideRed, !!(MonitorSideData & 0xF0));
+	Outputs->SetValue(OutputSideGreen, !!(MonitorSideData & 0x0F));
+	Outputs->SetValue(OutputSideBlue, !!(MonitorSideData2 & 0xF0));
+	Outputs->SetValue(OutputSideWhite, !!(MonitorSideData2 & 0xFF));
+	Outputs->SetValue(OutputLampRed, !!(UnderLampData & 0xF0));
+	Outputs->SetValue(OutputLampGreen, !!(UnderLampData & 0x0F));
+	Outputs->SetValue(OutputLampBlue, !!(UnderLampData2 & 0xF0));
+	Outputs->SetValue(OutputLampWhite, !!(UnderLampData2 & 0xFF));
 }
 
 void MarioKartGPDXJP110::OutputsGameLoop()

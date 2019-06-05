@@ -89,10 +89,17 @@ enum EOutputs
 	OutputSeat4Lamp,
 	OutputSeat5Lamp,
 	OutputSeat6Lamp,
-	OutputSeat7Lamp
+	OutputSeat7Lamp,
+	OutputBillboardRed,
+	OutputBillboardGreen,
+	OutputBillboardBlue,
+	OutputBillboardWhite,
+	OutputItemButton,
+	OutputMarioButton,
+	OutputSideWhite
 };
 
-#define NUM_OUTPUTS 68
+#define NUM_OUTPUTS 75
 
 class COutputs
 {

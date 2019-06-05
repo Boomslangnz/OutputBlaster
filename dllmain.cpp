@@ -51,6 +51,10 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 	{
 		game = new Machstorm;
 	}
+	if (*(uint32_t*)(moduleBase + 0x1140) == 0x2d7a80 || *(uint32_t*)(moduleBase + 0x10D0) == 0xC0850845 || *(uint32_t*)(moduleBase + 0x10D0) == 0xFF001F00)
+	{
+		game = new MarioKartGPDXJP110;
+	}
 	if (game != 0)
 	{
 		game->OutputsGameLoop();
@@ -63,9 +67,6 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		{
 		case 0xF8CEEC5D:
 			game = new SegaRacingClassic;
-			break;
-		case 0x7787da54:
-			game = new MarioKartGPDXJP110;
 			break;
 		case 0xb8f2836d:
 			game = new DaytonaChampionshipUSA;
