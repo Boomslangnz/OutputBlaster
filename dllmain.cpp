@@ -25,7 +25,6 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/DaytonaChampionshipUSA.h"
 #include "Game Files/GTIClubSuperminiFesta.h"
 #include "Game Files/InitialD4.h"
-#include "Game Files/InitialD4Japan.h"
 #include "Game Files/InitialD5.h"
 #include "Game Files/InitialD6.h"
 #include "Game Files/InitialD7.h"
@@ -130,10 +129,6 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 			else if (*(uint32_t*)0x804CF84 == 0x1B09)
 			{
 				game = new InitialD4;
-			}
-			else if (*(uint32_t*)0x804CF9C == 0x1AF0)
-			{
-				game = new InitialD4Japan;
 			}
 			else if (*(uint32_t*)0x804D258 == 0x1C5F)
 			{
