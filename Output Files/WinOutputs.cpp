@@ -173,8 +173,11 @@ LRESULT CWinOutputs::RegisterClient(HWND hwnd, LPARAM id)
 	RegisteredClient client;
 	client.id = id;
 	client.hwnd = hwnd;
-	m_clients.push_back(client);
-
+	for (unsigned i = 0; i < NUM_OUTPUTS; i++)
+	{
+		m_clients.push_back(client);
+	}
+	
 	return 0;
 }
 
