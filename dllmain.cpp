@@ -34,6 +34,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/LGI3D.h"
 #include "Game Files/Machstorm.h"
 #include "Game Files/MarioKartGPDXJP1.10.h"
+#include "Game Files/OperationGhost.h"
 #include "Game Files/Outrun2SP.h"
 #include "Game Files/SegaRacingClassic.h"
 #include "Game Files/SonicAllStarsRacing.h"
@@ -76,6 +77,9 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 			break;
 		case 0x1f2f9497:
 			game = new ChaseHQ2;
+			break;
+		case 0xf598cc36:
+			game = new OperationGhost;
 			break;
 		case 0x326ebcd6:
 			game = new GTIClubSuperminiFesta;

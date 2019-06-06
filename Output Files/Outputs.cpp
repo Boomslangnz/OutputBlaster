@@ -91,7 +91,12 @@ const char *COutputs::s_outputNames[] =
 	"Billboard White",
 	"Item Button",
 	"Mario Button",
-	"SideLEDWhite"
+	"SideLEDWhite",
+	"1pRecoil",
+	"1pHolderLamp",
+	"2pRecoil",
+	"2pHolderLamp",
+	"BillboardLamp"
 };
 
 const char *COutputs::GetOutputName(EOutputs output)

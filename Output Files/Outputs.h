@@ -96,10 +96,15 @@ enum EOutputs
 	OutputBillboardWhite,
 	OutputItemButton,
 	OutputMarioButton,
-	OutputSideWhite
+	OutputSideWhite,
+	Output1pRecoil,
+	Output1pHolderLamp,
+	Output2pRecoil,
+	Output2pHolderLamp,
+	OutputBillboardLamp
 };
 
-#define NUM_OUTPUTS 75
+#define NUM_OUTPUTS 80
 
 class COutputs
 {
