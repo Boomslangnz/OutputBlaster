@@ -55,6 +55,10 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 	{
 		game = new MarioKartGPDXJP110;
 	}
+	if (*(uint32_t*)(moduleBase + 0x2F00) == 0xFFCB8B48)
+	{
+		game = new WMMT5;
+	}
 	if (game != 0)
 	{
 		game->OutputsGameLoop();

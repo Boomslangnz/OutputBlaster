@@ -19,14 +19,21 @@ static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTi
 {
 	imageBase = (uintptr_t)GetModuleHandleA(0);
 	BYTE outputdata = *(BYTE *)(imageBase + 0x199F0CC);
-	BYTE outputdata2 = *(BYTE *)(imageBase + 0x199F0CC);
+	BYTE outputdata2 = *(BYTE *)(imageBase + 0x199F0CD);
 
 	Outputs->SetValue(OutputLampView1, !!(outputdata & 0x08));
 	Outputs->SetValue(OutputInterruption, !!(outputdata & 0x04));
 	Outputs->SetValue(OutputLampRed, !!(outputdata2 & 0x80));
 	Outputs->SetValue(OutputLampGreen, !!(outputdata2 & 0x40));
 	Outputs->SetValue(OutputLampBlue, !!(outputdata2 & 0x20));
-	Outputs->SetValue(OutputLampWhite, !!(outputdata2 & 0xE0));
+	if (outputdata2 >= 0xE0)
+	{
+		Outputs->SetValue(OutputLampWhite, 0x01);
+	}
+	else
+	{
+		Outputs->SetValue(OutputLampWhite, 0x00);
+	}
 	Outputs->SetValue(OutputSideLamp, !!(outputdata2 & 0x10));
 }
 
