@@ -6,3 +6,5 @@ Credits: Aaron Giles who originally wrote the MAME output code & Supermodel Emul
 This code uses GNU GENERAL PUBLIC LICENSE & License is supplied.
 
 Currently supports TeknoParrot Emulator
+
+To use: Place OutputBlaster.dll in game folder and Enable Outputs in game settings (with TeknoParrot)
