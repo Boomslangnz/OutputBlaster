@@ -101,10 +101,14 @@ enum EOutputs
 	Output1pHolderLamp,
 	Output2pRecoil,
 	Output2pHolderLamp,
-	OutputBillboardLamp
+	OutputBillboardLamp,
+	OutputBoost,
+	OutputLampRed2,
+	OutputLampGreen2,
+	OutputLampBlue2
 };
 
-#define NUM_OUTPUTS 80
+#define NUM_OUTPUTS 84
 
 class COutputs
 {

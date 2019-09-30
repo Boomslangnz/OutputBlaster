@@ -36,6 +36,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/MarioKartGPDXJP1.10.h"
 #include "Game Files/OperationGhost.h"
 #include "Game Files/Outrun2SP.h"
+#include "Game Files/SegaRaceTV.h"
 #include "Game Files/SegaRacingClassic.h"
 #include "Game Files/SonicAllStarsRacing.h"
 #include "Game Files/VirtuaTennis4.h"
@@ -134,6 +135,10 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 			else if (*(uint32_t*)0x804B850 == 0x82642C8)
 			{
 				game = new Outrun2SP;
+			}
+			else if (*(uint32_t*)0x804A908 == 0x12EE)
+			{
+				game = new SRTV;
 			}
 			else if (*(uint32_t*)0x804CF84 == 0x1B09)
 			{

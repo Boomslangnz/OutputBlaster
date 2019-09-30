@@ -96,7 +96,11 @@ const char *COutputs::s_outputNames[] =
 	"1pHolderLamp",
 	"2pRecoil",
 	"2pHolderLamp",
-	"BillboardLamp"
+	"BillboardLamp",
+	"Boost Button",
+	"LampRed2",
+	"LampGreen2",
+	"LampBlue2"
 };
 
 const char *COutputs::GetOutputName(EOutputs output)
