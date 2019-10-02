@@ -18,21 +18,26 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
 {
 	imageBase = (uintptr_t)GetModuleHandleA(0);
-	INT_PTR outputdataBase1 = *(INT_PTR *)(imageBase + 0x731F70);
-	INT_PTR outputdataBase2 = *(INT_PTR *)(outputdataBase1 + 0x21C);
-	INT_PTR outputdataBase3 = *(INT_PTR *)(outputdataBase2 + 0x78);
-	INT_PTR outputdataBase4 = *(INT_PTR *)(outputdataBase3 + 0x180);
-	INT_PTR outputdataBase5 = *(INT_PTR *)(outputdataBase4 + 0x4E0);
-	BYTE outputdataBase6 = *(BYTE *)(outputdataBase5 + 0xC);
-	BYTE outputdataBase7 = *(BYTE *)(outputdataBase5 + 0xD);
+	INT_PTR outputdataBase1 = *(INT_PTR *)(imageBase + 0x62B78);
+	INT_PTR outputdataBase2 = *(INT_PTR *)(outputdataBase1 + 0x7F0);
+	INT_PTR outputdataBase3 = *(INT_PTR *)(outputdataBase2 + 0xD4);
+	BYTE outputdataBase4 = *(BYTE *)(outputdataBase3 + 0xC);
+	BYTE outputdataBase5 = *(BYTE *)(outputdataBase3 + 0xD);
 
-	Outputs->SetValue(OutputLampStart, !!(outputdataBase6 & 0x80));
-	Outputs->SetValue(OutputLampView1, !!(outputdataBase6 & 0x8));
-	Outputs->SetValue(OutputBoost, !!(outputdataBase6 & 0x10));
-	Outputs->SetValue(OutputLampRed, !!(outputdataBase6 & 0x1));
-	Outputs->SetValue(OutputLampRed2, !!(outputdataBase7 & 0x40));
-	Outputs->SetValue(OutputLampBlue, !!(outputdataBase6 & 0x2));
-	Outputs->SetValue(OutputLampBlue2, !!(outputdataBase7 & 0x80));
+	if (outputdataBase4 == 0x80)
+	{
+		Outputs->SetValue(OutputLampStart, 0x01);
+	}
+	else
+	{
+		Outputs->SetValue(OutputLampStart, 0x00);
+	}
+	Outputs->SetValue(OutputLampView1, !!(outputdataBase4 & 0x8));
+	Outputs->SetValue(OutputBoost, !!(outputdataBase4 & 0x10));
+	Outputs->SetValue(OutputLampRed, !!(outputdataBase4 & 0x1));
+	Outputs->SetValue(OutputLampRed2, !!(outputdataBase5 & 0x40));
+	Outputs->SetValue(OutputLampBlue, !!(outputdataBase4 & 0x2));
+	Outputs->SetValue(OutputLampBlue2, !!(outputdataBase5 & 0x80));
 }
 
 void SRTV::OutputsGameLoop()
