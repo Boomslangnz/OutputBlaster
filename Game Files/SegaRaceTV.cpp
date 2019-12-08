@@ -15,14 +15,14 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #include "SegaRaceTV.h"
 
-static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
+static int WindowsLoop()
 {
 	imageBase = (uintptr_t)GetModuleHandleA(0);
-	INT_PTR outputdataBase1 = *(INT_PTR *)(imageBase + 0x62B78);
-	INT_PTR outputdataBase2 = *(INT_PTR *)(outputdataBase1 + 0x7F0);
-	INT_PTR outputdataBase3 = *(INT_PTR *)(outputdataBase2 + 0xD4);
-	BYTE outputdataBase4 = *(BYTE *)(outputdataBase3 + 0xC);
-	BYTE outputdataBase5 = *(BYTE *)(outputdataBase3 + 0xD);
+	INT_PTR outputdataBase1 = *(INT_PTR*)(imageBase + 0x62B78);
+	INT_PTR outputdataBase2 = *(INT_PTR*)(outputdataBase1 + 0x7F0);
+	INT_PTR outputdataBase3 = *(INT_PTR*)(outputdataBase2 + 0xD4);
+	BYTE outputdataBase4 = *(BYTE*)(outputdataBase3 + 0xC);
+	BYTE outputdataBase5 = *(BYTE*)(outputdataBase3 + 0xD);
 
 	if (outputdataBase4 == 0x80)
 	{
@@ -38,6 +38,16 @@ static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTi
 	Outputs->SetValue(OutputLampRed2, !!(outputdataBase5 & 0x40));
 	Outputs->SetValue(OutputLampBlue, !!(outputdataBase4 & 0x2));
 	Outputs->SetValue(OutputLampBlue2, !!(outputdataBase5 & 0x80));
+	return 0;
+}
+
+static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
+{
+	while (true)
+	{
+		WindowsLoop();
+		Sleep(16);
+	}
 }
 
 void SRTV::OutputsGameLoop()
@@ -49,7 +59,7 @@ void SRTV::OutputsGameLoop()
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
 		Outputs->Attached();
-		SetTimer(0, 0, Output_Time, (TIMERPROC)OutputsAreGo);
+		CreateThread(NULL, 0, OutputsAreGo, NULL, 0, NULL);
 		while (GetMessage(&Msg1, NULL, NULL, 0))
 		{
 			TranslateMessage(&Msg1);

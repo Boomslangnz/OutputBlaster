@@ -15,14 +15,24 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #include "Outrun2SP.h"
 
-static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
+static int WindowsLoop()
 {
-	BYTE outputdata = *(BYTE *)(0x8670E08);
+	BYTE outputdata = *(BYTE*)(0x8670E08);
 
 	Outputs->SetValue(OutputLampStart, !!(outputdata & 0x80));
 	Outputs->SetValue(OutputLampView1, !!(outputdata & 0x08));
 	Outputs->SetValue(OutputDriverLampL, !!(outputdata & 0x20));
 	Outputs->SetValue(OutputDriverLampR, !!(outputdata & 0x04));
+	return 0;
+}
+
+static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
+{
+	while (true)
+	{
+		WindowsLoop();
+		Sleep(16);
+	}
 }
 
 void Outrun2SP::OutputsGameLoop()
@@ -34,7 +44,7 @@ void Outrun2SP::OutputsGameLoop()
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
 		Outputs->Attached();
-		SetTimer(0, 0, Output_Time, (TIMERPROC)OutputsAreGo);
+		CreateThread(NULL, 0, OutputsAreGo, NULL, 0, NULL);
 		while (GetMessage(&Msg1, NULL, NULL, 0))
 		{
 			TranslateMessage(&Msg1);

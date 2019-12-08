@@ -15,10 +15,11 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #include "InitialD5.h"
 
-static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
+static int WindowsLoop()
 {
-	BYTE outputdata1 = *(BYTE *)(0x93D879D);
-	BYTE outputdata2 = *(BYTE *)(0x93D879E);
+	BYTE outputdata1 = *(BYTE*)(0x93D879D);
+	BYTE outputdata2 = *(BYTE*)(0x93D879E);
+	INT_PTR FFB = *(INT_PTR*)0x8CB6122;
 
 	Outputs->SetValue(OutputLampStart, !!(outputdata1 & 0x80));
 	Outputs->SetValue(OutputLampView1, !!(outputdata1 & 0x40));
@@ -26,6 +27,17 @@ static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTi
 	Outputs->SetValue(OutputLampSelectDown, !!(outputdata1 & 0x01));
 	Outputs->SetValue(OutputLampSelectLeft, !!(outputdata2 & 0x80));
 	Outputs->SetValue(OutputLampSelectRight, !!(outputdata2 & 0x40));
+	Outputs->SetValue(OutputFFB, FFB);
+	return 0;
+}
+
+static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
+{
+	while (true)
+	{
+		WindowsLoop();
+		Sleep(16);
+	}
 }
 
 void InitialD5::OutputsGameLoop()
@@ -37,7 +49,7 @@ void InitialD5::OutputsGameLoop()
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
 		Outputs->Attached();
-		SetTimer(0, 0, Output_Time, (TIMERPROC)OutputsAreGo);
+		CreateThread(NULL, 0, OutputsAreGo, NULL, 0, NULL);
 		while (GetMessage(&Msg1, NULL, NULL, 0))
 		{
 			TranslateMessage(&Msg1);

@@ -15,12 +15,12 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #include "LGI3D.h"
 
-static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
+static int WindowsLoop()
 {
 	imageBase = (uintptr_t)GetModuleHandleA(0);
-	BYTE outputBase = *(BYTE *)(imageBase + 0x65DA20);
-	BYTE outputData = *(BYTE *)(outputBase + 0x44);
-	BYTE outputData2 = *(BYTE *)(outputBase + 0x45);
+	BYTE outputBase = *(BYTE*)(imageBase + 0x65DA20);
+	BYTE outputData = *(BYTE*)(outputBase + 0x44);
+	BYTE outputData2 = *(BYTE*)(outputBase + 0x45);
 
 	Outputs->SetValue(OutputLampStart, !!(outputData & 0x80));
 	Outputs->SetValue(Output1pKnock, !!(outputData & 0x20));
@@ -34,6 +34,16 @@ static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTi
 	Outputs->SetValue(Output2pAirFront, !!(outputData2 & 0x40));
 	Outputs->SetValue(Output2pAirRear, !!(outputData2 & 0x10));
 	Outputs->SetValue(OutputRawLamps, outputData & outputData2);
+	return 0;
+}
+
+static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
+{
+	while (true)
+	{
+		WindowsLoop();
+		Sleep(16);
+	}
 }
 
 void LGI3D::OutputsGameLoop()
@@ -45,7 +55,7 @@ void LGI3D::OutputsGameLoop()
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
 		Outputs->Attached();
-		SetTimer(0, 0, Output_Time, (TIMERPROC)OutputsAreGo);
+		CreateThread(NULL, 0, OutputsAreGo, NULL, 0, NULL);
 		while (GetMessage(&Msg1, NULL, NULL, 0))
 		{
 			TranslateMessage(&Msg1);

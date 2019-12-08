@@ -34,21 +34,34 @@ int PatoLightOutput(int patolamp) {
 	}
 }
 
-static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
+static int WindowsLoop()
 {
 	int outputpatolamp = 0;
 	imageBase = (uintptr_t)GetModuleHandleA(0);
-	INT_PTR lampbase = *(INT_PTR *)(imageBase + 0x130B558);
-	BYTE startlamp = *(BYTE *)(lampbase + 0x49);
-	BYTE patolampR = *(BYTE *)(lampbase + 0x4F);
-	BYTE patolampB = *(BYTE *)(lampbase + 0x4B);
-	INT_PTR patolamp = *(INT_PTR *)(lampbase + 0x45);	
+	INT_PTR lampbase = *(INT_PTR*)(imageBase + 0x130B558);
+	BYTE startlamp = *(BYTE*)(lampbase + 0x49);
+	BYTE patolampR = *(BYTE*)(lampbase + 0x4F);
+	BYTE patolampB = *(BYTE*)(lampbase + 0x4B);
+	INT_PTR patolamp = *(INT_PTR*)(lampbase + 0x45);
 	outputpatolamp = PatoLightOutput(patolamp - 16384);
+	INT_PTR FFBBase = *(INT_PTR*)(imageBase + 0x130B558);
+	BYTE FFB = *(BYTE*)FFBBase + 0x45;
 
 	Outputs->SetValue(OutputLampStart, (startlamp / 255.0) * 100.0); //Modify value on mamehooker to show 0-100, with 100 being max 
 	Outputs->SetValue(OutputLampPatoButtonR, (patolampR / 255.0) * 100.0);
 	Outputs->SetValue(OutputLampPatoButtonB, (patolampB / 255.0) * 100.0);
 	Outputs->SetValue(OutputLampPato, outputpatolamp);
+	Outputs->SetValue(OutputFFB, FFB);
+	return 0;
+}
+
+static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
+{
+	while (true)
+	{
+		WindowsLoop();
+		Sleep(16);
+	}
 }
 
 void  ChaseHQ2::OutputsGameLoop()
@@ -60,7 +73,7 @@ void  ChaseHQ2::OutputsGameLoop()
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
 		Outputs->Attached();
-		SetTimer(0, 0, Output_Time, (TIMERPROC)OutputsAreGo);
+		CreateThread(NULL, 0, OutputsAreGo, NULL, 0, NULL);
 		while (GetMessage(&Msg1, NULL, NULL, 0))
 		{
 			TranslateMessage(&Msg1);

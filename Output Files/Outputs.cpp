@@ -100,7 +100,12 @@ const char *COutputs::s_outputNames[] =
 	"Boost Button",
 	"LampRed2",
 	"LampGreen2",
-	"LampBlue2"
+	"LampBlue2",
+	"FFB",
+	"FFB1",
+	"FFB2",
+	"FFB3",
+	"FFB4"
 };
 
 const char *COutputs::GetOutputName(EOutputs output)

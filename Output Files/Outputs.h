@@ -105,10 +105,15 @@ enum EOutputs
 	OutputBoost,
 	OutputLampRed2,
 	OutputLampGreen2,
-	OutputLampBlue2
+	OutputLampBlue2,
+	OutputFFB,
+	OutputFFB1,
+	OutputFFB2,
+	OutputFFB3,
+	OutputFFB4
 };
 
-#define NUM_OUTPUTS 84
+#define NUM_OUTPUTS 89
 
 class COutputs
 {

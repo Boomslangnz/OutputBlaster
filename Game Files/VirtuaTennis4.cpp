@@ -15,15 +15,25 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #include "VirtuaTennis4.h"
 
-static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
+static int WindowsLoop()
 {
 	imageBase = (uintptr_t)GetModuleHandleA(0);
-	BYTE outputBase= *(BYTE *)(imageBase + 0x4057DC);
-	BYTE outputData1p = *(BYTE *)(outputBase + 0x44);
-	BYTE outputData2p = *(BYTE *)(outputBase + 0x48);
+	BYTE outputBase = *(BYTE*)(imageBase + 0x4057DC);
+	BYTE outputData1p = *(BYTE*)(outputBase + 0x44);
+	BYTE outputData2p = *(BYTE*)(outputBase + 0x48);
 
 	Outputs->SetValue(OutputLampStart, !!(outputData1p & 0x80));
 	Outputs->SetValue(Output2pLampStart, !!(outputData2p & 0x80));
+	return 0;
+}
+
+static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
+{
+	while (true)
+	{
+		WindowsLoop();
+		Sleep(16);
+	}
 }
 
 void VirtuaTennis4::OutputsGameLoop()
@@ -35,7 +45,7 @@ void VirtuaTennis4::OutputsGameLoop()
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
 		Outputs->Attached();
-		SetTimer(0, 0, Output_Time, (TIMERPROC)OutputsAreGo);
+		CreateThread(NULL, 0, OutputsAreGo, NULL, 0, NULL);
 		while (GetMessage(&Msg1, NULL, NULL, 0))
 		{
 			TranslateMessage(&Msg1);

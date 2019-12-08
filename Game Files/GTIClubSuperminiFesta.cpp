@@ -15,14 +15,15 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #include "GTIClubSuperminiFesta.h"
 
-static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
+static int WindowsLoop()
 {
-	BYTE actionlamp = *(BYTE *)(0xA7E794);
-	BYTE startlamp = *(BYTE *)(0xA7E790);
-	BYTE selectuplamp = *(BYTE *)(0xA7E7A0);
-	BYTE selectdownlamp = *(BYTE *)(0xA7E7A4);
-	BYTE selectleftlamp = *(BYTE *)(0xA7E798);
-	BYTE selectrightlamp = *(BYTE *)(0xA7E79C);
+	BYTE actionlamp = *(BYTE*)(0xA7E794);
+	BYTE startlamp = *(BYTE*)(0xA7E790);
+	BYTE selectuplamp = *(BYTE*)(0xA7E7A0);
+	BYTE selectdownlamp = *(BYTE*)(0xA7E7A4);
+	BYTE selectleftlamp = *(BYTE*)(0xA7E798);
+	BYTE selectrightlamp = *(BYTE*)(0xA7E79C); 
+	INT_PTR FFB = *(INT_PTR*)0x918CBC;
 
 	Outputs->SetValue(OutputLampAction, !!(actionlamp & 0x1F));
 	Outputs->SetValue(OutputLampStart, !!(startlamp & 0x1F));
@@ -30,6 +31,17 @@ static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTi
 	Outputs->SetValue(OutputLampSelectDown, (selectdownlamp / 31.0) * 100.0);
 	Outputs->SetValue(OutputLampSelectLeft, (selectleftlamp / 31.0) * 100.0);
 	Outputs->SetValue(OutputLampSelectRight, (selectrightlamp / 31.0) * 100.0);
+	Outputs->SetValue(OutputFFB, FFB);
+	return 0;
+}
+
+static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
+{
+	while (true)
+	{
+		WindowsLoop();
+		Sleep(16);
+	}
 }
 
 void GTIClubSuperminiFesta::OutputsGameLoop()
@@ -41,7 +53,7 @@ void GTIClubSuperminiFesta::OutputsGameLoop()
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
 		Outputs->Attached();
-		SetTimer(0, 0, Output_Time, (TIMERPROC)OutputsAreGo);
+		CreateThread(NULL, 0, OutputsAreGo, NULL, 0, NULL);
 		while (GetMessage(&Msg1, NULL, NULL, 0))
 		{
 			TranslateMessage(&Msg1);

@@ -15,11 +15,12 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #include "SegaRacingClassic.h"
 
-static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
+static int WindowsLoop()
 {
 	imageBase = (uintptr_t)GetModuleHandleA(0);
-	BYTE data = *(BYTE *)(imageBase + 0x434C18);
-	BYTE data2 = *(BYTE *)(imageBase + 0x50DBEA);
+	BYTE data = *(BYTE*)(imageBase + 0x434C18);
+	BYTE data2 = *(BYTE*)(imageBase + 0x50DBEA);
+	BYTE FFB = *(BYTE*)(0x834C19);
 
 	Outputs->SetValue(OutputLampStart, !!(data & 0x04));
 	Outputs->SetValue(OutputLampView1, !!(data & 0x08));
@@ -34,6 +35,17 @@ static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTi
 	Outputs->SetValue(OutputRearRed, !!(data2 & 0x08));
 	Outputs->SetValue(OutputRearGreen, !!(data2 & 0x10));
 	Outputs->SetValue(OutputRearBlue, !!(data2 & 0x20));
+	Outputs->SetValue(OutputFFB, FFB);
+	return 0;
+}
+
+static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
+{
+	while (true)
+	{
+		WindowsLoop();
+		Sleep(16);
+	}
 }
 
 void SegaRacingClassic::OutputsGameLoop()
@@ -45,12 +57,14 @@ void SegaRacingClassic::OutputsGameLoop()
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
 		Outputs->Attached();
-		SetTimer(0, 0, Output_Time, (TIMERPROC)OutputsAreGo);
-		while (GetMessage(&Msg1, NULL, NULL, 0))
-		{
-			TranslateMessage(&Msg1);
-			DispatchMessage(&Msg1);
-		}
+		CreateThread(NULL, 0, OutputsAreGo, NULL, 0, NULL);		
 		init = true;
 	}
+
+	while (GetMessage(&Msg1, NULL, NULL, 0))
+	{
+		TranslateMessage(&Msg1);
+		DispatchMessage(&Msg1);
+	}
+	
 }

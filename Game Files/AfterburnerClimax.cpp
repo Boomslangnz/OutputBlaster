@@ -15,15 +15,25 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #include "AfterburnerClimax.h"
 
-static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
+static int WindowsLoop()
 {
-	BYTE data = *(BYTE *)(0x8347A5E);
+	BYTE data = *(BYTE*)(0x8347A5E);
 
 	Outputs->SetValue(OutputLampStart, !!(data & 0x80));
-	Outputs->SetValue(OutputRawDrive, !!(data & 0x40));	
+	Outputs->SetValue(OutputRawDrive, !!(data & 0x40));
 	Outputs->SetValue(OutputLampRed, !!(data & 0x10));
 	Outputs->SetValue(OutputLampGreen, !!(data & 0x08));
 	Outputs->SetValue(OutputLampBlue, !!(data & 0x04));
+	return 0;
+}
+
+static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
+{
+	while (true)
+	{
+		WindowsLoop();
+		Sleep(16);
+	}
 }
 
 void AfterburnerClimax::OutputsGameLoop()
@@ -35,7 +45,7 @@ void AfterburnerClimax::OutputsGameLoop()
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
 		Outputs->Attached();
-		SetTimer(0, 0, Output_Time, (TIMERPROC)OutputsAreGo);
+		CreateThread(NULL, 0, OutputsAreGo, NULL, 0, NULL);
 		while (GetMessage(&Msg1, NULL, NULL, 0))
 		{
 			TranslateMessage(&Msg1);

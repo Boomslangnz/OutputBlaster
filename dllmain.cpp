@@ -24,7 +24,6 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/ChaseHQ2.h"
 #include "Game Files/DaytonaChampionshipUSA.h"
 #include "Game Files/GTIClubSuperminiFesta.h"
-#include "Game Files/HOTD4.h"
 #include "Game Files/InitialD4.h"
 #include "Game Files/InitialD5.h"
 #include "Game Files/InitialD6.h"
@@ -128,10 +127,10 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 			{
 				game = new AfterburnerClimax;
 			}
-			else if (*(uint32_t *)0x0832572E == 0xAAAA03C7)
-			{
-				game = new HOTD4;
-			}
+			//else if (*(uint32_t *)0x0832572E == 0xAAAA03C7)
+			//{
+			//	game = new HOTD4;
+			//}
 			else if (*(uint32_t*)0x804B850 == 0x82642C8)
 			{
 				game = new Outrun2SP;

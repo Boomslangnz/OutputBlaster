@@ -15,17 +15,19 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #include "WackyRaces.h"
 
-static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
+static int WindowsLoop()
 {
 	imageBase = (uintptr_t)GetModuleHandleA(0);
-	INT_PTR lampbase = *(INT_PTR *)(imageBase + 0x7E00590);
-	INT_PTR lamps = *(INT_PTR *)(lampbase + 0x45);
-	BYTE Seatlamp1 = *(BYTE *)(lampbase + 0x53);
-	BYTE Seatlamp2 = *(BYTE *)(lampbase + 0x51);
-	BYTE Seatlamp3 = *(BYTE *)(lampbase + 0x23);
-	BYTE Seatlamp4 = *(BYTE *)(lampbase + 0x4D);
-	BYTE Seatlamp5 = *(BYTE *)(lampbase + 0x1F);
-	BYTE Seatlamp6 = *(BYTE *)(lampbase + 0x49);
+	INT_PTR lampbase = *(INT_PTR*)(imageBase + 0x7E00590);
+	INT_PTR lamps = *(INT_PTR*)(lampbase + 0x45);
+	BYTE Seatlamp1 = *(BYTE*)(lampbase + 0x53);
+	BYTE Seatlamp2 = *(BYTE*)(lampbase + 0x51);
+	BYTE Seatlamp3 = *(BYTE*)(lampbase + 0x23);
+	BYTE Seatlamp4 = *(BYTE*)(lampbase + 0x4D);
+	BYTE Seatlamp5 = *(BYTE*)(lampbase + 0x1F);
+	BYTE Seatlamp6 = *(BYTE*)(lampbase + 0x49);
+	INT_PTR FFBBase = *(INT_PTR*)(imageBase + 0x7E00590);
+	BYTE FFB = *(BYTE*)FFBBase + 0x45;
 
 	Outputs->SetValue(OutputLampStart, !!(lamps & 0x80));
 	Outputs->SetValue(OutputLampView1, !!(lamps & 0x100));
@@ -40,6 +42,17 @@ static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTi
 	Outputs->SetValue(OutputSeat5Lamp, !!(Seatlamp5 & 0xFF));
 	Outputs->SetValue(OutputSeat6Lamp, !!(Seatlamp6 & 0xFF));
 	Outputs->SetValue(OutputSeat7Lamp, !!(lamps & 0x4000));
+	Outputs->SetValue(OutputFFB, FFB);
+	return 0;
+}
+
+static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
+{
+	while (true)
+	{
+		WindowsLoop();
+		Sleep(16);
+	}
 }
 
 void WackyRaces::OutputsGameLoop()
@@ -51,7 +64,7 @@ void WackyRaces::OutputsGameLoop()
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
 		Outputs->Attached();
-		SetTimer(0, 0, Output_Time, (TIMERPROC)OutputsAreGo);
+		CreateThread(NULL, 0, OutputsAreGo, NULL, 0, NULL);
 		while (GetMessage(&Msg1, NULL, NULL, 0))
 		{
 			TranslateMessage(&Msg1);

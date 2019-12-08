@@ -20,7 +20,6 @@ static GameOutput m_game;
 static COutputs  *Outputs;
 static uintptr_t imageBase;
 static MSG Msg1;
-static UINT Output_Time;
 
 static bool init = false;
 

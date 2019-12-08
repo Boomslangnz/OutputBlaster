@@ -15,11 +15,15 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #include "WMMT5.h"
 
-static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
+static int WindowsLoop()
 {
 	imageBase = (uintptr_t)GetModuleHandleA(0);
-	BYTE outputdata = *(BYTE *)(imageBase + 0x199F0CC);
-	BYTE outputdata2 = *(BYTE *)(imageBase + 0x199F0CD);
+	BYTE outputdata = *(BYTE*)(imageBase + 0x199F0CC);
+	BYTE outputdata2 = *(BYTE*)(imageBase + 0x199F0CD);
+	INT_PTR FFB1 = *(INT_PTR*)imageBase + 0x196F188;
+	INT_PTR FFB2 = *(INT_PTR*)imageBase + 0x196F18C;
+	INT_PTR FFB3 = *(INT_PTR*)imageBase + 0x196F190;
+	INT_PTR FFB4 = *(INT_PTR*)imageBase + 0x196F194;
 
 	Outputs->SetValue(OutputLampView1, !!(outputdata & 0x08));
 	Outputs->SetValue(OutputInterruption, !!(outputdata & 0x04));
@@ -35,6 +39,20 @@ static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTi
 		Outputs->SetValue(OutputLampWhite, 0x00);
 	}
 	Outputs->SetValue(OutputSideLamp, !!(outputdata2 & 0x10));
+	Outputs->SetValue(OutputFFB, FFB1);
+	Outputs->SetValue(OutputFFB, FFB2);
+	Outputs->SetValue(OutputFFB, FFB3);
+	Outputs->SetValue(OutputFFB, FFB4);
+	return 0;
+}
+
+static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
+{
+	while (true)
+	{
+		WindowsLoop();
+		Sleep(16);
+	}
 }
 
 void WMMT5::OutputsGameLoop()
@@ -46,7 +64,7 @@ void WMMT5::OutputsGameLoop()
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
 		Outputs->Attached();
-		SetTimer(0, 0, Output_Time, (TIMERPROC)OutputsAreGo);
+		CreateThread(NULL, 0, OutputsAreGo, NULL, 0, NULL);
 		while (GetMessage(&Msg1, NULL, NULL, 0))
 		{
 			TranslateMessage(&Msg1);

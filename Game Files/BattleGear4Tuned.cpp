@@ -38,9 +38,8 @@ int OutputValue(int output) {
 	}
 }
 
-
-static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
-{	
+static int WindowsLoop()
+{
 	int startvaluelamp = 0;
 	int viewvaluelamp = 0;
 	int hazardvaluelamp = 0;
@@ -48,15 +47,15 @@ static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTi
 	int redvaluelamp = 0;
 	int greenvaluelamp = 0;
 	int bluevaluelamp = 0;
-	BYTE startoutput = *(BYTE *)(0x82D95C);
-	BYTE viewoutput = *(BYTE *)(0x82D956);
-	BYTE hazardoutput = *(BYTE *)(0x82D958);
-	BYTE keyoutput = *(BYTE *)(0x82D95A);
-	BYTE onlineoutput = *(BYTE *)(0x82D966);
-	BYTE overrevoutput = *(BYTE *)(0x82D967);
-	BYTE redoutput = *(BYTE *)(0x82D95E);
-	BYTE greenoutput = *(BYTE *)(0x82D960);
-	BYTE blueoutput = *(BYTE *)(0x82D962);
+	BYTE startoutput = *(BYTE*)(0x82D95C);
+	BYTE viewoutput = *(BYTE*)(0x82D956);
+	BYTE hazardoutput = *(BYTE*)(0x82D958);
+	BYTE keyoutput = *(BYTE*)(0x82D95A);
+	BYTE onlineoutput = *(BYTE*)(0x82D966);
+	BYTE overrevoutput = *(BYTE*)(0x82D967);
+	BYTE redoutput = *(BYTE*)(0x82D95E);
+	BYTE greenoutput = *(BYTE*)(0x82D960);
+	BYTE blueoutput = *(BYTE*)(0x82D962);
 	startvaluelamp = OutputValue(startoutput);
 	viewvaluelamp = OutputValue(viewoutput);
 	hazardvaluelamp = OutputValue(hazardoutput);
@@ -66,7 +65,7 @@ static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTi
 	bluevaluelamp = OutputValue(blueoutput);
 
 	//Max Value 100 on everything except Online & OverRev
-	Outputs->SetValue(OutputLampStart, (startvaluelamp / 8.0) * 100.0); 
+	Outputs->SetValue(OutputLampStart, (startvaluelamp / 8.0) * 100.0);
 	Outputs->SetValue(OutputLampView1, (viewvaluelamp / 8.0) * 100.0);
 	Outputs->SetValue(OutputLampHazard, (hazardvaluelamp / 8.0) * 100.0);
 	Outputs->SetValue(OutputLampKey, (keyvaluelamp / 8.0) * 100.0);
@@ -79,6 +78,16 @@ static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTi
 	Outputs->SetValue(OutputLampCyan, ((greenvaluelamp & bluevaluelamp) / 8.0) * 100.0);
 	Outputs->SetValue(OutputLampMagneta, ((bluevaluelamp & redvaluelamp) / 8.0) * 100.0);
 	Outputs->SetValue(OutputLampWhite, ((bluevaluelamp & greenvaluelamp & redvaluelamp) / 8.0) * 100.0);
+	return 0;
+}
+
+static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
+{
+	while (true)
+	{
+		WindowsLoop();
+		Sleep(16);
+	}
 }
 
 void BattleGear4Tuned::OutputsGameLoop()
@@ -90,7 +99,7 @@ void BattleGear4Tuned::OutputsGameLoop()
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
 		Outputs->Attached();
-		SetTimer(0, 0, Output_Time, (TIMERPROC)OutputsAreGo);
+		CreateThread(NULL, 0, OutputsAreGo, NULL, 0, NULL);
 		while (GetMessage(&Msg1, NULL, NULL, 0))
 		{
 			TranslateMessage(&Msg1);

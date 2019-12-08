@@ -15,11 +15,11 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #include "LGI.h"
 
-static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
+static int WindowsLoop()
 {
 	imageBase = (uintptr_t)GetModuleHandleA(0);
-	BYTE outputBase = *(BYTE *)(imageBase + 0x63BF5C);
-	BYTE outputData = *(BYTE *)(outputBase + 0x44);
+	BYTE outputBase = *(BYTE*)(imageBase + 0x63BF5C);
+	BYTE outputData = *(BYTE*)(outputBase + 0x44);
 
 	Outputs->SetValue(OutputLampStart, !!(outputData & 0x80));
 	Outputs->SetValue(Output1pKnock, !!(outputData & 0x20));
@@ -28,6 +28,16 @@ static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTi
 	Outputs->SetValue(Output2pMotor, !!(outputData & 0x08));
 	Outputs->SetValue(Output2pLampStart, !!(outputData & 0x10));
 	Outputs->SetValue(OutputRawLamps, outputData);
+	return 0;
+}
+
+static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
+{
+	while (true)
+	{
+		WindowsLoop();
+		Sleep(16);
+	}
 }
 
 void LGI::OutputsGameLoop()
@@ -39,7 +49,7 @@ void LGI::OutputsGameLoop()
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
 		Outputs->Attached();
-		SetTimer(0, 0, Output_Time, (TIMERPROC)OutputsAreGo);
+		CreateThread(NULL, 0, OutputsAreGo, NULL, 0, NULL);
 		while (GetMessage(&Msg1, NULL, NULL, 0))
 		{
 			TranslateMessage(&Msg1);

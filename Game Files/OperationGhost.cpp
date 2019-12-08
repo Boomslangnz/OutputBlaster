@@ -15,10 +15,10 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #include "OperationGhost.h"
 
-static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
+static int WindowsLoop()
 {
 	imageBase = (uintptr_t)GetModuleHandleA(0);
-	BYTE OutputData = *(BYTE *)(imageBase + 0x246428);
+	BYTE OutputData = *(BYTE*)(imageBase + 0x246428);
 
 	Outputs->SetValue(OutputLampStart, !!(OutputData & 0x80));
 	Outputs->SetValue(Output1pRecoil, !!(OutputData & 0x40));
@@ -27,6 +27,16 @@ static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTi
 	Outputs->SetValue(Output2pRecoil, !!(OutputData & 0x08));
 	Outputs->SetValue(Output2pHolderLamp, !!(OutputData & 0x01));
 	Outputs->SetValue(OutputBillboardLamp, !!(OutputData & 0x20));
+	return 0;
+}
+
+static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
+{
+	while (true)
+	{
+		WindowsLoop();
+		Sleep(16);
+	}
 }
 
 void OperationGhost::OutputsGameLoop()
@@ -38,7 +48,7 @@ void OperationGhost::OutputsGameLoop()
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
 		Outputs->Attached();
-		SetTimer(0, 0, Output_Time, (TIMERPROC)OutputsAreGo);
+		CreateThread(NULL, 0, OutputsAreGo, NULL, 0, NULL);
 		while (GetMessage(&Msg1, NULL, NULL, 0))
 		{
 			TranslateMessage(&Msg1);

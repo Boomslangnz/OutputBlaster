@@ -15,18 +15,18 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #include "Machstorm.h"
 
-static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
+static int WindowsLoop()
 {
 	imageBase = (uintptr_t)GetModuleHandleA(0);
-	BYTE VibrationData = *(BYTE *)(imageBase + 0x6390E9);
-	BYTE PowerData = *(BYTE *)(imageBase + 0x639109);
-	BYTE LEDRearCoverData1 = *(BYTE *)(imageBase + 0x6390EB);
-	BYTE LEDRearCoverData2 = *(BYTE *)(imageBase + 0x6390EC);
-	BYTE LEDRearCoverData3 = *(BYTE *)(imageBase + 0x6390ED);
-	BYTE ColourRed = *(BYTE *)(imageBase + 0x639108);
-	BYTE ColourGreenBlue = *(BYTE *)(imageBase + 0x63910B);
+	BYTE VibrationData = *(BYTE*)(imageBase + 0x6390E9);
+	BYTE PowerData = *(BYTE*)(imageBase + 0x639109);
+	BYTE LEDRearCoverData1 = *(BYTE*)(imageBase + 0x6390EB);
+	BYTE LEDRearCoverData2 = *(BYTE*)(imageBase + 0x6390EC);
+	BYTE LEDRearCoverData3 = *(BYTE*)(imageBase + 0x6390ED);
+	BYTE ColourRed = *(BYTE*)(imageBase + 0x639108);
+	BYTE ColourGreenBlue = *(BYTE*)(imageBase + 0x63910B);
 
-	Outputs->SetValue(OutputVibration, !!(VibrationData & 0x01));	
+	Outputs->SetValue(OutputVibration, !!(VibrationData & 0x01));
 	Outputs->SetValue(OutputRearCover, !!((LEDRearCoverData1 & LEDRearCoverData2 & LEDRearCoverData3) & 0x01));
 	Outputs->SetValue(OutputLampRed, ColourRed);
 
@@ -39,11 +39,11 @@ static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTi
 		Outputs->SetValue(OutputPower, PowerData - 101);
 	}
 
-	if (ColourGreenBlue == 0) 
+	if (ColourGreenBlue == 0)
 	{
-	Outputs->SetValue(OutputLampGreen, 0);
-	Outputs->SetValue(OutputLampBlue, 0);
-	Outputs->SetValue(OutputLampWhite, 0);
+		Outputs->SetValue(OutputLampGreen, 0);
+		Outputs->SetValue(OutputLampBlue, 0);
+		Outputs->SetValue(OutputLampWhite, 0);
 	}
 	else if ((ColourGreenBlue > 0) && (ColourGreenBlue < 16))
 	{
@@ -146,7 +146,17 @@ static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTi
 			Outputs->SetValue(OutputLampGreen, ColourGreenBlue - 240);
 			Outputs->SetValue(OutputLampBlue, 15);
 			Outputs->SetValue(OutputLampWhite, 0);
-		}		
+		}
+	}
+	return 0;
+}
+
+static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
+{
+	while (true)
+	{
+		WindowsLoop();
+		Sleep(16);
 	}
 }
 
@@ -159,7 +169,7 @@ void Machstorm::OutputsGameLoop()
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
 		Outputs->Attached();
-		SetTimer(0, 0, Output_Time, (TIMERPROC)OutputsAreGo);
+		CreateThread(NULL, 0, OutputsAreGo, NULL, 0, NULL);
 		while (GetMessage(&Msg1, NULL, NULL, 0))
 		{
 			TranslateMessage(&Msg1);

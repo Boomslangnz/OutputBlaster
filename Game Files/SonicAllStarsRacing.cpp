@@ -15,11 +15,15 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #include "SonicAllStarsRacing.h"
 
-static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
+static int WindowsLoop()
 {
 	imageBase = (uintptr_t)GetModuleHandleA(0);
-	BYTE data = *(BYTE *)(imageBase + 0x813708);
-	BYTE data2 = *(BYTE *)(imageBase + 0x813709);
+	BYTE data = *(BYTE*)(imageBase + 0x813708);
+	BYTE data2 = *(BYTE*)(imageBase + 0x813709);
+	BYTE FFB = *(BYTE*)(imageBase + 0x5CD864);
+
+	//Enable FFB
+	*(BYTE*)(imageBase + 0x5CD858) = 0x03;
 
 	Outputs->SetValue(OutputLampStart, !!(data & 0x80));
 	Outputs->SetValue(OutputLampLeader, !!(data & 0x40));
@@ -35,6 +39,17 @@ static VOID CALLBACK OutputsAreGo(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTi
 	Outputs->SetValue(OutputItemRed, !!(data & 0x08));
 	Outputs->SetValue(OutputItemGreen, !!(data & 0x20));
 	Outputs->SetValue(OutputItemBlue, !!(data & 0x04));
+	Outputs->SetValue(OutputFFB, FFB);
+	return 0;
+}
+
+static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
+{
+	while (true)
+	{
+		WindowsLoop();
+		Sleep(16);
+	}
 }
 
 void SonicAllStarsRacing::OutputsGameLoop()
@@ -46,7 +61,7 @@ void SonicAllStarsRacing::OutputsGameLoop()
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
 		Outputs->Attached();
-		SetTimer(0, 0, Output_Time, (TIMERPROC)OutputsAreGo);
+		CreateThread(NULL, 0, OutputsAreGo, NULL, 0, NULL);
 		while (GetMessage(&Msg1, NULL, NULL, 0))
 		{
 			TranslateMessage(&Msg1);
