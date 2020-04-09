@@ -39,7 +39,7 @@ void Outrun2SP::OutputsGameLoop()
 {
 	if (!init)
 	{
-		Outputs = new CWinOutputs();
+		Outputs = CreateOutputsFromConfig();
 		m_game.name = "Outrun 2 Special Tours";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();

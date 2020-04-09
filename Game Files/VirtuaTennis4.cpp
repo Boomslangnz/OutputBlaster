@@ -40,7 +40,7 @@ void VirtuaTennis4::OutputsGameLoop()
 {
 	if (!init)
 	{
-		Outputs = new CWinOutputs();
+		Outputs = CreateOutputsFromConfig();
 		m_game.name = "Virtua Tennis 4";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();

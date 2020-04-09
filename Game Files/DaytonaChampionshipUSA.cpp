@@ -47,7 +47,7 @@ void DaytonaChampionshipUSA::OutputsGameLoop()
 {
 	if (!init)
 	{
-		Outputs = new CWinOutputs();
+		Outputs = CreateOutputsFromConfig();
 		m_game.name = "Daytona Championship USA";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();

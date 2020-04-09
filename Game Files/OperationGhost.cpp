@@ -43,7 +43,7 @@ void OperationGhost::OutputsGameLoop()
 {
 	if (!init)
 	{
-		Outputs = new CWinOutputs();
+		Outputs = CreateOutputsFromConfig();
 		m_game.name = "Operation G.H.O.S.T";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();

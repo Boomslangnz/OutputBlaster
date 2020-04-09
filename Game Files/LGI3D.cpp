@@ -50,7 +50,7 @@ void LGI3D::OutputsGameLoop()
 {
 	if (!init)
 	{
-		Outputs = new CWinOutputs();
+		Outputs = CreateOutputsFromConfig();
 		m_game.name = "Let's Go Island 3D";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();

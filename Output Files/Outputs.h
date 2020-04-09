@@ -16,6 +16,8 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #ifndef INCLUDED_OUTPUTS_H
 #define INCLUDED_OUTPUTS_H
 #include "GameOutput.h"
+#include <windows.h>
+
 /*
  * EOutputs enumeration of all available outputs.
  */
@@ -110,10 +112,21 @@ enum EOutputs
 	OutputFFB1,
 	OutputFFB2,
 	OutputFFB3,
-	OutputFFB4
+	OutputFFB4,
+	OutputAmmo1pA,
+	OutputAmmo1pB,
+	OutputAmmo2pA,
+	OutputAmmo2pB,
+	OutputFlame1pBool,
+	OutputFlame2pBool,
+	OutputHealth1pBool,
+	OutputHealth2pBool,
+	OutputShoot1p,
+	OutputShoot2p,
+	NUM_OUTPUTS
 };
 
-#define NUM_OUTPUTS 89
+#define NUM_OUTPUTS (EOutputs::NUM_OUTPUTS)
 
 class COutputs
 {
@@ -181,6 +194,14 @@ public:
 	 * Sets the current value of the given output.
 	 */
 	void SetValue(EOutputs output, UINT8 value);
+
+	/* 
+	 * HasValue(EOutputs output)
+	 *
+	 * Returns if the value has been set at least once, 
+	 * meaning it is used by the game.
+	 */
+	bool HasValue(EOutputs output);
 
 protected:
 	/*

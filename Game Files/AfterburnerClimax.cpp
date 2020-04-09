@@ -40,7 +40,7 @@ void AfterburnerClimax::OutputsGameLoop()
 {	
 	if (!init)
 	{
-		Outputs = new CWinOutputs();
+		Outputs = CreateOutputsFromConfig();
 		m_game.name = "Afterburner Climax";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();

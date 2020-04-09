@@ -14,7 +14,8 @@ You should have received a copy of the GNU General Public License
 along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #pragma once
-#include "WinOutputs.h"
+#include "Outputs.h"
+
 const char *COutputs::s_outputNames[] =
 {
 	"pause",
@@ -105,7 +106,17 @@ const char *COutputs::s_outputNames[] =
 	"FFB1",
 	"FFB2",
 	"FFB3",
-	"FFB4"
+	"FFB4",
+	"Ammo1pA",
+	"Ammo1pB",
+	"Ammo2pA",
+	"Ammo2pB",
+	"Flame1pBool",
+	"Flame2pBool",
+	"Health1pBool",
+	"Health2pBool",
+	"Shoot1p",
+	"Shoot2p",
 };
 
 const char *COutputs::GetOutputName(EOutputs output)
@@ -167,3 +178,12 @@ void COutputs::SetValue(EOutputs output, UINT8 value)
 	if (firstSet || value != prevValue)
 		SendOutput(output, prevValue, value);
 }
+
+bool COutputs::HasValue(EOutputs output) 
+{
+	int idx = (unsigned)output;
+	if (idx < 0 || idx >= NUM_OUTPUTS)
+		return false;
+	return !m_first[output]; 
+}
+

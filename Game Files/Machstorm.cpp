@@ -164,7 +164,7 @@ void Machstorm::OutputsGameLoop()
 {
 	if (!init)
 	{
-		Outputs = new CWinOutputs();
+		Outputs = CreateOutputsFromConfig();
 		m_game.name = "Machstorm";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();

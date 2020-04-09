@@ -173,10 +173,8 @@ LRESULT CWinOutputs::RegisterClient(HWND hwnd, LPARAM id)
 	RegisteredClient client;
 	client.id = id;
 	client.hwnd = hwnd;
-	for (unsigned i = 0; i < NUM_OUTPUTS; i++)
-	{
-		m_clients.push_back(client);
-	}
+	m_clients.push_back(client);
+	SendAllToClient(client);
 	
 	return 0;
 }
@@ -187,8 +185,10 @@ void CWinOutputs::SendAllToClient(RegisteredClient &client)
 	for (unsigned i = 0; i < NUM_OUTPUTS; i++)
 	{
 		EOutputs output = (EOutputs)i;
-		LPARAM param = (LPARAM)output + 1;
-		PostMessage(client.hwnd, m_updateState, param, GetValue(output));
+		if (HasValue(output)) {
+			LPARAM param = (LPARAM)output + 1;
+			PostMessage(client.hwnd, m_updateState, param, GetValue(output));
+		}
 	}
 }
 
@@ -210,7 +210,6 @@ LRESULT CWinOutputs::UnregisterClient(HWND hwnd, LPARAM id)
 
 	// Return error if no matches found
 	return (found ? 0 : 1);
-	return 0;
 }
 
 LRESULT CWinOutputs::SendIdString(HWND hwnd, LPARAM id)
