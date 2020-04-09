@@ -42,6 +42,11 @@ struct RegisteredClientTcp
 class CNetOutputs : public COutputs
 {
 public:
+	int TcpPort = 8000;
+	int UdpBroadcastPort = 8001;
+	std::string SeparatorIdAndValue = std::string(" = ");
+	std::string FrameEnding = std::string("\r"); // Can also be "\r\n"
+
 	/*
 	 * CWinOutputs():
 	 * ~CWinOutputs():
@@ -74,10 +79,6 @@ protected:
 	void SendOutput(EOutputs output, UINT8 prevValue, UINT8 value);
 
 private:
-	int TcpPort = 8000;
-	int UdpBroadcastPort = 8001;
-	std::string SeparatorIdAndValue = std::string(" = ");
-	std::string FrameEnding = std::string("\r");
 	bool s_createdClass = false;
 
 	/*

@@ -153,9 +153,16 @@ void Game::OutputsGameLoop()
 COutputs* Game::CreateOutputsFromConfig()
 {
 	switch (configOutputSystem) {
-		case 1:
-			return new CNetOutputs();
-			break;
+		case 1: {
+			auto outputs = new CNetOutputs();
+			// TCP and UDP port from .ini
+			outputs->TcpPort = configNetTCPPort;
+			outputs->UdpBroadcastPort = configNetUDPBroadcastPort;
+			if (configNetOutputWithLF==1) {
+				outputs->FrameEnding = std::string("\r\n");
+			}
+			return (COutputs*)outputs;
+		} break;
 		case 0:
 		default:
 			return new CWinOutputs();

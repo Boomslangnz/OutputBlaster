@@ -19,14 +19,10 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include <atlbase.h>
 #include <iostream>
 #include "NetOutputs.h"
-#include "../Common Files/Game.h"
 
 
 CNetOutputs::CNetOutputs()
 {
-    // TCP and UDP port from .ini
-    TcpPort = configNetTCPPort;
-    UdpBroadcastPort = configNetUDPBroadcastPort;
 }
 
 CNetOutputs::~CNetOutputs()
@@ -42,9 +38,6 @@ CNetOutputs::~CNetOutputs()
 
 bool CNetOutputs::Initialize()
 {
-    if (configNetOutputWithLF==1) {
-        FrameEnding = std::string("\r\n");
-    }
     // Create TCP server
     if (CreateTcpServerSocket() != 0) {
         MessageBoxA(NULL, "Unable to start server thread for tcp outputs", NULL, NULL);
