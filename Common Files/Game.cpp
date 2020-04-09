@@ -25,10 +25,10 @@ Helpers * helpers = new Helpers();
 
 static wchar_t* settingsFilename = TEXT(".\\OutputBlaster.ini");
 int configGameId = GetPrivateProfileInt(TEXT("Settings"), TEXT("GameId"), -1, settingsFilename);
-int configOutputSystem = GetPrivateProfileInt(TEXT("Settings"), TEXT("OutputSystem"), 0, settingsFilename);
-int configNetOutputWithLF = GetPrivateProfileInt(TEXT("Settings"), TEXT("NetOutputWithLF"), 0, settingsFilename);
-int configNetTCPPort = GetPrivateProfileInt(TEXT("Settings"), TEXT("NetTCPPort"), 8000, settingsFilename);
-int configNetUDPBroadcastPort = GetPrivateProfileInt(TEXT("Settings"), TEXT("NetUDPBroadcastPort"), 8001, settingsFilename);
+int configOutputsSystem = GetPrivateProfileInt(TEXT("Settings"), TEXT("OutputsSystem"), 0, settingsFilename);
+int configNetOutputsWithLF = GetPrivateProfileInt(TEXT("Settings"), TEXT("NetOutputsWithLF"), 0, settingsFilename);
+int configNetOutputsTCPPort = GetPrivateProfileInt(TEXT("Settings"), TEXT("NetOutputsTCPPort"), 8000, settingsFilename);
+int configNetOutputsUDPBroadcastPort = GetPrivateProfileInt(TEXT("Settings"), TEXT("NetOutputsUDPBroadcastPort"), 8001, settingsFilename);
 
 
 
@@ -152,13 +152,13 @@ void Game::OutputsGameLoop()
 
 COutputs* Game::CreateOutputsFromConfig()
 {
-	switch (configOutputSystem) {
+	switch (configOutputsSystem) {
 		case 1: {
 			auto outputs = new CNetOutputs();
 			// TCP and UDP port from .ini
-			outputs->TcpPort = configNetTCPPort;
-			outputs->UdpBroadcastPort = configNetUDPBroadcastPort;
-			if (configNetOutputWithLF==1) {
+			outputs->TcpPort = configNetOutputsTCPPort;
+			outputs->UdpBroadcastPort = configNetOutputsUDPBroadcastPort;
+			if (configNetOutputsWithLF==1) {
 				outputs->FrameEnding = std::string("\r\n");
 			}
 			return (COutputs*)outputs;
