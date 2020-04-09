@@ -25,7 +25,10 @@ Helpers * helpers = new Helpers();
 
 static wchar_t* settingsFilename = TEXT(".\\OutputBlaster.ini");
 int configGameId = GetPrivateProfileInt(TEXT("Settings"), TEXT("GameId"), -1, settingsFilename);
-int configOutputSystem = GetPrivateProfileInt(TEXT("Settings"), TEXT("Outputsystem"), 0, settingsFilename);
+int configOutputSystem = GetPrivateProfileInt(TEXT("Settings"), TEXT("OutputSystem"), 0, settingsFilename);
+int configNetOutputWithLF = GetPrivateProfileInt(TEXT("Settings"), TEXT("NetOutputWithLF"), 0, settingsFilename);
+int configNetTCPPort = GetPrivateProfileInt(TEXT("Settings"), TEXT("NetTCPPort"), 8000, settingsFilename);
+int configNetUDPBroadcastPort = GetPrivateProfileInt(TEXT("Settings"), TEXT("NetUDPBroadcastPort"), 8001, settingsFilename);
 
 
 

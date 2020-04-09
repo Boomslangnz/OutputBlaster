@@ -26,6 +26,9 @@ static MSG Msg1;
 // From .ini
 extern int configGameId;
 extern int configOutputSystem;
+extern int configNetOutputWithLF;
+extern int configNetTCPPort;
+extern int configNetUDPBroadcastPort;
 
 static bool init = false;
 

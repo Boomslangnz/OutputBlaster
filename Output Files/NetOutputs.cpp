@@ -19,11 +19,14 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include <atlbase.h>
 #include <iostream>
 #include "NetOutputs.h"
+#include "../Common Files/Game.h"
 
 
 CNetOutputs::CNetOutputs()
 {
-    //
+    // TCP and UDP port from .ini
+    TcpPort = configNetTCPPort;
+    UdpBroadcastPort = configNetUDPBroadcastPort;
 }
 
 CNetOutputs::~CNetOutputs()
@@ -39,6 +42,9 @@ CNetOutputs::~CNetOutputs()
 
 bool CNetOutputs::Initialize()
 {
+    if (configNetOutputWithLF==1) {
+        FrameEnding = std::string("\r\n");
+    }
     // Create TCP server
     if (CreateTcpServerSocket() != 0) {
         MessageBoxA(NULL, "Unable to start server thread for tcp outputs", NULL, NULL);
@@ -74,7 +80,7 @@ void CNetOutputs::SendOutput(EOutputs output, UINT8 prevValue, UINT8 value)
 
         std::string name = GetOutputName(output);
         std::string strvalue = std::to_string(value);
-        std::string line = name + std::string("=") + strvalue + std::string("\r\n");
+        std::string line = name + SeparatorIdAndValue + strvalue + FrameEnding;
         send(csock, line.c_str(), line.length(), 0);
     }
 
@@ -174,7 +180,7 @@ LRESULT CNetOutputs::SendUdpBroadcastWithId()
     Sender_addr.sin_port = htons(UdpBroadcastPort);
     Sender_addr.sin_addr.s_addr = inet_addr("255.255.255.255");
 
-    std::string lines = "mame_start = " + GetGame().name + "\r\ntcp = " + std::to_string(TcpPort) + "\r\n";
+    std::string lines = "mame_start" + SeparatorIdAndValue + GetGame().name + FrameEnding + "tcp" + SeparatorIdAndValue + std::to_string(TcpPort) + FrameEnding;
     if (sendto(sock, lines.c_str(), lines.length(), 0, (sockaddr*)&Sender_addr, sizeof(Sender_addr)) != lines.length()) {
         perror("broadcast send");
         closesocket(sock);
@@ -227,7 +233,7 @@ void CNetOutputs::SendAllToClient(RegisteredClientTcp& client)
         if (HasValue(output)) {
             std::string name = GetOutputName(output);
             std::string strvalue = std::to_string(GetValue(output));
-            std::string line = name + std::string(" = ") + strvalue + std::string("\r\n");
+            std::string line = name + SeparatorIdAndValue + strvalue + FrameEnding;
             send(client.ClientSocket, line.c_str(), line.length(), 0);
         }
     }
@@ -240,11 +246,13 @@ LRESULT CNetOutputs::UnregisterClient(SOCKET socket)
     vector<RegisteredClientTcp>::iterator it = m_clients.begin();
     while (it != m_clients.end()) {
         if (it->ClientSocket == socket) {
+            SendStopString(*it, true);
             it = m_clients.erase(it);
             found = true;
             closesocket(it->ClientSocket);
-        } else
+        } else {
             it++;
+        }
     }
 
     // Return error if no matches found
@@ -255,19 +263,19 @@ LRESULT CNetOutputs::UnregisterClient(SOCKET socket)
 LRESULT CNetOutputs::SendGameIdString(RegisteredClientTcp& client)
 {
     // Id 0 is the name of the game
-    std::string line = "mame_start = " + GetGame().name + "\r\n";
+    std::string line = "mame_start" + SeparatorIdAndValue + GetGame().name + FrameEnding;
     return send(client.ClientSocket, line.c_str(), line.length(), 0);
 }
 LRESULT CNetOutputs::SendStopString(RegisteredClientTcp& client, bool stopped)
 {
     // Id 0 is the name of the game
-    std::string line = "mame_stop = 1" + std::string((stopped ? "1" : "0")) + "\r\n";
+    std::string line = "mame_stop" + SeparatorIdAndValue + std::string((stopped ? "1" : "0")) + FrameEnding;
     return send(client.ClientSocket, line.c_str(), line.length(), 0);
 }
 LRESULT CNetOutputs::SendPauseString(RegisteredClientTcp& client, bool paused)
 {
     // Id 0 is the name of the game
-    std::string line = "pause = " + std::string((paused ? "1" : "0")) + "\r\n";
+    std::string line = "pause" + SeparatorIdAndValue + std::string((paused ? "1" : "0")) + FrameEnding;
     return send(client.ClientSocket, line.c_str(), line.length(), 0);
 }
 LRESULT CNetOutputs::SendValueIdString(RegisteredClientTcp& client, EOutputs output)
@@ -275,7 +283,7 @@ LRESULT CNetOutputs::SendValueIdString(RegisteredClientTcp& client, EOutputs out
     // Id 0 is the name of the game
     std::string  name = GetOutputName(output);
 
-    std::string line = "id:" + name + "\r\n";
+    std::string line = "id:" + name + FrameEnding;
     return send(client.ClientSocket, line.c_str(), line.length(), 0);
 }
 

@@ -74,9 +74,10 @@ protected:
 	void SendOutput(EOutputs output, UINT8 prevValue, UINT8 value);
 
 private:
-	const int TcpPort = 8000;
-	const int UdpBroadcastPort = 8001;
-
+	int TcpPort = 8000;
+	int UdpBroadcastPort = 8001;
+	std::string SeparatorIdAndValue = std::string(" = ");
+	std::string FrameEnding = std::string("\r");
 	bool s_createdClass = false;
 
 	/*
