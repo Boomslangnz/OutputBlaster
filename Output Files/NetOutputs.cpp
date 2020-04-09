@@ -227,7 +227,7 @@ void CNetOutputs::SendAllToClient(RegisteredClientTcp& client)
         if (HasValue(output)) {
             std::string name = GetOutputName(output);
             std::string strvalue = std::to_string(GetValue(output));
-            std::string line = name + std::string("=") + strvalue + std::string("\r\n");
+            std::string line = name + std::string(" = ") + strvalue + std::string("\r\n");
             send(client.ClientSocket, line.c_str(), line.length(), 0);
         }
     }
