@@ -68,7 +68,7 @@ void  ChaseHQ2::OutputsGameLoop()
 {
 	if (!init)
 	{
-		Outputs = new CWinOutputs();
+		Outputs = CreateOutputsFromConfig();
 		m_game.name = "ChaseHQ2";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();

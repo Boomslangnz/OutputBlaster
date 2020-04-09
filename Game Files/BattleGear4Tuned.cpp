@@ -94,7 +94,7 @@ void BattleGear4Tuned::OutputsGameLoop()
 {
 	if (!init)
 	{
-		Outputs = new CWinOutputs();
+		Outputs = CreateOutputsFromConfig();
 		m_game.name = "Battle Gear 4 Tuned";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();

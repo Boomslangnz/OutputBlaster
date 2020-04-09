@@ -59,7 +59,7 @@ void WackyRaces::OutputsGameLoop()
 {
 	if (!init)
 	{
-		Outputs = new CWinOutputs();
+		Outputs = CreateOutputsFromConfig();
 		m_game.name = "Wacky Races";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();

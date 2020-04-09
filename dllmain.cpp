@@ -20,6 +20,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 //Game headers go here
 #include "Game Files/AfterburnerClimax.h"
+#include "Game Files/AliensExtermination.h"
 #include "Game Files/BattleGear4Tuned.h"
 #include "Game Files/ChaseHQ2.h"
 #include "Game Files/DaytonaChampionshipUSA.h"
@@ -111,6 +112,9 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 			break;
 		case 0x185fd019:
 			game = new WackyRaces;
+			break;
+		case 0xCAFEBABE: // Don't know how to get it!
+			game = new AliensExtermination;
 			break;
 		}
 

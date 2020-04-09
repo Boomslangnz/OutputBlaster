@@ -54,7 +54,7 @@ void SRTV::OutputsGameLoop()
 {
 	if (!init)
 	{
-		Outputs = new CWinOutputs();
+		Outputs = CreateOutputsFromConfig();
 		m_game.name = "Sega Race TV";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
