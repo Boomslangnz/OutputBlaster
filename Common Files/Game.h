@@ -23,6 +23,10 @@ static COutputs* Outputs;
 static uintptr_t imageBase;
 static MSG Msg1;
 
+// From .ini
+extern int configGameId;
+extern int configOutputSystem;
+
 static bool init = false;
 
 class Helpers {

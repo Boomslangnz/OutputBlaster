@@ -24,7 +24,8 @@ typedef unsigned char U8;
 Helpers * helpers = new Helpers();
 
 static wchar_t* settingsFilename = TEXT(".\\OutputBlaster.ini");
-static int UseNetOutputSystem = GetPrivateProfileInt(TEXT("Settings"), TEXT("Network"), 0, settingsFilename);
+int configGameId = GetPrivateProfileInt(TEXT("Settings"), TEXT("GameId"), -1, settingsFilename);
+int configOutputSystem = GetPrivateProfileInt(TEXT("Settings"), TEXT("Outputsystem"), 0, settingsFilename);
 
 
 
@@ -148,7 +149,7 @@ void Game::OutputsGameLoop()
 
 COutputs* Game::CreateOutputsFromConfig()
 {
-	switch (UseNetOutputSystem) {
+	switch (configOutputSystem) {
 		case 1:
 			return new CNetOutputs();
 			break;

@@ -46,8 +46,22 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 Game* game;
 bool OutputsRunning = true;
 
+
 DWORD WINAPI OutputsLoop(LPVOID lpParam)
-{		
+{
+	if (configGameId>=0) {
+		switch (configGameId) {
+			case 36: // Don't know how to get CRC32 without the game running!
+				game = new AliensExtermination;
+				break;
+		}
+		if (game!=0) {
+			game->OutputsGameLoop();
+			Sleep(16);
+		}
+	}
+
+
 	auto moduleBase = (uintptr_t)GetModuleHandle(nullptr);
 	if (*(uint32_t*)(moduleBase + 0x2182) == 0xE995C969)
 	{
@@ -112,9 +126,6 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 			break;
 		case 0x185fd019:
 			game = new WackyRaces;
-			break;
-		case 0xCAFEBABE: // Don't know how to get it!
-			game = new AliensExtermination;
 			break;
 		}
 
