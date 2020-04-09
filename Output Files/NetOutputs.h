@@ -132,29 +132,31 @@ private:
 	 */
 	LRESULT UnregisterClient(SOCKET hwnd);
 
-	LRESULT SendStarIdtString(RegisteredClientTcp& client);
+	/*
+	 * SendGameIdString(hwnd, id):
+	 *
+	 * Sends the name of the current running game.
+	 */
+	LRESULT SendGameIdString(RegisteredClientTcp& client);
+	/*
+	 * SendStopString(hwnd, id):
+	 *
+	 * Sends the mame stops message
+	 */
 	LRESULT SendStopString(RegisteredClientTcp& client, bool stopped);
+	/*
+	 * SendPauseString(hwnd, id):
+	 *
+	 * Sends the name of the current running game.
+	 */
 	LRESULT SendPauseString(RegisteredClientTcp& client, bool paused);
 
 	/*
-	 * SendIdString(hwnd, id):
+	 * SendValueIdString(hwnd, id):
 	 *
 	 * Sends the name of the requested output back to a client, or the name of the current running game if an id of zero is requested.
 	 */
-	LRESULT SendIdString(RegisteredClientTcp& client, LPARAM id);
+	LRESULT SendValueIdString(RegisteredClientTcp& client, EOutputs output);
 
-	/*
-	 * MapIdToName(id):
-	 *
-	 * Maps the given id to an output's name.
-	 */
-	const char *MapIdToName(LPARAM id);
-
-	/*
-	 * MapNameToId(name):
-	 *
-	 * Maps the given name to an output's id.
-	 */
-	LPARAM MapNameToId(const char *name);
 };
 

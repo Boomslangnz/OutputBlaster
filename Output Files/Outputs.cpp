@@ -106,7 +106,17 @@ const char *COutputs::s_outputNames[] =
 	"FFB1",
 	"FFB2",
 	"FFB3",
-	"FFB4"
+	"FFB4",
+	"Ammo1pA",
+	"Ammo1pB",
+	"Ammo2pA",
+	"Ammo2pB",
+	"Flame1pBool",
+	"Flame2pBool",
+	"Health1pBool",
+	"Health2pBool",
+	"Shoot1p",
+	"Shoot2p",
 };
 
 const char *COutputs::GetOutputName(EOutputs output)
