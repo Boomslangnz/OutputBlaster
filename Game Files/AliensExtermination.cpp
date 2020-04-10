@@ -18,7 +18,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include <string>
 #include <Windows.h>
 
-static wchar_t* settingsFilename = TEXT(".\\OutputBlaster.ini");
+//static wchar_t* settingsFilename = TEXT(".\\OutputBlaster.ini");
 static int EscapeKeyExitViaPlugin = GetPrivateProfileInt(TEXT("Settings"), TEXT("EscapeKeyExitViaPlugin"), 0, settingsFilename);
 static int configFeedbackLength = GetPrivateProfileInt(TEXT("Settings"), TEXT("FeedbackLength"), 120, settingsFilename);
 static int HowtoRumbleGunEffect = GetPrivateProfileInt(TEXT("Settings"), TEXT("HowtoRumbleGunEffect"), 0, settingsFilename);

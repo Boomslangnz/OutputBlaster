@@ -52,18 +52,6 @@ bool OutputsRunning = true;
 DWORD WINAPI OutputsLoop(LPVOID lpParam)
 {	
 	Sleep(2500);
-{
-	if (configGameId>=0) {
-		switch (configGameId) {
-			case 36: // Don't know how to get CRC32 without the game running!
-				game = new AliensExtermination;
-				break;
-		}
-		if (game!=0) {
-			game->OutputsGameLoop();
-			Sleep(16);
-		}
-	}
 
 	auto moduleBase = (uintptr_t)GetModuleHandle(nullptr);
 	if (*(uint32_t*)(moduleBase + 0x2182) == 0xE995C969)
@@ -148,6 +136,9 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		{
 		case 0x97994382:
 			game = new M2Emulator;
+			break;
+		case 0xE7BC4D6B:
+			game = new AliensExtermination;
 			break;
 		}
 

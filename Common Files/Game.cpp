@@ -23,14 +23,10 @@ typedef unsigned char U8;
 
 Helpers * helpers = new Helpers();
 
-static wchar_t* settingsFilename = TEXT(".\\OutputBlaster.ini");
-int configGameId = GetPrivateProfileInt(TEXT("Settings"), TEXT("GameId"), -1, settingsFilename);
 int configOutputsSystem = GetPrivateProfileInt(TEXT("Settings"), TEXT("OutputsSystem"), 0, settingsFilename);
 int configNetOutputsWithLF = GetPrivateProfileInt(TEXT("Settings"), TEXT("NetOutputsWithLF"), 0, settingsFilename);
 int configNetOutputsTCPPort = GetPrivateProfileInt(TEXT("Settings"), TEXT("NetOutputsTCPPort"), 8000, settingsFilename);
 int configNetOutputsUDPBroadcastPort = GetPrivateProfileInt(TEXT("Settings"), TEXT("NetOutputsUDPBroadcastPort"), 8001, settingsFilename);
-
-
 
 bool Helpers::fileExists(char *filename)
 {
