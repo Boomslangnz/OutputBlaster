@@ -59,7 +59,7 @@ void WMMT5::OutputsGameLoop()
 {
 	if (!init)
 	{
-		Outputs = new CWinOutputs();
+		Outputs = CreateOutputsFromConfig();
 		m_game.name = "Wangan Midnight Maximum Tune 5";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();

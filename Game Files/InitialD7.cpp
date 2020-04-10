@@ -42,7 +42,7 @@ void InitialD7::OutputsGameLoop()
 {
 	if (!init)
 	{
-		Outputs = new CWinOutputs();
+		Outputs = CreateOutputsFromConfig();
 		m_game.name = "Initial D Arcade Stage 7 AAX";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();

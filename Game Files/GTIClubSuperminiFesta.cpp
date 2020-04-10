@@ -48,7 +48,7 @@ void GTIClubSuperminiFesta::OutputsGameLoop()
 {
 	if (!init)
 	{
-		Outputs = new CWinOutputs();
+		Outputs = CreateOutputsFromConfig();
 		m_game.name = "GTI Club Supermini Festa";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();

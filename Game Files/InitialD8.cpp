@@ -43,7 +43,7 @@ void InitialD8::OutputsGameLoop()
 {
 	if (!init)
 	{
-		Outputs = new CWinOutputs();
+		Outputs = CreateOutputsFromConfig();
 		m_game.name = "Initial D Arcade Stage 8 Infinity";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();

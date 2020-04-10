@@ -56,7 +56,7 @@ void SonicAllStarsRacing::OutputsGameLoop()
 {
 	if (!init)
 	{
-		Outputs = new CWinOutputs();
+		Outputs = CreateOutputsFromConfig();
 		m_game.name = "Sonic & Sega All Stars Racing";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();

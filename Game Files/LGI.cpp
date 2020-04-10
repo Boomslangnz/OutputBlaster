@@ -44,7 +44,7 @@ void LGI::OutputsGameLoop()
 {
 	if (!init)
 	{
-		Outputs = new CWinOutputs();
+		Outputs = CreateOutputsFromConfig();
 		m_game.name = "Let's Go Island";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();

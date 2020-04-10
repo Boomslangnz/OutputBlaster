@@ -44,7 +44,7 @@ void InitialD4::OutputsGameLoop()
 {
 	if (!init)
 	{
-		Outputs = new CWinOutputs();
+		Outputs = CreateOutputsFromConfig();
 		m_game.name = "Initial D Arcade Stage 4";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();

@@ -15,17 +15,52 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #pragma once
 #include "../Output Files/WinOutputs.h"
+#include "../Output Files/NetOutputs.h"
+#include <Windows.h>
 
 static GameOutput m_game;
-static COutputs  *Outputs;
+static COutputs* Outputs;
 static uintptr_t imageBase;
 static MSG Msg1;
+
+// From .ini
+extern int configGameId;
+extern int configOutputsSystem;
+extern int configNetOutputsWithLF;
+extern int configNetOutputsTCPPort;
+extern int configNetOutputsUDPBroadcastPort;
 
 static bool init = false;
 static wchar_t* settingsFilename = TEXT(".\\OutputBlaster.ini");
 static int SleepA = GetPrivateProfileInt(TEXT("Settings"), TEXT("Sleep"), 16, settingsFilename);
 
+class Helpers {
+public:
+	int enableLogging = 0;
+	// helper functions
+	bool fileExists(char *filename);
+	// logging
+	void log(char *msg);
+	void logInt(int value);
+	void logInit(char *msg);
+	// reading memory
+	LPVOID GetTranslatedOffset(INT_PTR offset);
+	int ReadInt32(INT_PTR offset, bool isRelativeOffset);
+	UINT8 ReadByte(INT_PTR offset, bool isRelativeOffset);
+	float WriteFloat32(INT_PTR offset, float val, bool isRelativeOffset);
+	UINT8 WriteByte(INT_PTR offset, UINT8 val, bool isRelativeOffset);
+	INT_PTR WriteIntPtr(INT_PTR offset, INT_PTR val, bool isRelativeOffset);
+	UINT8 WriteNop(INT_PTR offset, bool isRelativeOffset);
+	INT_PTR ReadIntPtr(INT_PTR offset, bool isRelativeOffset);
+	float ReadFloat32(INT_PTR offset, bool isRelativeOffset);
+};
+
+extern Helpers* helpers;
+
 class Game {
 public:
+	
+	COutputs * CreateOutputsFromConfig();
+
 	virtual void OutputsGameLoop();
 };

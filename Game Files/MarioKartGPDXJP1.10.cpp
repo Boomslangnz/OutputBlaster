@@ -56,7 +56,7 @@ void MarioKartGPDXJP110::OutputsGameLoop()
 {
 	if (!init)
 	{
-		Outputs = new CWinOutputs();
+		Outputs = CreateOutputsFromConfig();
 		m_game.name = "Mario Kart GP DX";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
