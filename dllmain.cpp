@@ -31,6 +31,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/InitialD8.h"
 #include "Game Files/LGI.h"
 #include "Game Files/LGI3D.h"
+#include "Game Files/M2Emulator.h"
 #include "Game Files/Machstorm.h"
 #include "Game Files/MarioKartGPDXJP1.10.h"
 #include "Game Files/OperationGhost.h"
@@ -42,11 +43,14 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/WackyRaces.h"
 #include "Game Files/WMMT5.h"
 
+static char newCrc[0x400];
 Game* game;
 bool OutputsRunning = true;
 
 DWORD WINAPI OutputsLoop(LPVOID lpParam)
-{		
+{	
+	Sleep(2500);
+
 	auto moduleBase = (uintptr_t)GetModuleHandle(nullptr);
 	if (*(uint32_t*)(moduleBase + 0x2182) == 0xE995C969)
 	{
@@ -114,6 +118,25 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 			break;
 		}
 
+		// Craft CRC detection without virtual address
+		memcpy(newCrc, GetModuleHandle(nullptr), 0x400);
+		DWORD pePTR = *(DWORD*)(newCrc + 0x3C);
+
+		// Overwrite ImageBase with 8 bytes of 0
+		*(DWORD*)(newCrc + pePTR + 0x18) = 0x00000000;
+		*(DWORD*)(newCrc + pePTR + 0x18 + 4) = 0x00000000;
+#ifdef _AMD64_
+		* (DWORD*)(newCrc + pePTR + 50) = 0x00000000;
+#endif
+		* (DWORD*)(newCrc + pePTR + 54) = 0x00000000;
+		uint32_t newCrcResult = GetCRC32(newCrc, 0x400);
+		switch (newCrcResult)
+		{
+		case 0x97994382:
+			game = new M2Emulator;
+			break;
+		}
+
 		if (game != 0) //Load PC Based Arcade Game
 		{
 			game->OutputsGameLoop();
@@ -121,8 +144,6 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		}
 		else
 		{
-			Sleep(2000);
-
 			if (*(uint32_t*)0x804CA44 == 0x82EED98)
 			{
 				game = new AfterburnerClimax;
@@ -170,6 +191,12 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
 	case DLL_THREAD_DETACH:
 		break;
 	case DLL_PROCESS_DETACH:
+		Outputs->SetValue(OutputLampStart, 0x00);
+		Outputs->SetValue(OutputLampView1, 0x00);
+		Outputs->SetValue(OutputLampView2, 0x00);
+		Outputs->SetValue(OutputLampView3, 0x00);
+		Outputs->SetValue(OutputLampView4, 0x00);
+		Outputs->SetValue(OutputLampLeader, 0x00);
 		Outputs->~COutputs();
 		OutputsRunning = false;
 		break;

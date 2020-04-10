@@ -39,7 +39,7 @@ static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
 	while (true)
 	{
 		WindowsLoop();
-		Sleep(16);
+		Sleep(SleepA);
 	}
 }
 

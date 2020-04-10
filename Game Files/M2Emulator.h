@@ -14,18 +14,9 @@ You should have received a copy of the GNU General Public License
 along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #pragma once
-#include "../Output Files/WinOutputs.h"
+#include "../Common Files/Game.h"
+class M2Emulator : public Game {
 
-static GameOutput m_game;
-static COutputs  *Outputs;
-static uintptr_t imageBase;
-static MSG Msg1;
-
-static bool init = false;
-static wchar_t* settingsFilename = TEXT(".\\OutputBlaster.ini");
-static int SleepA = GetPrivateProfileInt(TEXT("Settings"), TEXT("Sleep"), 16, settingsFilename);
-
-class Game {
 public:
-	virtual void OutputsGameLoop();
+	void OutputsGameLoop();
 };

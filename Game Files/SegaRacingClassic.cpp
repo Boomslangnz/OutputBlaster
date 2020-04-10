@@ -23,11 +23,11 @@ static int WindowsLoop()
 	BYTE FFB = *(BYTE*)(0x834C19);
 
 	Outputs->SetValue(OutputLampStart, !!(data & 0x04));
+	Outputs->SetValue(OutputLampLeader, !!(data & 0x20));
 	Outputs->SetValue(OutputLampView1, !!(data & 0x08));
 	Outputs->SetValue(OutputLampView2, !!(data & 0x40));
 	Outputs->SetValue(OutputLampView3, !!(data & 0x10));
-	Outputs->SetValue(OutputLampView4, !!(data & 0x80));
-	Outputs->SetValue(OutputLampLeader, !!(data & 0x20));
+	Outputs->SetValue(OutputLampView4, !!(data & 0x80));	
 	Outputs->SetValue(OutputRawLamps, data);
 	Outputs->SetValue(OutputWooferRed, !!(data2 & 0x01));
 	Outputs->SetValue(OutputWooferGreen, !!(data2 & 0x02));
@@ -44,7 +44,7 @@ static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
 	while (true)
 	{
 		WindowsLoop();
-		Sleep(16);
+		Sleep(SleepA);
 	}
 }
 

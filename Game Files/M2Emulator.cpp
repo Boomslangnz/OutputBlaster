@@ -13,45 +13,23 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
-#include "ChaseHQ2.h"
-
-int PatoLightOutput(int patolamp) {
-	switch (patolamp) {
-	case 0x100:
-		return 6;
-	case 0x08:
-		return 5;
-	case 0x80:
-		return 4;
-	case 0x200:
-		return 3;
-	case 0x400:
-		return 2;
-	case 0x10:
-		return 1;
-	default:
-		return 0;
-	}
-}
+#include "M2Emulator.h"
 
 static int WindowsLoop()
 {
-	int outputpatolamp = 0;
 	imageBase = (uintptr_t)GetModuleHandleA(0);
-	INT_PTR lampbase = *(INT_PTR*)(imageBase + 0x130B558);
-	BYTE startlamp = *(BYTE*)(lampbase + 0x49);
-	BYTE patolampR = *(BYTE*)(lampbase + 0x4F);
-	BYTE patolampB = *(BYTE*)(lampbase + 0x4B);
-	INT_PTR patolamp = *(INT_PTR*)(lampbase + 0x45);
-	outputpatolamp = PatoLightOutput(patolamp - 16384);
-	INT_PTR FFBBase = *(INT_PTR*)(imageBase + 0x130B558);
-	BYTE FFB = *(BYTE*)FFBBase + 0x45;
+	INT_PTR Rambase = *(INT_PTR*)(imageBase + 0x1AA888);
+	INT_PTR RambaseA = *(INT_PTR*)(Rambase + 0x100);
+	BYTE data = *(BYTE*)(RambaseA + 0x824);
 
-	Outputs->SetValue(OutputLampStart, (startlamp / 255.0) * 100.0); //Modify value on mamehooker to show 0-100, with 100 being max 
-	Outputs->SetValue(OutputLampPatoButtonR, (patolampR / 255.0) * 100.0);
-	Outputs->SetValue(OutputLampPatoButtonB, (patolampB / 255.0) * 100.0);
-	Outputs->SetValue(OutputLampPato, outputpatolamp);
-	Outputs->SetValue(OutputFFB, FFB);
+	Outputs->SetValue(OutputLampStart, !!(data & 0x04));
+	Outputs->SetValue(OutputLampLeader, !!(data & 0x80));
+	Outputs->SetValue(OutputLampView1, !!(data & 0x08));
+	Outputs->SetValue(OutputLampView2, !!(data & 0x10));
+	Outputs->SetValue(OutputLampView3, !!(data & 0x20));
+	Outputs->SetValue(OutputLampView4, !!(data & 0x40));
+	Outputs->SetValue(OutputRawLamps, data);
+
 	return 0;
 }
 
@@ -64,12 +42,12 @@ static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
 	}
 }
 
-void ChaseHQ2::OutputsGameLoop()
+void M2Emulator::OutputsGameLoop()
 {
 	if (!init)
 	{
 		Outputs = new CWinOutputs();
-		m_game.name = "ChaseHQ2";
+		m_game.name = "M2 Emulator";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
 		Outputs->Attached();
