@@ -106,13 +106,8 @@ int Helpers::ReadInt32(INT_PTR offset, bool isRelativeOffset)
 {
 	int val = 0;
 	SIZE_T read;
-	//log("going to try to RPM");
 	LPVOID trueOffset = (isRelativeOffset ? GetTranslatedOffset(offset) : (LPVOID)offset);
 	ReadProcessMemory(GetCurrentProcess(), trueOffset, &val, sizeof(int), &read);
-	//log("RPM");
-	//char text[256];
-	//sprintf_s(text, "%16X / %16X\n", offset, trueOffset);
-	//log(text);
 	return val;
 }
 
@@ -130,15 +125,9 @@ float Helpers::ReadFloat32(INT_PTR offset, bool isRelativeOffset)
 		
 		float val = 0.0f;
 		SIZE_T read;
-		//log("going to try to RPM");
 		LPVOID trueOffset = (isRelativeOffset ? GetTranslatedOffset(offset) : (LPVOID)offset);
 		ReadProcessMemory(GetCurrentProcess(), trueOffset, &val, sizeof(float), &read);
-		//char text[256];
-		//sprintf_s(text, "%16X / %16X\n", offset, trueOffset);
-		//log(text);
-		//log("RPM");
-		return val;
-		
+		return val;		
 }
 
 void Game::OutputsGameLoop()
