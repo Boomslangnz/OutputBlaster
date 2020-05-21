@@ -17,13 +17,12 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 static int WindowsLoop()
 {
-	imageBase = (uintptr_t)GetModuleHandleA(0);
-	BYTE outputdata = *(BYTE*)(imageBase + 0x199F0CC);
-	BYTE outputdata2 = *(BYTE*)(imageBase + 0x199F0CD);
-	INT_PTR FFB1 = *(INT_PTR*)imageBase + 0x196F188;
-	INT_PTR FFB2 = *(INT_PTR*)imageBase + 0x196F18C;
-	INT_PTR FFB3 = *(INT_PTR*)imageBase + 0x196F190;
-	INT_PTR FFB4 = *(INT_PTR*)imageBase + 0x196F194;
+	UINT8 outputdata = helpers->ReadByte(0x199F0CC, true);
+	UINT8 outputdata2 = helpers->ReadByte(0x199F0CD, true);
+	INT_PTR FFB1 = helpers->ReadIntPtr(0x196F188, true);
+	INT_PTR FFB2 = helpers->ReadIntPtr(0x196F18C, true);
+	INT_PTR FFB3 = helpers->ReadIntPtr(0x196F190, true);
+	INT_PTR FFB4 = helpers->ReadIntPtr(0x196F194, true);
 
 	Outputs->SetValue(OutputLampView1, !!(outputdata & 0x08));
 	Outputs->SetValue(OutputInterruption, !!(outputdata & 0x04));

@@ -13,21 +13,25 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
-#include "ChaseHQ2.h"
+#include "BattleGear4.h"
 
-int PatoLightOutput(int patolamp) {
-	switch (patolamp) {
-	case 0x100:
+static int OutputValue(int output) {
+	switch (output) {
+	case 0x20:
+		return 8;
+	case 0x1C:
+		return 7;
+	case 0x18:
 		return 6;
-	case 0x08:
+	case 0x14:
 		return 5;
-	case 0x80:
-		return 4;
-	case 0x200:
-		return 3;
-	case 0x400:
-		return 2;
 	case 0x10:
+		return 4;
+	case 0x0C:
+		return 3;
+	case 0x08:
+		return 2;
+	case 0x04:
 		return 1;
 	default:
 		return 0;
@@ -36,21 +40,24 @@ int PatoLightOutput(int patolamp) {
 
 static int WindowsLoop()
 {
-	int outputpatolamp = 0;
-	INT_PTR lampbase = helpers->ReadIntPtr(0x130B558, true);
-	UINT8 startlamp = helpers->ReadByte(lampbase + 0x49, false);
-	UINT8 patolampR = helpers->ReadByte(lampbase + 0x4F, false);
-	UINT8 patolampB = helpers->ReadByte(lampbase + 0x4B, false);
-	INT_PTR patolamp = helpers->ReadIntPtr(lampbase + 0x45, false);
-	outputpatolamp = PatoLightOutput(patolamp - 16384);
-	INT_PTR FFBBase = helpers->ReadIntPtr(0x130B558, true);
-	UINT8 FFB = helpers->ReadByte(FFBBase + 0x45, false);
+	int startvaluelamp = 0;
+	int viewvaluelamp = 0;
+	int hazardvaluelamp = 0;
 
-	Outputs->SetValue(OutputLampStart, (startlamp / 255.0) * 100.0); //Modify value on mamehooker to show 0-100, with 100 being max 
-	Outputs->SetValue(OutputLampPatoButtonR, (patolampR / 255.0) * 100.0);
-	Outputs->SetValue(OutputLampPatoButtonB, (patolampB / 255.0) * 100.0);
-	Outputs->SetValue(OutputLampPato, outputpatolamp);
-	Outputs->SetValue(OutputFFB, FFB);
+	UINT8 startoutput = helpers->ReadByte(0x7CE8D8, false);
+	UINT8 viewoutput = helpers->ReadByte(0x7CE8D2, false);
+	UINT8 hazardoutput = helpers->ReadByte(0x7CE8D4, false);
+	UINT8 overrevoutput = helpers->ReadByte(0x7CE8E3, false);
+	startvaluelamp = OutputValue(startoutput);
+	viewvaluelamp = OutputValue(viewoutput);
+	hazardvaluelamp = OutputValue(hazardoutput);
+
+	//Max Value 100 on everything except OverRev
+	Outputs->SetValue(OutputLampStart, (startvaluelamp / 8.0) * 100.0);
+	Outputs->SetValue(OutputLampView1, (viewvaluelamp / 8.0) * 100.0);
+	Outputs->SetValue(OutputLampHazard, (hazardvaluelamp / 8.0) * 100.0);
+	Outputs->SetValue(OutputLampOverrev, !!(overrevoutput & 0x01));
+
 	return 0;
 }
 
@@ -63,12 +70,12 @@ static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
 	}
 }
 
-void ChaseHQ2::OutputsGameLoop()
+void BattleGear4::OutputsGameLoop()
 {
 	if (!init)
 	{
 		Outputs = CreateOutputsFromConfig();
-		m_game.name = "ChaseHQ2";
+		m_game.name = "Battle Gear 4";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
 		Outputs->Attached();

@@ -20,7 +20,6 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 static GameOutput m_game;
 static COutputs* Outputs;
-static uintptr_t imageBase;
 static MSG Msg1;
 
 // From .ini

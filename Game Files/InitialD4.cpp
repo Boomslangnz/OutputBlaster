@@ -17,9 +17,9 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 static int WindowsLoop()
 {
-	BYTE outputdata1 = *(BYTE*)(0x8D7CCDD);
-	BYTE outputdata2 = *(BYTE*)(0x8D7CCDE);
-	INT_PTR FFB = *(INT_PTR*)0x89AE89A;
+	UINT8 outputdata1 = helpers->ReadByte(0x8D7CCDD, false);
+	UINT8 outputdata2 = helpers->ReadByte(0x8D7CCDE, false);
+	INT_PTR FFB = helpers->ReadIntPtr(0x89AE89A, false);
 
 	Outputs->SetValue(OutputLampStart, !!(outputdata1 & 0x80));
 	Outputs->SetValue(OutputLampView1, !!(outputdata1 & 0x40));

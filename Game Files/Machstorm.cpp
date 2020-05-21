@@ -17,14 +17,13 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 static int WindowsLoop()
 {
-	imageBase = (uintptr_t)GetModuleHandleA(0);
-	BYTE VibrationData = *(BYTE*)(imageBase + 0x6390E9);
-	BYTE PowerData = *(BYTE*)(imageBase + 0x639109);
-	BYTE LEDRearCoverData1 = *(BYTE*)(imageBase + 0x6390EB);
-	BYTE LEDRearCoverData2 = *(BYTE*)(imageBase + 0x6390EC);
-	BYTE LEDRearCoverData3 = *(BYTE*)(imageBase + 0x6390ED);
-	BYTE ColourRed = *(BYTE*)(imageBase + 0x639108);
-	BYTE ColourGreenBlue = *(BYTE*)(imageBase + 0x63910B);
+	UINT8 VibrationData = helpers->ReadByte(0x6390E9, true);
+	UINT8 PowerData = helpers->ReadByte(0x639109, true);
+	UINT8 LEDRearCoverData1 = helpers->ReadByte(0x6390EB, true);
+	UINT8 LEDRearCoverData2 = helpers->ReadByte(0x6390EC, true);
+	UINT8 LEDRearCoverData3 = helpers->ReadByte(0x6390ED, true);
+	UINT8 ColourRed = helpers->ReadByte(0x639108, true);
+	UINT8 ColourGreenBlue = helpers->ReadByte(0x63910B, true);
 
 	Outputs->SetValue(OutputVibration, !!(VibrationData & 0x01));
 	Outputs->SetValue(OutputRearCover, !!((LEDRearCoverData1 & LEDRearCoverData2 & LEDRearCoverData3) & 0x01));

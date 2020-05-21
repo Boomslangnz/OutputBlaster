@@ -17,7 +17,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 static int WindowsLoop()
 {
-	BYTE data = *(BYTE*)(0x8347A5E);
+	UINT8 data = helpers->ReadByte(0x8347A5E, false);
 
 	Outputs->SetValue(OutputLampStart, !!(data & 0x80));
 	Outputs->SetValue(OutputRawDrive, !!(data & 0x40));

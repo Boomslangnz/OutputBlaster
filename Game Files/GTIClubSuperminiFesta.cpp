@@ -17,13 +17,13 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 static int WindowsLoop()
 {
-	BYTE actionlamp = *(BYTE*)(0xA7E794);
-	BYTE startlamp = *(BYTE*)(0xA7E790);
-	BYTE selectuplamp = *(BYTE*)(0xA7E7A0);
-	BYTE selectdownlamp = *(BYTE*)(0xA7E7A4);
-	BYTE selectleftlamp = *(BYTE*)(0xA7E798);
-	BYTE selectrightlamp = *(BYTE*)(0xA7E79C); 
-	INT_PTR FFB = *(INT_PTR*)0x918CBC;
+	UINT8 actionlamp = helpers->ReadByte(0xA7E794, false);
+	UINT8 startlamp = helpers->ReadByte(0xA7E790, false);
+	UINT8 selectuplamp = helpers->ReadByte(0xA7E7A0, false);
+	UINT8 selectdownlamp = helpers->ReadByte(0xA7E7A4, false);
+	UINT8 selectleftlamp = helpers->ReadByte(0xA7E798, false);
+	UINT8 selectrightlamp = helpers->ReadByte(0xA7E79C, false);
+	INT_PTR FFB = helpers->ReadIntPtr(0x918CBC, false);
 
 	Outputs->SetValue(OutputLampAction, !!(actionlamp & 0x1F));
 	Outputs->SetValue(OutputLampStart, !!(startlamp & 0x1F));

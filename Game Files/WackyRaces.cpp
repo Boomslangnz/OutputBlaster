@@ -17,17 +17,16 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 static int WindowsLoop()
 {
-	imageBase = (uintptr_t)GetModuleHandleA(0);
-	INT_PTR lampbase = *(INT_PTR*)(imageBase + 0x7E00590);
-	INT_PTR lamps = *(INT_PTR*)(lampbase + 0x45);
-	BYTE Seatlamp1 = *(BYTE*)(lampbase + 0x53);
-	BYTE Seatlamp2 = *(BYTE*)(lampbase + 0x51);
-	BYTE Seatlamp3 = *(BYTE*)(lampbase + 0x23);
-	BYTE Seatlamp4 = *(BYTE*)(lampbase + 0x4D);
-	BYTE Seatlamp5 = *(BYTE*)(lampbase + 0x1F);
-	BYTE Seatlamp6 = *(BYTE*)(lampbase + 0x49);
-	INT_PTR FFBBase = *(INT_PTR*)(imageBase + 0x7E00590);
-	BYTE FFB = *(BYTE*)FFBBase + 0x45;
+	INT_PTR lampbase = helpers->ReadIntPtr(0x7E00590, true);
+	INT_PTR lamps = helpers->ReadIntPtr(lampbase + 0x45, false);
+	UINT8 Seatlamp1 = helpers->ReadByte(lampbase + 0x53, false);
+	UINT8 Seatlamp2 = helpers->ReadByte(lampbase + 0x51, false);
+	UINT8 Seatlamp3 = helpers->ReadByte(lampbase + 0x23, false);
+	UINT8 Seatlamp4 = helpers->ReadByte(lampbase + 0x4D, false);
+	UINT8 Seatlamp5 = helpers->ReadByte(lampbase + 0x1F, false);
+	UINT8 Seatlamp6 = helpers->ReadByte(lampbase + 0x49, false);
+	INT_PTR FFBBase = helpers->ReadIntPtr(0x7E00590, true);
+	UINT8 FFB = helpers->ReadByte(FFBBase + 0x45, false);
 
 	Outputs->SetValue(OutputLampStart, !!(lamps & 0x80));
 	Outputs->SetValue(OutputLampView1, !!(lamps & 0x100));

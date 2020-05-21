@@ -17,14 +17,13 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 static int WindowsLoop()
 {
-	imageBase = (uintptr_t)GetModuleHandleA(0);
-	BYTE ButtonData = *(BYTE*)(imageBase + 0xA4528D);
-	BYTE BillboardData = *(BYTE*)(imageBase + 0xA4694C);
-	BYTE BillboardData2 = *(BYTE*)(imageBase + 0xA4694D);
-	BYTE MonitorSideData = *(BYTE*)(imageBase + 0xA469C1);
-	BYTE MonitorSideData2 = *(BYTE*)(imageBase + 0xA469C2);
-	BYTE UnderLampData = *(BYTE*)(imageBase + 0xA452A6);
-	BYTE UnderLampData2 = *(BYTE*)(imageBase + 0xA452A7);
+	UINT8 ButtonData = helpers->ReadByte(0xA4528D, true);
+	UINT8 BillboardData = helpers->ReadByte(0xA4694C, true);
+	UINT8 BillboardData2 = helpers->ReadByte(0xA4694D, true);
+	UINT8 MonitorSideData = helpers->ReadByte(0xA469C1, true);
+	UINT8 MonitorSideData2 = helpers->ReadByte(0xA469C2, true);
+	UINT8 UnderLampData = helpers->ReadByte(0xA452A6, true);
+	UINT8 UnderLampData2 = helpers->ReadByte(0xA452A7, true);
 
 	Outputs->SetValue(OutputItemButton, !!(ButtonData & 0x04));
 	Outputs->SetValue(OutputMarioButton, !!(ButtonData & 0x08));

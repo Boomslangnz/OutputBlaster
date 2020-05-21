@@ -17,9 +17,8 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 static int WindowsLoop()
 {
-	imageBase = (uintptr_t)GetModuleHandleA(0);
-	BYTE outputBase = *(BYTE*)(imageBase + 0x63BF5C);
-	BYTE outputData = *(BYTE*)(outputBase + 0x44);
+	INT_PTR outputBase = helpers->ReadIntPtr(0x63BF5C, true);
+	UINT8 outputData = helpers->ReadByte(outputBase + 0x44, false);
 
 	Outputs->SetValue(OutputLampStart, !!(outputData & 0x80));
 	Outputs->SetValue(Output1pKnock, !!(outputData & 0x20));

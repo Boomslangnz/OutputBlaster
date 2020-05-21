@@ -21,10 +21,12 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 //Game headers go here
 #include "Game Files/AfterburnerClimax.h"
 #include "Game Files/AliensExtermination.h"
+#include "Game Files/BattleGear4.h"
 #include "Game Files/BattleGear4Tuned.h"
 #include "Game Files/ChaseHQ2.h"
 #include "Game Files/DaytonaChampionshipUSA.h"
 #include "Game Files/GTIClubSuperminiFesta.h"
+#include "Game Files/H2Overdrive.h"
 #include "Game Files/InitialD4.h"
 #include "Game Files/InitialD5.h"
 #include "Game Files/InitialD6.h"
@@ -37,8 +39,10 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/MarioKartGPDXJP1.10.h"
 #include "Game Files/OperationGhost.h"
 #include "Game Files/Outrun2SP.h"
+#include "Game Files/R-Tuned.h"
 #include "Game Files/SegaRaceTV.h"
 #include "Game Files/SegaRacingClassic.h"
+#include "Game Files/Transformers.h"
 #include "Game Files/SonicAllStarsRacing.h"
 #include "Game Files/VirtuaTennis4.h"
 #include "Game Files/WackyRaces.h"
@@ -140,6 +144,16 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		case 0xE7BC4D6B:
 			game = new AliensExtermination;
 			break;
+		case 0xdc693790:
+		case 0x7dcef927:
+			game = new Transformers;
+			break;
+		case 0xbd8c984d:
+			game = new BattleGear4;
+			break;
+		case 0xed9b5740:
+			game = new H2Overdrive;
+			break;	
 		}
 
 		if (game != 0) //Load PC Based Arcade Game
@@ -172,6 +186,10 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 			else if (*(uint32_t*)0x804D258 == 0x1C5F)
 			{
 				game = new InitialD5;
+			}
+			else if (*(uint32_t*)0x0804E8F8 == 0x08479718)
+			{
+				game = new RTuned;
 			}
 			if (game != 0) //Load Lindbergh Game 
 			{

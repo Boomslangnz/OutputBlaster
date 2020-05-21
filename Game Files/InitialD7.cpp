@@ -17,8 +17,8 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 static int WindowsLoop()
 {
-	BYTE outputdata1 = *(BYTE*)(0x185D152);
-	BYTE outputdata2 = *(BYTE*)(0x185D153);
+	UINT8 outputdata1 = helpers->ReadByte(0x185D152, false);
+	UINT8 outputdata2 = helpers->ReadByte(0x185D153, false);
 
 	Outputs->SetValue(OutputLampStart, !!(outputdata1 & 0x80));
 	Outputs->SetValue(OutputLampView1, !!(outputdata1 & 0x40));

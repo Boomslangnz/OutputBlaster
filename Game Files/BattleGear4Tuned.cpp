@@ -15,7 +15,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #include "BattleGear4Tuned.h"
 
-int OutputValue(int output) {
+static int OutputValue(int output) {
 	switch (output) {
 	case 0x20:
 		return 8;
@@ -47,15 +47,15 @@ static int WindowsLoop()
 	int redvaluelamp = 0;
 	int greenvaluelamp = 0;
 	int bluevaluelamp = 0;
-	BYTE startoutput = *(BYTE*)(0x82D95C);
-	BYTE viewoutput = *(BYTE*)(0x82D956);
-	BYTE hazardoutput = *(BYTE*)(0x82D958);
-	BYTE keyoutput = *(BYTE*)(0x82D95A);
-	BYTE onlineoutput = *(BYTE*)(0x82D966);
-	BYTE overrevoutput = *(BYTE*)(0x82D967);
-	BYTE redoutput = *(BYTE*)(0x82D95E);
-	BYTE greenoutput = *(BYTE*)(0x82D960);
-	BYTE blueoutput = *(BYTE*)(0x82D962);
+	UINT8 startoutput = helpers->ReadByte(0x82D95C, false);
+	UINT8 viewoutput = helpers->ReadByte(0x82D956, false);
+	UINT8 hazardoutput = helpers->ReadByte(0x82D958, false);
+	UINT8 keyoutput = helpers->ReadByte(0x82D95A, false);
+	UINT8 onlineoutput = helpers->ReadByte(0x82D966, false);
+	UINT8 overrevoutput = helpers->ReadByte(0x82D967, false);
+	UINT8 redoutput = helpers->ReadByte(0x82D95E, false);
+	UINT8 greenoutput = helpers->ReadByte(0x82D960, false);
+	UINT8 blueoutput = helpers->ReadByte(0x82D962, false);
 	startvaluelamp = OutputValue(startoutput);
 	viewvaluelamp = OutputValue(viewoutput);
 	hazardvaluelamp = OutputValue(hazardoutput);

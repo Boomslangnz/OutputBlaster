@@ -17,10 +17,9 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 static int WindowsLoop()
 {
-	imageBase = (uintptr_t)GetModuleHandleA(0);
-	BYTE data = *(BYTE*)(imageBase + 0x434C18);
-	BYTE data2 = *(BYTE*)(imageBase + 0x50DBEA);
-	BYTE FFB = *(BYTE*)(0x834C19);
+	UINT8 data = helpers->ReadByte(0x434C18, true);
+	UINT8 data2 = helpers->ReadByte(0x50DBEA, true);
+	UINT8 FFB = helpers->ReadByte(0x834C19, false);
 
 	Outputs->SetValue(OutputLampStart, !!(data & 0x04));
 	Outputs->SetValue(OutputLampLeader, !!(data & 0x20));
