@@ -23,8 +23,10 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/AliensExtermination.h"
 #include "Game Files/BattleGear4.h"
 #include "Game Files/BattleGear4Tuned.h"
+#include "Game Files/Cars.h"
 #include "Game Files/ChaseHQ2.h"
 #include "Game Files/DaytonaChampionshipUSA.h"
+#include "Game Files/DirtyDrivin.h"
 #include "Game Files/GTIClubSuperminiFesta.h"
 #include "Game Files/H2Overdrive.h"
 #include "Game Files/InitialD4.h"
@@ -42,6 +44,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/R-Tuned.h"
 #include "Game Files/SegaRaceTV.h"
 #include "Game Files/SegaRacingClassic.h"
+#include "Game Files/SRG.h"
 #include "Game Files/Transformers.h"
 #include "Game Files/SonicAllStarsRacing.h"
 #include "Game Files/VirtuaTennis4.h"
@@ -153,7 +156,16 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 			break;
 		case 0xed9b5740:
 			game = new H2Overdrive;
-			break;	
+			break;
+		case 0xfac8a714:
+			game = new Cars;
+			break;
+		case 0x8456EEC1:
+			game = new DirtyDrivin;
+			break;
+		case 0xc484002f:
+			game = new SRG;
+			break;
 		}
 
 		if (game != 0) //Load PC Based Arcade Game
