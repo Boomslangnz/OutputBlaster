@@ -29,6 +29,8 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/DirtyDrivin.h"
 #include "Game Files/GTIClubSuperminiFesta.h"
 #include "Game Files/H2Overdrive.h"
+#include "Game Files/ID0V131.h"
+#include "Game Files/ID0V211.h"
 #include "Game Files/InitialD4.h"
 #include "Game Files/InitialD5.h"
 #include "Game Files/InitialD6.h"
@@ -165,6 +167,20 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 			break;
 		case 0xc484002f:
 			game = new SRG;
+			break;
+		case 0xc68bcd2f:
+			game = new InitialD0V131;
+			break;
+		case 0x89da99ee:
+			game = new InitialD0V211;
+			break;
+		default:
+#ifdef _DEBUG
+			static char test[256];
+			memset(test, 0, 256);
+			sprintf(test, "New CRC: %08x not implemented", newCrcResult);
+			OutputDebugStringA(test);
+#endif
 			break;
 		}
 
