@@ -53,9 +53,9 @@ static int WindowsLoop()
 	hazardvaluelamp = OutputValue(hazardoutput);
 
 	//Max Value 100 on everything except OverRev
-	Outputs->SetValue(OutputLampStart, (startvaluelamp / 8.0) * 100.0);
-	Outputs->SetValue(OutputLampView1, (viewvaluelamp / 8.0) * 100.0);
-	Outputs->SetValue(OutputLampHazard, (hazardvaluelamp / 8.0) * 100.0);
+	Outputs->SetValue(OutputLampStart, (startvaluelamp / 8.0) * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputLampView1, (viewvaluelamp / 8.0) * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputLampHazard, (hazardvaluelamp / 8.0) * (MaxScaleOutput * 1.0));
 	Outputs->SetValue(OutputLampOverrev, !!(overrevoutput & 0x01));
 
 	return 0;

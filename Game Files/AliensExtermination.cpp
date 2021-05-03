@@ -354,9 +354,10 @@ static int WindowsLoop()
 
 static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
 {
-	while (true) {
+	while (true) 
+	{
 		WindowsLoop();
-		Sleep(16);
+		Sleep(SleepA);
 	}
 }
 

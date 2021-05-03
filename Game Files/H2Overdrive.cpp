@@ -31,19 +31,19 @@ static int WindowsLoop()
 	float Infinity3 = helpers->ReadFloat32(0x78C9D0, false);
 	float Leader = helpers->ReadFloat32(0x78C710, false);
 
-	Outputs->SetValue(OutputIntakeLeft, IntakeLeft * 100.0);
-	Outputs->SetValue(OutputIntakeCenter, IntakeCenter * 100.0);
-	Outputs->SetValue(OutputIntakeRight, IntakeRight * 100.0);
-	Outputs->SetValue(OutputBase0Left, Base0Left * 100.0);
-	Outputs->SetValue(OutputBase1Left, Base1Left * 100.0);
-	Outputs->SetValue(OutputBase0Right, Base0Right * 100.0);
-	Outputs->SetValue(OutputBase1Right, Base1Right * 100.0);
-	Outputs->SetValue(OutputSeatLeft, SeatLeft * 100.0);
-	Outputs->SetValue(OutputSeatRight, SeatRight * 100.0);
-	Outputs->SetValue(OutputInfinity1, Infinity1 * 100.0);
-	Outputs->SetValue(OutputInfinity2, Infinity2 * 100.0);
-	Outputs->SetValue(OutputInfinity3, Infinity3 * 100.0);
-	Outputs->SetValue(OutputLampLeader, Leader * 100.0);
+	Outputs->SetValue(OutputIntakeLeft, IntakeLeft * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputIntakeCenter, IntakeCenter * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputIntakeRight, IntakeRight * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputBase0Left, Base0Left * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputBase1Left, Base1Left * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputBase0Right, Base0Right * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputBase1Right, Base1Right * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputSeatLeft, SeatLeft * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputSeatRight, SeatRight * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputInfinity1, Infinity1 * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputInfinity2, Infinity2 * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputInfinity3, Infinity3 * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputLampLeader, Leader * (MaxScaleOutput * 1.0));
 
 	return 0;
 }

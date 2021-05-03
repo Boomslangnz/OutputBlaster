@@ -46,9 +46,9 @@ static int WindowsLoop()
 	INT_PTR FFBBase = helpers->ReadIntPtr(0x130B558, true);
 	UINT8 FFB = helpers->ReadByte(FFBBase + 0x45, false);
 
-	Outputs->SetValue(OutputLampStart, (startlamp / 255.0) * 100.0); //Modify value on mamehooker to show 0-100, with 100 being max 
-	Outputs->SetValue(OutputLampPatoButtonR, (patolampR / 255.0) * 100.0);
-	Outputs->SetValue(OutputLampPatoButtonB, (patolampB / 255.0) * 100.0);
+	Outputs->SetValue(OutputLampStart, (startlamp / 255.0) * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputLampPatoButtonR, (patolampR / 255.0) * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputLampPatoButtonB, (patolampB / 255.0) * (MaxScaleOutput * 1.0));
 	Outputs->SetValue(OutputLampPato, outputpatolamp);
 	Outputs->SetValue(OutputFFB, FFB);
 	return 0;

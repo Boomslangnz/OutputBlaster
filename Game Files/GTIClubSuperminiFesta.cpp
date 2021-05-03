@@ -27,10 +27,10 @@ static int WindowsLoop()
 
 	Outputs->SetValue(OutputLampAction, !!(actionlamp & 0x1F));
 	Outputs->SetValue(OutputLampStart, !!(startlamp & 0x1F));
-	Outputs->SetValue(OutputLampSelectUp, (selectuplamp / 31.0) * 100.0);
-	Outputs->SetValue(OutputLampSelectDown, (selectdownlamp / 31.0) * 100.0);
-	Outputs->SetValue(OutputLampSelectLeft, (selectleftlamp / 31.0) * 100.0);
-	Outputs->SetValue(OutputLampSelectRight, (selectrightlamp / 31.0) * 100.0);
+	Outputs->SetValue(OutputLampSelectUp, (selectuplamp / 31.0) * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputLampSelectDown, (selectdownlamp / 31.0) * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputLampSelectLeft, (selectleftlamp / 31.0) * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputLampSelectRight, (selectrightlamp / 31.0) * (MaxScaleOutput * 1.0));
 	Outputs->SetValue(OutputFFB, FFB);
 	return 0;
 }

@@ -65,19 +65,19 @@ static int WindowsLoop()
 	bluevaluelamp = OutputValue(blueoutput);
 
 	//Max Value 100 on everything except Online & OverRev
-	Outputs->SetValue(OutputLampStart, (startvaluelamp / 8.0) * 100.0);
-	Outputs->SetValue(OutputLampView1, (viewvaluelamp / 8.0) * 100.0);
-	Outputs->SetValue(OutputLampHazard, (hazardvaluelamp / 8.0) * 100.0);
-	Outputs->SetValue(OutputLampKey, (keyvaluelamp / 8.0) * 100.0);
+	Outputs->SetValue(OutputLampStart, (startvaluelamp / 8.0) * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputLampView1, (viewvaluelamp / 8.0) * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputLampHazard, (hazardvaluelamp / 8.0) * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputLampKey, (keyvaluelamp / 8.0) * (MaxScaleOutput * 1.0));
 	Outputs->SetValue(OutputLampOnline, !!(onlineoutput & 0x01));
 	Outputs->SetValue(OutputLampOverrev, !!(overrevoutput & 0x01));
-	Outputs->SetValue(OutputLampRed, (redvaluelamp / 8.0) * 100.0);
-	Outputs->SetValue(OutputLampGreen, (greenvaluelamp / 8.0) * 100.0);
-	Outputs->SetValue(OutputLampBlue, (bluevaluelamp / 8.0) * 100.0);
-	Outputs->SetValue(OutputLampYellow, ((redvaluelamp & greenvaluelamp) / 8.0) * 100.0);
-	Outputs->SetValue(OutputLampCyan, ((greenvaluelamp & bluevaluelamp) / 8.0) * 100.0);
-	Outputs->SetValue(OutputLampMagneta, ((bluevaluelamp & redvaluelamp) / 8.0) * 100.0);
-	Outputs->SetValue(OutputLampWhite, ((bluevaluelamp & greenvaluelamp & redvaluelamp) / 8.0) * 100.0);
+	Outputs->SetValue(OutputLampRed, (redvaluelamp / 8.0) * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputLampGreen, (greenvaluelamp / 8.0) * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputLampBlue, (bluevaluelamp / 8.0) * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputLampYellow, ((redvaluelamp & greenvaluelamp) / 8.0) * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputLampCyan, ((greenvaluelamp & bluevaluelamp) / 8.0) * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputLampMagneta, ((bluevaluelamp & redvaluelamp) / 8.0) * (MaxScaleOutput * 1.0));
+	Outputs->SetValue(OutputLampWhite, ((bluevaluelamp & greenvaluelamp & redvaluelamp) / 8.0) * (MaxScaleOutput * 1.0));
 	return 0;
 }
 
