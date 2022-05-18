@@ -52,11 +52,14 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/VirtuaTennis4.h"
 #include "Game Files/WackyRaces.h"
 #include "Game Files/WMMT5.h"
+#include "Game Files/WMMT5DX.h"
+#include "Game Files/WMMT5DXPlus.h"
+#include "Game Files/WMMT6.h"
+#include "Game Files/WMMT6R.h"
 
 static char newCrc[0x400];
 Game* game;
 bool OutputsRunning = true;
-
 
 DWORD WINAPI OutputsLoop(LPVOID lpParam)
 {	
@@ -71,10 +74,7 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 	{
 		game = new MarioKartGPDXJP110;
 	}
-	if (*(uint32_t*)(moduleBase + 0x2F00) == 0xFFCB8B48)
-	{
-		game = new WMMT5;
-	}
+
 	if (game != 0)
 	{
 		game->OutputsGameLoop();
@@ -173,6 +173,21 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 			break;
 		case 0x89da99ee:
 			game = new InitialD0V211;
+			break;
+		case 0xe75a6a44:
+			game = new WMMT5;
+			break;
+		case 0xDD61E0BA:
+			game = new WMMT5DX;
+			break;
+		case 0x1BB6F051:
+			game = new WMMT5DXPlus;
+			break;
+		case 0x0761cc11:
+			game = new WMMT6;
+			break;
+		case 0xa447f2ef:
+			game = new WMMT6R;
 			break;
 		default:
 #ifdef _DEBUG

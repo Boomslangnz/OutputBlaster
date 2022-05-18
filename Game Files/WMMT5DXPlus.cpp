@@ -13,16 +13,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
-#include "WMMT5.h"
+#include "WMMT5DXPlus.h"
 
 static int WindowsLoop()
 {
-	UINT8 outputdata = helpers->ReadByte(0x199F0CC, true);
-	UINT8 outputdata2 = helpers->ReadByte(0x199F0CD, true);
-	float FFB1 = helpers->ReadFloat32(0x196F188, true);
-	float FFB2 = helpers->ReadFloat32(0x196F18C, true);
-	float FFB3 = helpers->ReadFloat32(0x196F190, true);
-	float FFB4 = helpers->ReadFloat32(0x196F194, true);
+	UINT8 outputdata = helpers->ReadByte(0x1FD55D1, true);
+	UINT8 outputdata2 = helpers->ReadByte(0x1FD55D2, true);
+	float FFB1 = helpers->ReadFloat32(0x1FA6F40, true);
+	float FFB2 = helpers->ReadFloat32(0x1FA6F44, true);
+	float FFB3 = helpers->ReadFloat32(0x1FA6F48, true);
+	float FFB4 = helpers->ReadFloat32(0x1FA6F4C, true);
 
 	Outputs->SetValue(OutputLampView1, !!(outputdata & 0x08));
 	Outputs->SetValue(OutputInterruption, !!(outputdata & 0x04));
@@ -50,12 +50,12 @@ static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
 	}
 }
 
-void WMMT5::OutputsGameLoop()
+void WMMT5DXPlus::OutputsGameLoop()
 {
 	if (!init)
 	{
 		Outputs = CreateOutputsFromConfig();
-		m_game.name = "Wangan Midnight Maximum Tune 5";
+		m_game.name = "Wangan Midnight Maximum Tune 5DX+";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
 		Outputs->Attached();
