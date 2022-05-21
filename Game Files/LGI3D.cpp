@@ -22,8 +22,6 @@ static int WindowsLoop()
 	UINT8 outputData2 = helpers->ReadByte(outputBase + 0x45, false);
 
 	Outputs->SetValue(OutputLampStart, !!(outputData & 0x80));
-	Outputs->SetValue(Output1pMotor, !!(outputData & 0x40));
-	Outputs->SetValue(Output2pMotor, !!(outputData & 0x08));
 	Outputs->SetValue(Output2pLampStart, !!(outputData & 0x10));
 	Outputs->SetValue(OutputVisualChange3D, !!(outputData & 0x02));
 	Outputs->SetValue(Output1pAirFront, !!(outputData2 & 0x80));
@@ -32,15 +30,15 @@ static int WindowsLoop()
 	Outputs->SetValue(Output2pAirRear, !!(outputData2 & 0x10));
 	Outputs->SetValue(OutputRawLamps, outputData & outputData2);
 
-	if (Outputs->GetValue(Output1pKnock) && AutoRecoilPulse)
-		Outputs->SetValue(Output1pKnock, 0);
+	if (Outputs->GetValue(Output1pMotor) && AutoRecoilPulse)
+		Outputs->SetValue(Output1pMotor, 0);
 	else
-		Outputs->SetValue(Output1pKnock, !!(outputData & 0x20));
+		Outputs->SetValue(Output1pMotor, !!(outputData & 0x40));
 
-	if (Outputs->GetValue(Output2pKnock) && AutoRecoilPulse)
-		Outputs->SetValue(Output2pKnock, 0);
+	if (Outputs->GetValue(Output2pMotor) && AutoRecoilPulse)
+		Outputs->SetValue(Output2pMotor, 0);
 	else
-		Outputs->SetValue(Output2pKnock, !!(outputData & 0x04));
+		Outputs->SetValue(Output2pMotor, !!(outputData & 0x08));
 
 	return 0;
 }

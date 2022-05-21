@@ -338,16 +338,16 @@ static int WindowsLoop()
 	oldShoot2 = newShoot2;
 
 
-	Outputs->SetValue(EOutputs::OutputAmmo1pA, Ammo1pA);
-	Outputs->SetValue(EOutputs::OutputAmmo1pB, Ammo1pB);
-	Outputs->SetValue(EOutputs::OutputAmmo2pA, Ammo2pA);
-	Outputs->SetValue(EOutputs::OutputAmmo2pB, Ammo2pB);
-	Outputs->SetValue(EOutputs::OutputFlame1pBool, Flame1pBool);
-	Outputs->SetValue(EOutputs::OutputFlame2pBool, Flame2pBool);
-	Outputs->SetValue(EOutputs::OutputHealth1pBool, Health1pBool);
-	Outputs->SetValue(EOutputs::OutputHealth2pBool, Health2pBool);
-	Outputs->SetValue(EOutputs::OutputShoot1p, Shoot1p);
-	Outputs->SetValue(EOutputs::OutputShoot2p, Shoot2p);
+	Outputs->SetValue(OutputAmmo1pA, Ammo1pA);
+	Outputs->SetValue(OutputAmmo1pB, Ammo1pB);
+	Outputs->SetValue(OutputAmmo2pA, Ammo2pA);
+	Outputs->SetValue(OutputAmmo2pB, Ammo2pB);
+	Outputs->SetValue(OutputFlame1pBool, Flame1pBool);
+	Outputs->SetValue(OutputFlame2pBool, Flame2pBool);
+	Outputs->SetValue(OutputHealth1pBool, Health1pBool);
+	Outputs->SetValue(OutputHealth2pBool, Health2pBool);
+	Outputs->SetValue(OutputShoot1p, Shoot1p);
+	Outputs->SetValue(OutputShoot2p, Shoot2p);
 
 	return 0;
 }
