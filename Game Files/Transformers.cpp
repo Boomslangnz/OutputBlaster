@@ -32,8 +32,17 @@ static int WindowsLoop(Helpers* helpers)
 	Outputs->SetValue(OutputEmblemRed, !!(outputs2 & 0x20) || !!(Testoutputs2 & 0x20));
 	Outputs->SetValue(OutputEmblemGreen, !!(outputs2 & 0x10) || !!(Testoutputs2 & 0x10));
 	Outputs->SetValue(OutputEmblemBlue, !!(outputs2 & 0x08) || !!(Testoutputs2 & 0x08));
-	Outputs->SetValue(OutputShoot1p, !!(outputs1 & 0x40) || !!(Testoutputs1 & 0x40));
-	Outputs->SetValue(OutputShoot2p, !!(outputs1 & 0x08) || !!(Testoutputs1 & 0x08));
+
+	if (Outputs->GetValue(OutputShoot1p) && AutoRecoilPulse)
+		Outputs->SetValue(OutputShoot1p, 0);
+	else
+		Outputs->SetValue(OutputShoot1p, !!(outputs1 & 0x40) || !!(Testoutputs1 & 0x40));
+
+	if (Outputs->GetValue(OutputShoot2p) && AutoRecoilPulse)
+		Outputs->SetValue(OutputShoot2p, 0);
+	else
+		Outputs->SetValue(OutputShoot2p, !!(outputs1 & 0x08) || !!(Testoutputs1 & 0x08));
+
 	return 0;
 }
 

@@ -33,6 +33,7 @@ static bool init = false;
 static wchar_t* settingsFilename = TEXT(".\\OutputBlaster.ini");
 static int SleepA = GetPrivateProfileInt(TEXT("Settings"), TEXT("Sleep"), 16, settingsFilename);
 static int MaxScaleOutput = GetPrivateProfileInt(TEXT("Settings"), TEXT("MaxScaleOutput"), 16, settingsFilename);
+static int AutoRecoilPulse = GetPrivateProfileInt(TEXT("Settings"), TEXT("AutoRecoilPulse"), 0, settingsFilename);
 
 class Helpers {
 public:

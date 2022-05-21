@@ -20,12 +20,21 @@ static int WindowsLoop()
 	UINT8 OutputData = helpers->ReadByte(0x246428, true);
 
 	Outputs->SetValue(OutputLampStart, !!(OutputData & 0x80));
-	Outputs->SetValue(Output1pRecoil, !!(OutputData & 0x40));
 	Outputs->SetValue(Output1pHolderLamp, !!(OutputData & 0x02));
 	Outputs->SetValue(Output2pLampStart, !!(OutputData & 0x10));
-	Outputs->SetValue(Output2pRecoil, !!(OutputData & 0x08));
 	Outputs->SetValue(Output2pHolderLamp, !!(OutputData & 0x01));
 	Outputs->SetValue(OutputBillboardLamp, !!(OutputData & 0x20));
+
+	if (Outputs->GetValue(Output1pRecoil) && AutoRecoilPulse)
+		Outputs->SetValue(Output1pRecoil, 0);
+	else
+		Outputs->SetValue(Output1pRecoil, !!(OutputData & 0x40));
+
+	if (Outputs->GetValue(Output2pRecoil) && AutoRecoilPulse)
+		Outputs->SetValue(Output2pRecoil, 0);
+	else
+		Outputs->SetValue(Output2pRecoil, !!(OutputData & 0x08));
+
 	return 0;
 }
 
