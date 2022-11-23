@@ -17,26 +17,20 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 static int WindowsLoop()
 {
-	INT_PTR outputdataBase1 = helpers->ReadIntPtr(0x62B78, true);
-	INT_PTR outputdataBase2 = helpers->ReadIntPtr(outputdataBase1 + 0x7F0, false);
-	INT_PTR outputdataBase3 = helpers->ReadIntPtr(outputdataBase2 + 0xD4, false);
-	UINT8 outputdataBase4 = helpers->ReadByte(outputdataBase3 + 0xC, false);
-	UINT8 outputdataBase5 = helpers->ReadByte(outputdataBase3 + 0xD, false);
+	uintptr_t regal32Base = (uintptr_t)GetModuleHandleA("regal32.dll");
+	INT_PTR outputBase = helpers->ReadIntPtr((INT_PTR)regal32Base + 0x262B58, false);
+	INT_PTR outputOff0 = helpers->ReadIntPtr(outputBase + 0x5C, false);
+	INT_PTR outputOff1 = helpers->ReadIntPtr(outputOff0 + 0x08, false);
+	UINT8 output1 = helpers->ReadByte(outputOff1 + 0x2B2, false);
+	UINT8 output2 = helpers->ReadByte(outputOff1 + 0x2B3, false);
 
-	if (outputdataBase4 == 0x80)
-	{
-		Outputs->SetValue(OutputLampStart, 0x01);
-	}
-	else
-	{
-		Outputs->SetValue(OutputLampStart, 0x00);
-	}
-	Outputs->SetValue(OutputLampView1, !!(outputdataBase4 & 0x8));
-	Outputs->SetValue(OutputBoost, !!(outputdataBase4 & 0x10));
-	Outputs->SetValue(OutputLampRed, !!(outputdataBase4 & 0x1));
-	Outputs->SetValue(OutputLampRed2, !!(outputdataBase5 & 0x40));
-	Outputs->SetValue(OutputLampBlue, !!(outputdataBase4 & 0x2));
-	Outputs->SetValue(OutputLampBlue2, !!(outputdataBase5 & 0x80));
+	Outputs->SetValue(OutputLampStart, !!(output1 & 0x80));
+	Outputs->SetValue(OutputLampView1, !!(output1 & 0x8));
+	Outputs->SetValue(OutputBoost, !!(output1 & 0x10));
+	Outputs->SetValue(OutputLampRed, !!(output1 & 0x1));
+	Outputs->SetValue(OutputLampRed2, !!(output2 & 0x40));
+	Outputs->SetValue(OutputLampBlue, !!(output1 & 0x2));
+	Outputs->SetValue(OutputLampBlue2, !!(output2 & 0x80));
 	return 0;
 }
 

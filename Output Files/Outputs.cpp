@@ -161,6 +161,7 @@ const char *COutputs::s_outputNames[] =
 	"Base",
 	"Extra",
 	"Dash",
+	"RPM",
 };
 
 const char *COutputs::GetOutputName(EOutputs output)

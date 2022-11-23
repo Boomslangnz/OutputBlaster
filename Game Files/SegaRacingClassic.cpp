@@ -20,6 +20,7 @@ static int WindowsLoop()
 	UINT8 data = helpers->ReadByte(0x434C18, true);
 	UINT8 data2 = helpers->ReadByte(0x50DBEA, true);
 	UINT8 FFB = helpers->ReadByte(0x834C19, false);
+	DWORD RPM = helpers->ReadInt32(0xAC8CC0, true);
 
 	Outputs->SetValue(OutputLampStart, !!(data & 0x04));
 	Outputs->SetValue(OutputLampLeader, !!(data & 0x20));
@@ -35,6 +36,7 @@ static int WindowsLoop()
 	Outputs->SetValue(OutputRearGreen, !!(data2 & 0x10));
 	Outputs->SetValue(OutputRearBlue, !!(data2 & 0x20));
 	Outputs->SetValue(OutputFFB, FFB);
+	Outputs->SetValue(OutputRPM, RPM / 100.0);
 	return 0;
 }
 

@@ -167,6 +167,7 @@ enum EOutputs
 	OutputBase,
 	OutputExtra,
 	OutputDash,
+	OutputRPM,
 	NUM_OUTPUTS
 };
 

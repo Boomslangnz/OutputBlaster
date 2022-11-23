@@ -29,6 +29,8 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/DirtyDrivin.h"
 #include "Game Files/GTIClubSuperminiFesta.h"
 #include "Game Files/H2Overdrive.h"
+#include "Game Files/HOTD4VerA.h"
+#include "Game Files/HOTD4VerC.h"
 #include "Game Files/ID0V131.h"
 #include "Game Files/ID0V211.h"
 #include "Game Files/InitialD4.h"
@@ -62,6 +64,14 @@ static char newCrc[0x400];
 Game* game;
 bool OutputsRunning = true;
 
+static uint32_t ReadWithoutCrashing(uint32_t* addr)
+{
+	if (addr == NULL || IsBadReadPtr(addr, 4))
+		return 0;
+	else
+		return *addr;
+}
+
 DWORD WINAPI OutputsLoop(LPVOID lpParam)
 {
 	Sleep(2500);
@@ -80,7 +90,7 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 	uint32_t newCrcResult = GetCRC32(newCrc, 0x400);
 	switch (newCrcResult)
 	{
-	case 0x74303cd6:
+	case 0x4904b14d:
 		game = new OperationGhost;
 		break;
 	case 0xf26ecfa9:
@@ -195,29 +205,37 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 	}
 	else
 	{
-		if (*(uint32_t*)0x804CA44 == 0x82EED98)
+		if (ReadWithoutCrashing((uint32_t*)0x804CA44) == 0x82EED98)
 		{
 			game = new AfterburnerClimax;
 		}
-		else if (*(uint32_t*)0x804B850 == 0x82642C8)
+		else if (ReadWithoutCrashing((uint32_t*)0x804B850) == 0x82642C8)
 		{
 			game = new Outrun2SP;
 		}
-		else if (*(uint32_t*)0x804A908 == 0x12EE)
+		else if (ReadWithoutCrashing((uint32_t*)0x804A908) == 0x12EE)
 		{
 			game = new SRTV;
 		}
-		else if (*(uint32_t*)0x804CF84 == 0x1B09)
+		else if (ReadWithoutCrashing((uint32_t*)0x804CF84) == 0x1B09)
 		{
 			game = new InitialD4;
 		}
-		else if (*(uint32_t*)0x804D258 == 0x1C5F)
+		else if (ReadWithoutCrashing((uint32_t*)0x804D258) == 0x1C5F)
 		{
 			game = new InitialD5;
 		}
-		else if (*(uint32_t*)0x0804E8F8 == 0x08479718)
+		else if (ReadWithoutCrashing((uint32_t*)0x0804E8F8) == 0x08479718)
 		{
 			game = new RTuned;
+		}
+		else if (ReadWithoutCrashing((uint32_t*)0x0832572E) == 0xAAAA03C7) // Ver A
+		{
+			game = new HOTD4VerA;
+		}
+		else if (ReadWithoutCrashing((uint32_t*)0x08320C69) == 0xAAAA03C7) // Ver C
+		{
+			game = new HOTD4VerC;
 		}
 
 		if (game != 0) //Load Lindbergh Game 
