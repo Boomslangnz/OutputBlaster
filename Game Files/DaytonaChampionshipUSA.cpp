@@ -22,6 +22,7 @@ static int WindowsLoop()
 	UINT8 view2data = helpers->ReadByte(0x11AF48C, true);
 	UINT8 view3data = helpers->ReadByte(0x11AF4A0, true);
 	UINT8 view4data = helpers->ReadByte(0x11AF4B4, true);
+	DWORD RPM = helpers->ReadInt32(0x15B9978, true);
 	UINT8 FFB = helpers->ReadByte(0x15AFC46, false);
 
 	Outputs->SetValue(OutputLampStart, !!(startdata & 0x01));
@@ -29,6 +30,7 @@ static int WindowsLoop()
 	Outputs->SetValue(OutputLampView2, !!(view2data & 0x01));
 	Outputs->SetValue(OutputLampView3, !!(view3data & 0x01));
 	Outputs->SetValue(OutputLampView4, !!(view4data & 0x01));
+	Outputs->SetValue(OutputRPM, RPM / 100.0);
 	Outputs->SetValue(OutputFFB, FFB);
 	return 0;
 }

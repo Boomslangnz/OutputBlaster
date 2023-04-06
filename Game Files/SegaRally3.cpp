@@ -13,27 +13,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
-#include "DaytonaChampionshipUSANSE.h"
+#include "SegaRally3.h"
 
 static int WindowsLoop()
 {
-	UINT8 startdata = helpers->ReadByte(0x11C16E4, true);
-	UINT8 view1data = helpers->ReadByte(0x11C16F8, true);
-	UINT8 view2data = helpers->ReadByte(0x11C170C, true);
-	UINT8 view3data = helpers->ReadByte(0x11C1720, true);
-	UINT8 view4data = helpers->ReadByte(0x11C1734, true);
-	UINT8 OutputsRaw = helpers->ReadByte(0x15C8803, true);
-	DWORD RPM = helpers->ReadInt32(0x15CDAF8, true);
-	UINT8 FFB = helpers->ReadByte(0x1334061, true);
+	float RPMfloat = helpers->ReadFloat32(0x5DBE84, true);
+	DWORD RPM = floor(RPMfloat + 0.5);
 
-	Outputs->SetValue(OutputLampStart, !!(startdata & 0x01));
-	Outputs->SetValue(OutputLampView1, !!(view1data & 0x01));
-	Outputs->SetValue(OutputLampView2, !!(view2data & 0x01));
-	Outputs->SetValue(OutputLampView3, !!(view3data & 0x01));
-	Outputs->SetValue(OutputLampView4, !!(view4data & 0x01));
-	Outputs->SetValue(OutputLampLeader, !!(OutputsRaw & 0x80));
 	Outputs->SetValue(OutputRPM, RPM / 100.0);
-	Outputs->SetValue(OutputFFB, FFB);
 	return 0;
 }
 
@@ -46,12 +33,12 @@ static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
 	}
 }
 
-void DaytonaChampionshipUSANSE::OutputsGameLoop()
+void SR3::OutputsGameLoop()
 {
 	if (!init)
 	{
 		Outputs = CreateOutputsFromConfig();
-		m_game.name = "Daytona Championship USA NSE";
+		m_game.name = "Sega Rally 3";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
 		Outputs->Attached();

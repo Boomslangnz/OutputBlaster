@@ -50,6 +50,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/R-Tuned.h"
 #include "Game Files/SegaRaceTV.h"
 #include "Game Files/SegaRacingClassic.h"
+#include "Game Files/SegaRally3.h"
 #include "Game Files/SRG.h"
 #include "Game Files/Transformers.h"
 #include "Game Files/SonicAllStarsRacing.h"
@@ -170,6 +171,9 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		break;
 	case 0xc484002f:
 		game = new SRG;
+		break;
+	case 0x08f14845:
+		game = new SR3;
 		break;
 	case 0xc68bcd2f:
 		game = new InitialD0V131;
