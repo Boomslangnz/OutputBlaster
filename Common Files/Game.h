@@ -17,6 +17,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "../Output Files/WinOutputs.h"
 #include "../Output Files/NetOutputs.h"
 #include <Windows.h>
+#include "../Common Files/MinHook.h"
 
 static GameOutput m_game;
 static COutputs* Outputs;

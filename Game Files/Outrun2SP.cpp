@@ -25,7 +25,7 @@ static int WindowsLoop()
 	Outputs->SetValue(OutputLampView1, !!(outputdata & 0x08));
 	Outputs->SetValue(OutputDriverLampL, !!(outputdata & 0x20));
 	Outputs->SetValue(OutputDriverLampR, !!(outputdata & 0x04));
-	Outputs->SetValue(OutputRPM, RPM / 100.0);
+	Outputs->SetValue(OutputRPM, RPM / 10.0);
 	return 0;
 }
 

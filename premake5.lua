@@ -24,6 +24,30 @@ workspace "OutputBlaster"
 	filter "platforms:x64"
 		architecture "x64"
 
+	filter { "platforms:x86", "configurations:Release" }
+
+	links 	{
+		  "Common Files/MinHook/x86/Release/MinHook.lib"
+		}
+
+	filter { "platforms:x86", "configurations:Debug" }
+
+	links 	{
+		  "Common Files/MinHook/x86/Debug/MinHook.lib"
+		}
+
+	filter { "platforms:x64", "configurations:Release" }
+
+	links 	{
+		  "Common Files/MinHook/x64/Release/MinHook.lib"
+		}
+
+	filter { "platforms:x64", "configurations:Debug" }
+
+	links 	{
+		  "Common Files/MinHook/x64/Debug/MinHook.lib"
+		}
+
 project "OutputBlaster"
 	targetname "OutputBlaster"
 	language "c++"

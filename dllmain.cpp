@@ -29,6 +29,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/DaytonaChampionshipUSANSE.h"
 #include "Game Files/DirtyDrivin.h"
 #include "Game Files/GTIClubSuperminiFesta.h"
+#include "Game Files/GRID.h"
 #include "Game Files/H2Overdrive.h"
 #include "Game Files/HOTD4VerA.h"
 #include "Game Files/HOTD4VerC.h"
@@ -195,6 +196,9 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		break;
 	case 0xa447f2ef:
 		game = new WMMT6R;
+		break;
+	case 0xbfa0c985:
+		game = new GRID;
 		break;
 	default:
 #ifdef _DEBUG
