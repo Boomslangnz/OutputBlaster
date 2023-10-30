@@ -25,8 +25,6 @@ static int WindowsLoop()
 	UINT8 Seatlamp4 = helpers->ReadByte(lampbase + 0x4D, false);
 	UINT8 Seatlamp5 = helpers->ReadByte(lampbase + 0x1F, false);
 	UINT8 Seatlamp6 = helpers->ReadByte(lampbase + 0x49, false);
-	INT_PTR FFBBase = helpers->ReadIntPtr(0x7E00590, true);
-	UINT8 FFB = helpers->ReadByte(FFBBase + 0x45, false);
 
 	Outputs->SetValue(OutputLampStart, !!(lamps & 0x80));
 	Outputs->SetValue(OutputLampView1, !!(lamps & 0x100));
@@ -41,7 +39,11 @@ static int WindowsLoop()
 	Outputs->SetValue(OutputSeat5Lamp, !!(Seatlamp5 & 0xFF));
 	Outputs->SetValue(OutputSeat6Lamp, !!(Seatlamp6 & 0xFF));
 	Outputs->SetValue(OutputSeat7Lamp, !!(lamps & 0x4000));
-	Outputs->SetValue(OutputFFB, FFB);
+	Outputs->SetValue(OutputFFB, !!(lamps & 0x2000));
+	Outputs->SetValue(OutputFFB1, !!(lamps & 0x1000));
+	Outputs->SetValue(OutputFFB2, !!(lamps & 0x40));
+	Outputs->SetValue(OutputFFB3, !!(lamps & 0x800));
+	Outputs->SetValue(OutputFFB4, !!(lamps & 0x20));
 	return 0;
 }
 
