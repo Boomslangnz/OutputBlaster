@@ -22,6 +22,7 @@ static int WindowsLoop()
 	DWORD RPM = floor(RPMfloat + 0.5);
 
 	Outputs->SetValue(OutputLampStart, !!(outputdata & 0x80));
+	Outputs->SetValue(OutputLampLeader, !!(outputdata & 0x40));
 	Outputs->SetValue(OutputLampView1, !!(outputdata & 0x08));
 	Outputs->SetValue(OutputDriverLampL, !!(outputdata & 0x20));
 	Outputs->SetValue(OutputDriverLampR, !!(outputdata & 0x04));
