@@ -18,11 +18,14 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 static int WindowsLoop()
 {
 	UINT8 outputdata = helpers->ReadByte(0x8670E08, false);
+	UINT8 raceLeader = helpers->ReadByte(0x830430C, false);
 	float RPMfloat = helpers->ReadFloat32(0x827A174, false);
 	DWORD RPM = floor(RPMfloat + 0.5);
+	
+	//set OutputLampLeader if raceLeader is equal to hex  1
+	Outputs->SetValue(OutputLampLeader, raceLeader == 0x01);
 
 	Outputs->SetValue(OutputLampStart, !!(outputdata & 0x80));
-	Outputs->SetValue(OutputLampLeader, !!(outputdata & 0x40));
 	Outputs->SetValue(OutputLampView1, !!(outputdata & 0x08));
 	Outputs->SetValue(OutputDriverLampL, !!(outputdata & 0x20));
 	Outputs->SetValue(OutputDriverLampR, !!(outputdata & 0x04));
