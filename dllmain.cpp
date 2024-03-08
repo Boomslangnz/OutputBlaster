@@ -25,6 +25,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/BattleGear4Tuned.h"
 #include "Game Files/Cars.h"
 #include "Game Files/ChaseHQ2.h"
+#include "Game Files/CruisnBlast.h"
 #include "Game Files/DaytonaChampionshipUSA.h"
 #include "Game Files/DaytonaChampionshipUSANSE.h"
 #include "Game Files/DirtyDrivin.h"
@@ -204,6 +205,9 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 	case 0xdb7c9b6e:
 		game = new FNFDrift;
 		break;
+	//case 0x648e6f7b:
+	//	game = new FNF;
+	//	break;
 	default:
 #ifdef _DEBUG
 		static char test[256];
@@ -212,6 +216,14 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		OutputDebugStringA(test);
 #endif
 		break;
+	}
+
+	//if the game has not been found usinjg CRC show a message box showing the CRC we are missing
+	if (game == 0)
+	{
+		char test[256];
+		memset(test, 0, 256);
+		MessageBoxA(NULL, test, "Error", NULL);
 	}
 
 	if (game != 0) //Load PC Based Arcade Game

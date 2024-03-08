@@ -27,16 +27,19 @@ static int WindowsLoop()
 	//ONLY view 3 on 2160640
 	//ONLY START on 587776
 	//ONLY MUSIC on 1112064
+
+
+
 	//View 1
 	Outputs->SetValue(OutputLampView1, !!(Lamps & 0x800000));
 	//View 2
 	Outputs->SetValue(OutputLampView2, !!(Lamps & 0x400000));
 	//View 3
 	Outputs->SetValue(OutputLampView3, !!(Lamps & 0x200000));
-	//Start
-	Outputs->SetValue(OutputLampStart, !!(Lamps & 0x100000));
 	//Music
-	Outputs->SetValue(OutputLampView4, !!(Lamps & 0x20000));
+	Outputs->SetValue(OutputLampView4, !!(Lamps & 0x100000));
+	//start
+	Outputs->SetValue(OutputLampStart, !!(Lamps & 0x90000));
 
 	return 0;
 }
