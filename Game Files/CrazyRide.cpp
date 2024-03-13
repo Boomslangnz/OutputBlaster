@@ -23,8 +23,8 @@ static int WindowsLoop()
 	*/
 
 
-	DWORD Start = helpers->ReadInt32(0x22630, true);
-	DWORD Brake = helpers->ReadInt32(0x22634, true);
+	DWORD Start = helpers->ReadInt32(0x7FFA1FD22630, true);
+	DWORD Brake = helpers->ReadInt32(0x7FFA1FD22634, true);
 
 	//View 1
 	Outputs->SetValue(OutputLampStart, Start == 1);
