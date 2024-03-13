@@ -25,11 +25,13 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/BattleGear4Tuned.h"
 #include "Game Files/Cars.h"
 #include "Game Files/ChaseHQ2.h"
+#include "Game Files/CrazyRide.h"
 #include "Game Files/CruisnBlast.h"
 #include "Game Files/DaytonaChampionshipUSA.h"
 #include "Game Files/DaytonaChampionshipUSANSE.h"
 #include "Game Files/DirtyDrivin.h"
 #include "Game Files/FNFDrift.h"
+#include "Game Files/FNFSupercars.h"
 #include "Game Files/GTIClubSuperminiFesta.h"
 #include "Game Files/GRID.h"
 #include "Game Files/H2Overdrive.h"
@@ -205,9 +207,20 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 	case 0xdb7c9b6e:
 		game = new FNFDrift;
 		break;
-	//case 0x648e6f7b:
+	case 0xd00ed126:
+		game = new CruisnBlast;
+		break;
+	//works with non TP version so far
+	// case 0x259812d7:
+	// 	game = new FNFSupercars;
+	// 	break;
+	//WIP
+	//case 0x648e6f7b: 
 	//	game = new FNF;
 	//	break;
+	case 0x999999999:
+		game = new CrazyRide;
+		break;
 	default:
 #ifdef _DEBUG
 		static char test[256];
@@ -219,12 +232,7 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 	}
 
 	//if the game has not been found usinjg CRC show a message box showing the CRC we are missing
-	if (game == 0)
-	{
-		char test[256];
-		memset(test, 0, 256);
-		MessageBoxA(NULL, test, "Error", NULL);
-	}
+	
 
 	if (game != 0) //Load PC Based Arcade Game
 	{

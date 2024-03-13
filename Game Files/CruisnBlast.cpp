@@ -14,34 +14,36 @@ You should have received a copy of the GNU General Public License
 along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #include "CruisnBlast.h"
+#include <iostream>
+#include <fstream>
 
 static int WindowsLoop()
 {
-	DWORD StartLamp = helpers->ReadInt32(0x08AC3040, true);
-	DWORD KeypadLamp = helpers->ReadInt32(0x08AC3044, true);
-	DWORD View1Lamp = helpers->ReadInt32(0x08AC3048, true);
-	DWORD View2Lamp = helpers->ReadInt32(0x08AC304C, true);
-	DWORD View3Lamp = helpers->ReadInt32(0x08AC3050, true);
-	DWORD TunesLamp = helpers->ReadInt32(0x08AC3054, true);
-	DWORD TopSpeakerLamp = helpers->ReadInt32(0x08AC3058, true);
-	DWORD TopRedLamp = helpers->ReadInt32(0x08AC305C, true);
-	DWORD TopWhiteLamp = helpers->ReadInt32(0x08AC3060, true);
-	DWORD TopBlueLamp = helpers->ReadInt32(0x08AC3064, true);
-	DWORD LeaderLamp = helpers->ReadInt32(0x08AC3068, true);
-	DWORD SeatSidesLamp = helpers->ReadInt32(0x08AC306C, true);
-	DWORD SeatBackLamp = helpers->ReadInt32(0x08AC3070, true);
-	DWORD DashRedLamp = helpers->ReadInt32(0x08AC3074, true);
-	DWORD DashOrangeLamp = helpers->ReadInt32(0x08AC3078, true);
-	DWORD DashBlueLamp = helpers->ReadInt32(0x08AC307C, true);
-	DWORD PedestalOuterLamp = helpers->ReadInt32(0x08AC3080, true);
-	DWORD PedestalInnerLamp = helpers->ReadInt32(0x08AC3084, true);
+	INT_PTR StartLamp = helpers->ReadIntPtr(0xA05C0DC, false);
+	INT_PTR OutputLampStart = helpers->ReadInt32(0x8AC3038, false);
+	
+	INT_PTR KeypadLamp = helpers->ReadInt32(0x8AC3044, false);
+	INT_PTR View1Lamp = helpers->ReadInt32(0x8AC3048, false);
+	INT_PTR View2Lamp = helpers->ReadInt32(0x8AC304C, false);
+	INT_PTR View3Lamp = helpers->ReadInt32(0x8AC3050, false);
+	INT_PTR TunesLamp = helpers->ReadInt32(0x8AC3054, false);
+	INT_PTR TopSpeakerLamp = helpers->ReadInt32(0x8AC3058, false);
+	INT_PTR TopRedLamp = helpers->ReadInt32(0x8AC305C, false);
+	INT_PTR TopWhiteLamp = helpers->ReadInt32(0x8AC3060, false);
+	INT_PTR TopBlueLamp = helpers->ReadInt32(0x8AC3064, false);
+	INT_PTR LeaderLamp = helpers->ReadInt32(0x8AC3068, false);
+	INT_PTR SeatSidesLamp = helpers->ReadInt32(0x8AC306C, false);
+	INT_PTR SeatBackLamp = helpers->ReadInt32(0x8AC3070, false);
+	INT_PTR DashRedLamp = helpers->ReadInt32(0x8AC3074, false);
+	INT_PTR DashOrangeLamp = helpers->ReadInt32(0x8AC3078, false);
+	INT_PTR DashBlueLamp = helpers->ReadInt32(0x8AC307C, false);
+	INT_PTR PedestalOuterLamp = helpers->ReadInt32(0x8AC3080, false);
+	INT_PTR PedestalInnerLamp = helpers->ReadInt32(0x8AC3084, false);
 
-	Outputs->SetValue(OutputLampStart, StartLamp > 0);
-	Outputs->SetValue(OutputLampView1, View1Lamp > 0);
-	Outputs->SetValue(OutputLampView2, View2Lamp > 0);
-	Outputs->SetValue(OutputLampView3, View3Lamp > 0);
-	Outputs->SetValue(OutputLampView4, TunesLamp > 0);
-	Outputs->SetValue(OutputLampLeader, LeaderLamp > 0);
+
+	//Coming Soon
+	
+
 	return 0;
 }
 
