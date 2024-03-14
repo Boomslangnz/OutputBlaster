@@ -18,12 +18,13 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 static uintptr_t usbBase;
 static bool startOn = false;
 static bool brakeOn = false;
-
+static bool stopOn = false;
 static int WindowsLoop()
 {
 
+	UINT8 Brake = helpers->ReadInt32(usbBase + 0x22638, false);
 	UINT8 Start = helpers->ReadInt32(usbBase + 0x22630, false);
-	UINT8 Brake = helpers->ReadInt32(usbBase + 0x22634, false);
+	UINT8 StopLamp = helpers->ReadInt32(usbBase + 0x22634, false);
 
 	if (Start == 1) {
 		Outputs->SetValue(OutputLampStart, true);
@@ -66,6 +67,29 @@ static int WindowsLoop()
 	else
 	{
 		Outputs->SetValue(OutputLampView1, false);
+	}
+
+	//stop lamp
+
+	if (StopLamp == 1)
+	{
+		Outputs->SetValue(OutputLampView2, true);
+	}
+	else if (StopLamp == 2)
+	{
+		if (stopOn)
+		{
+			stopOn = false;
+		}
+		else
+		{
+			stopOn = true;
+		}
+		Outputs->SetValue(OutputLampView2, stopOn);
+	}
+	else
+	{
+		Outputs->SetValue(OutputLampView2, false);
 	}
 
 	return 0;
