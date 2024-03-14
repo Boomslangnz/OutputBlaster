@@ -15,6 +15,8 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #include "CrazyRide.h"
 
+static uintptr_t usbBase;
+
 static int WindowsLoop()
 {
 	/*
@@ -23,11 +25,11 @@ static int WindowsLoop()
 	*/
 
 
-	DWORD Start = helpers->ReadInt32(0x7FFA1FD22630, true);
-	DWORD Brake = helpers->ReadInt32(0x7FFA1FD22634, true);
+	DWORD Start = helpers->ReadInt32(usbBase + 0x22630, true);
+	DWORD Brake = helpers->ReadInt32(usbBase + 0x22634, true);
 
 	//View 1
-	Outputs->SetValue(OutputLampStart, Start == 1);
+	Outputs->SetValue(OutputLampStart, Start == 2);
 	//View 2
 	Outputs->SetValue(OutputLampView2, Brake == 2);
 	
@@ -43,11 +45,13 @@ static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
 	}
 }
 
+
 void CrazyRide::OutputsGameLoop()
 {
 	if (!init)
 	{
 		Outputs = CreateOutputsFromConfig();
+		usbBase = (uintptr_t)GetModuleHandleA("UsbPluginsDll_R.dll");
 		m_game.name = "Crazy Ride";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
