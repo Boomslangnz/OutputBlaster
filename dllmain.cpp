@@ -218,7 +218,7 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 	//case 0x648e6f7b: 
 	//	game = new FNF;
 	//	break;
-	case 0x999999999:
+	case 0x790b4172:
 		game = new CrazyRide;
 		break;
 	default:
@@ -231,8 +231,6 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		break;
 	}
 
-	//if the game has not been found usinjg CRC show a message box showing the CRC we are missing
-	
 
 	if (game != 0) //Load PC Based Arcade Game
 	{

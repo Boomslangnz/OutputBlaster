@@ -16,23 +16,58 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "CrazyRide.h"
 
 static uintptr_t usbBase;
+static bool startOn = false;
+static bool brakeOn = false;
 
 static int WindowsLoop()
 {
-	/*
-	UsbPluginsDll_R.dll + 22630
-	usbPluginsDll_R.dll + 22634
-	*/
 
+	UINT8 Start = helpers->ReadInt32(usbBase + 0x22630, false);
+	UINT8 Brake = helpers->ReadInt32(usbBase + 0x22634, false);
 
-	DWORD Start = helpers->ReadInt32(usbBase + 0x22630, true);
-	DWORD Brake = helpers->ReadInt32(usbBase + 0x22634, true);
+	if (Start == 1) {
+		Outputs->SetValue(OutputLampStart, true);
+	}
+	else if (Start == 2)
+	{
+		if (startOn)
+		{
+			startOn = false;
+		}
+		else
+		{
+			startOn = true;
+		}
+		Outputs->SetValue(OutputLampStart, startOn);
+	}
+	else
+	{
+		Outputs->SetValue(OutputLampStart, false);
+	}
 
-	//View 1
-	Outputs->SetValue(OutputLampStart, Start == 2);
-	//View 2
-	Outputs->SetValue(OutputLampView2, Brake == 2);
+	//brake
 	
+	if (Brake == 1)
+	{
+		Outputs->SetValue(OutputLampView1, true);
+	}
+	else if (Brake == 2)
+	{
+		if (brakeOn)
+		{
+			brakeOn = false;
+		}
+		else
+		{
+			brakeOn = true;
+		}
+		Outputs->SetValue(OutputLampView1, brakeOn);
+	}	
+	else
+	{
+		Outputs->SetValue(OutputLampView1, false);
+	}
+
 	return 0;
 }
 
