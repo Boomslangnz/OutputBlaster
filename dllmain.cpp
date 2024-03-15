@@ -30,6 +30,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/DaytonaChampionshipUSA.h"
 #include "Game Files/DaytonaChampionshipUSANSE.h"
 #include "Game Files/DirtyDrivin.h"
+//#include "Game Files/DeadHeat.h"
 #include "Game Files/FNFDrift.h"
 #include "Game Files/FNFSupercars.h"
 #include "Game Files/GTIClubSuperminiFesta.h"
@@ -50,6 +51,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/M2Emulator.h"
 #include "Game Files/Machstorm.h"
 #include "Game Files/MarioKartGPDXJP1.10.h"
+#include "Game Files/MotoGP.h"
 #include "Game Files/OperationGhost.h"
 #include "Game Files/Outrun2SP.h"
 #include "Game Files/R-Tuned.h"
@@ -210,16 +212,22 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 	case 0xd00ed126:
 		game = new CruisnBlast;
 		break;
+	//case 0x0aa471ff:
+	//	game = new DeadHeat;
+	//	break;
 	//works with non TP version so far
-	// case 0x259812d7:
-	// 	game = new FNFSupercars;
-	// 	break;
+	 case 0x259812d7:
+	 	game = new FNFSupercars;
+		break;
 	//WIP
 	//case 0x648e6f7b: 
 	//	game = new FNF;
 	//	break;
 	case 0x790b4172:
 		game = new CrazyRide;
+		break;
+	case 0xef254afc:
+		game = new MotoGP;
 		break;
 	default:
 #ifdef _DEBUG
@@ -231,7 +239,14 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		break;
 	}
 
-
+	if (game == 0)
+	{
+		//print the crc in a messsageboxa
+		char test[256];
+		memset(test, 0, 256);
+		sprintf(test, "New CRC: %08x not implemented", newCrcResult);
+		MessageBoxA(NULL, test, "Error", NULL);
+	}
 	if (game != 0) //Load PC Based Arcade Game
 	{
 		game->OutputsGameLoop();
