@@ -21,6 +21,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 //Game headers go here
 #include "Game Files/AfterburnerClimax.h"
 #include "Game Files/AliensExtermination.h"
+#include "Game Files/ArcticThunder.h"
 #include "Game Files/BattleGear4.h"
 #include "Game Files/BattleGear4Tuned.h"
 #include "Game Files/Cars.h"
@@ -228,6 +229,9 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		break;
 	case 0xef254afc:
 		game = new MotoGP;
+		break;
+	case 0xc205c6Ac:
+		game = new ArcticThunder;
 		break;
 	default:
 #ifdef _DEBUG

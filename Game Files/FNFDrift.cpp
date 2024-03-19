@@ -20,16 +20,6 @@ static int WindowsLoop()
 
 	DWORD Lamps = helpers->ReadInt32(0x41B86BC, true);
 
-	//no lamps on 63488
-	//all lamps on 16775168
-	//ONLY view 1 on 8452096
-	//ONLY view 2 on 4257792
-	//ONLY view 3 on 2160640
-	//ONLY START on 587776
-	//ONLY MUSIC on 1112064
-
-
-
 	//View 1
 	Outputs->SetValue(OutputLampView1, !!(Lamps & 0x800000));
 	//View 2

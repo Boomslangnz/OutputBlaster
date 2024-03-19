@@ -15,6 +15,8 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #include "Outrun2SP.h"
 
+static bool raceLeaderOn = false;
+
 static int WindowsLoop()
 {
 	UINT8 outputdata = helpers->ReadByte(0x8670E08, false);
@@ -22,9 +24,23 @@ static int WindowsLoop()
 	float RPMfloat = helpers->ReadFloat32(0x827A174, false);
 	DWORD RPM = floor(RPMfloat + 0.5);
 	
-	//set OutputLampLeader if raceLeader is equal to hex  1
-	Outputs->SetValue(OutputLampLeader, raceLeader == 0x01);
-
+	if (raceLeader == 0x01)
+	{
+		if(raceLeader == false)
+		{
+			raceLeaderOn = true;
+			Outputs->SetValue(OutputLampLeader, false);
+		}
+	}
+	else
+	{
+		if (raceLeaderOn == true)
+		{
+			Outputs->SetValue(OutputLampLeader, false);
+			raceLeaderOn = false;
+		}
+	}
+	
 	Outputs->SetValue(OutputLampStart, !!(outputdata & 0x80));
 	Outputs->SetValue(OutputLampView1, !!(outputdata & 0x08));
 	Outputs->SetValue(OutputDriverLampL, !!(outputdata & 0x20));
