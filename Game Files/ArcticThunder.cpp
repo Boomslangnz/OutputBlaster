@@ -19,8 +19,8 @@ static int WindowsLoop()
 {
 
 	UINT8 LampsOut = helpers->ReadByte(0xA363B4, false);
-	Outputs->SetValue(OutputLampStart, !!(LampsOut & 0x04));
-	Outputs->SetValue(OutputLampView1, !!(LampsOut & 0x08));
+	Outputs->SetValue(OutputLampView1, !!(LampsOut & 0x04)); //Attack Button
+	Outputs->SetValue(OutputLampStart, !!(LampsOut & 0x08)); //Start Button
 
 	return 0;
 }
