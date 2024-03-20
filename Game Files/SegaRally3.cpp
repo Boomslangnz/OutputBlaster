@@ -21,12 +21,12 @@ static int WindowsLoop()
 	DWORD RPM = floor(RPMfloat + 0.5);
 	Outputs->SetValue(OutputRPM, RPM / 100.0);
 
-	INT_PTR ViewButton = helpers->ReadIntPtr(0x5DD104, true);
-	INT_PTR StartButton = helpers->ReadIntPtr(0x5D6DF8, true); 
+	UINT8 ViewButton = helpers->ReadByte(0x5DD104, true);
+	UNIT8 StartButton = helpers->ReadByte(0x5D6DF8, true); 
 	
-	Outputs->SetValue(OutputLampView1, !!(ViewButton == 1));
-	Outputs->SetValue(OutputLampStart, !!(StartButton == 1));
-	Outputs->SetValue(OutputLampView2, !!(StartButton == 2));
+	Outputs->SetValue(OutputLampView1, !!(ViewButton & 1));
+	Outputs->SetValue(OutputLampStart, !!(StartButton & 1));
+	Outputs->SetValue(OutputLampView2, !!(StartButton & 2));
 	
 	return 0;
 }
