@@ -246,10 +246,10 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 	if (game == 0)
 	{
 		//print the crc in a messsageboxa
-		char test[256];
-		memset(test, 0, 256);
-		sprintf(test, "New CRC: %08x not implemented", newCrcResult);
-		MessageBoxA(NULL, test, "Error", NULL);
+		//char test[256];
+		//memset(test, 0, 256);
+		///sprintf(test, "New CRC: %08x not implemented", newCrcResult);
+		//MessageBoxA(NULL, test, "Error", NULL);
 	}
 	if (game != 0) //Load PC Based Arcade Game
 	{
