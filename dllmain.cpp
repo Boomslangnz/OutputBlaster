@@ -84,7 +84,6 @@ static uint32_t ReadWithoutCrashing(uint32_t* addr)
 DWORD WINAPI OutputsLoop(LPVOID lpParam)
 {
 	Sleep(2500);
-
 	// Craft CRC detection without virtual address
 	memcpy(newCrc, GetModuleHandle(nullptr), 0x400);
 	DWORD pePTR = *(DWORD*)(newCrc + 0x3C);
@@ -210,13 +209,6 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 	case 0xdb7c9b6e:
 		game = new FNFDrift;
 		break;
-	case 0xd00ed126:
-		game = new CruisnBlast;
-		break;
-	//case 0x0aa471ff:
-	//	game = new DeadHeat;
-	//	break;
-	//works with non TP version so far
 	 case 0x259812d7:
 	 	game = new FNFSupercars;
 		break;
@@ -226,9 +218,6 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 	//	break;
 	case 0x790b4172:
 		game = new CrazyRide;
-		break;
-	case 0xef254afc:
-		game = new MotoGP;
 		break;
 	case 0xc205c6Ac:
 		game = new ArcticThunder;
@@ -243,16 +232,11 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		break;
 	}
 
-	if (game == 0)
-	{
-		//print the crc in a messsageboxa
-		//char test[256];
-		//memset(test, 0, 256);
-		///sprintf(test, "New CRC: %08x not implemented", newCrcResult);
-		//MessageBoxA(NULL, test, "Error", NULL);
-	}
+
 	if (game != 0) //Load PC Based Arcade Game
 	{
+		OutputDebugStringA("Game Found");
+		OutputDebugStringA(std::to_string(newCrcResult).c_str());
 		game->OutputsGameLoop();
 		Sleep(16);
 	}
@@ -266,6 +250,16 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		{
 			game = new Outrun2SP;
 		}
+		else if (ReadWithoutCrashing((uint32_t*)0x804B840) == 0x0002A68)
+		{
+			OutputDebugStringA("Moto GP");
+			game = new MotoGP;
+		}
+		//else if (ReadWithoutCrashing((uint32_t*)0x804B840) == 0x0000012)
+		//{
+		//	OutputDebugStringA("Dead Heat");
+		//	game = new DeadHeat;
+		//}
 		else if (ReadWithoutCrashing((uint32_t*)0x804A908) == 0x12EE)
 		{
 			game = new SRTV;
@@ -290,16 +284,24 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		{
 			game = new HOTD4VerC;
 		}
+		else if (ReadWithoutCrashing((uint32_t*)0x8320C69) == 0xC70000A4)
+		{
+			game = new CruisnBlast;
+		}
 
 		if (game != 0) //Load Lindbergh Game 
 		{
+
 			game->OutputsGameLoop();
 			Sleep(16);
 		}
-		else
-		{
-			MessageBoxA(NULL, "Output Blaster not supported!", "Error", NULL);
-		}
+	}
+	if (game == 0)
+	{
+		static char test[256];
+		memset(test, 0, 256);
+		sprintf(test, "New CRC: %08x not implemented", newCrcResult);
+		OutputDebugStringA(test);
 	}
 	return 0;
 }

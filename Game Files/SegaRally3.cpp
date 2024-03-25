@@ -22,7 +22,7 @@ static int WindowsLoop()
 	Outputs->SetValue(OutputRPM, RPM / 100.0);
 
 	UINT8 ViewButton = helpers->ReadByte(0x5DD104, true);
-	UNIT8 StartButton = helpers->ReadByte(0x5D6DF8, true); 
+	UINT8 StartButton = helpers->ReadByte(0x5D6DF8, true); 
 	
 	Outputs->SetValue(OutputLampView1, !!(ViewButton & 1));
 	Outputs->SetValue(OutputLampStart, !!(StartButton & 1));
