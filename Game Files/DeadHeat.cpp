@@ -26,8 +26,8 @@ static bool dHseatOn = false;
 static int WindowsLoop()
 {
 
-	Outputs->SetValue(OutputLampStart, dHstartLampOn );
-	Outputs->SetValue(OutputLampView1, dHnitrousOn );
+	Outputs->SetValue(OutputLampView1, dHstartLampOn );
+	Outputs->SetValue(OutputLampStart, dHnitrousOn );
 	Outputs->SetValue(OutputBillboardLamp, dHringTopOn);
 	Outputs->SetValue(OutputDash, dHringCenterOn);
 	Outputs->SetValue(OutputBase, dHringBottomOn);

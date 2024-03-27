@@ -59,6 +59,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/SegaRacingClassic.h"
 #include "Game Files/SegaRally3.h"
 #include "Game Files/SRG.h"
+#include "Game Files/TheWalkingDead.h"
 #include "Game Files/Transformers.h"
 #include "Game Files/SonicAllStarsRacing.h"
 #include "Game Files/VirtuaTennis4.h"
@@ -226,7 +227,6 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		break;
 	}
 
-
 	if (game != 0) //Load PC Based Arcade Game
 	{
 		OutputDebugStringA("Game Found");
@@ -239,6 +239,10 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		if (ReadWithoutCrashing((uint32_t*)0x804CA44) == 0x82EED98)
 		{
 			game = new AfterburnerClimax;
+		}
+		else if (ReadWithoutCrashing((uint32_t*)0x804CA44) == 0x62726F76)
+		{
+			game = new WalkingDead;
 		}
 		else if (ReadWithoutCrashing((uint32_t*)0x804B850) == 0x82642C8)
 		{
