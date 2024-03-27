@@ -30,7 +30,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/DaytonaChampionshipUSA.h"
 #include "Game Files/DaytonaChampionshipUSANSE.h"
 #include "Game Files/DirtyDrivin.h"
-//#include "Game Files/DeadHeat.h"
+#include "Game Files/DeadHeat.h"
 #include "Game Files/FNFDrift.h"
 #include "Game Files/FNFSupercars.h"
 #include "Game Files/GTIClubSuperminiFesta.h"
@@ -223,12 +223,6 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		game = new ArcticThunder;
 		break;
 	default:
-#ifdef _DEBUG
-		static char test[256];
-		memset(test, 0, 256);
-		sprintf(test, "New CRC: %08x not implemented", newCrcResult);
-		OutputDebugStringA(test);
-#endif
 		break;
 	}
 
@@ -252,14 +246,12 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		}
 		else if (ReadWithoutCrashing((uint32_t*)0x804B840) == 0x0002A68)
 		{
-			OutputDebugStringA("Moto GP");
 			game = new MotoGP;
 		}
-		//else if (ReadWithoutCrashing((uint32_t*)0x804B840) == 0x0000012)
-		//{
-		//	OutputDebugStringA("Dead Heat");
-		//	game = new DeadHeat;
-		//}
+		else if (ReadWithoutCrashing((uint32_t*)0x804B840) == 0x0000012)
+		{
+			game = new DeadHeat;
+		}
 		else if (ReadWithoutCrashing((uint32_t*)0x804A908) == 0x12EE)
 		{
 			game = new SRTV;

@@ -15,12 +15,8 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #include "CruisnBlast.h"
 
-//static int GameMode = 0; //0 = none, 5 = game, etc
 static int WindowsLoop()
 {
-	//UINT32 GameState = helpers->ReadByte(0x8a4ee2c,false);
-	//GameMode = GameState; //not used for now, maybe later we need this
-
 	return 0;
 }
 
@@ -156,6 +152,23 @@ static void __cdecl LampUnisMotion_Set(unsigned int param_1, unsigned int param_
 static void (__cdecl* LampFX_SetStateOri)(void* param_1);
 static void __cdecl LampFX_SetState(void* param_1)
 {
+	if ((int)param_1 == 5)
+	{
+		Outputs->SetValue(OutputLampStart, true);
+		Outputs->SetValue(OutputLampView1, true);
+		Outputs->SetValue(OutputLampView2, true);
+		Outputs->SetValue(OutputLampView3, true);
+		Outputs->SetValue(OutputLampView4, true);
+	}
+	else
+	{
+		Outputs->SetValue(OutputLampStart, false);
+		Outputs->SetValue(OutputLampView1, false);
+		Outputs->SetValue(OutputLampView2, false);
+		Outputs->SetValue(OutputLampView3, false);
+		Outputs->SetValue(OutputLampView4, false);
+	
+	}
 	return LampFX_SetStateOri(param_1);
 }
 
@@ -190,6 +203,7 @@ void CruisnBlast::OutputsGameLoop()
 
 		MH_Initialize();
 		MH_CreateHook((void*)(0x8142490), CBLampSet, (void**)&CBLampSetOri);
+		MH_CreateHook((void*)(0x8143320), LampFX_SetState, (void**)&LampFX_SetStateOri);
 		/*
 		Unused hooks, maybe we can use them later
 		MH_CreateHook((void*)(0x83a9aa0), RIO_PwmOutSet, (void**)&CB_RIO_PwmOutSetOrig);
@@ -199,7 +213,6 @@ void CruisnBlast::OutputsGameLoop()
 		MH_CreateHook((void*)(0x8141c90), LampSC_Set, (void**)&LampSC_SetOri);
 		MH_CreateHook((void*)(0x8142fd0), LampFX_Blink, (void**)&LampFX_BlinkOri);
 		MH_CreateHook((void*)(0x8141eb0), LampUnisMotion_Set, (void**)&LampUnisMotion_SetOri);
-		MH_CreateHook((void*)(0x8143320), LampFX_SetState, (void**)&LampFX_SetStateOri);
 		MH_CreateHook((void*)(0x81428e0), LampFX_Pulse, (void**)&LampFX_PulseOri);
 		MH_CreateHook((void*)(0x8142aa0), LampFX_ColorCycle, (void**)&LampFX_ColorCycleOri);
 		MH_CreateHook((void*)(0x8142a00), LampFX_ColorCycleVal, (void**)&LampFX_ColorCycleValOri);

@@ -31,6 +31,7 @@ enum EOutputs
 	OutputLampView3,
 	OutputLampView4,
 	OutputLampLeader,
+	OutputLampLeader2,
 	OutputRawDrive,
 	OutputRawLamps,
 	OutputLampAction,
