@@ -35,34 +35,63 @@ static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
 //GAME_CAB_TYPE_SUPER_DELUXE,
 //GAME_CAB_TYPE_HOMEONLY,
 
+
+//lamp types
+/*
+LAMP_P1START,
+LAMP_P2START,
+LAMP_DINOHEAD,
+LAMP_LOGO,
+LAMP_DINOEYES,
+LAMP_ROOF,
+LAMP_MARQUEE,
+LAMP_DASH,
+LAMP_FOLIAGE,
+LAMP_P1GUN_R,
+LAMP_P1GUN_G,
+LAMP_P1GUN_B,
+LAMP_P2GUN_R,
+LAMP_P2GUN_G,
+LAMP_P2GUN_B,
+LAMP_SEAT_R,
+LAMP_SEAT_G,
+LAMP_SEAT_B,
+LAMP_BENCH_LOGO,
+LAMP_P1GUN_MOUNT,
+LAMP_P2GUN_MOUNT,
+LAMP_SEAT_BASE,
+LAMP_ESTOP,
+LAMP_COMPRESSOR,
+LAMP_NUM_LIGHTS
+*/
 static void(__cdecl* CBLampSetOri)(int param_1, void* param_2);
 static void __cdecl CBLampSet(int param_1, void* param_2)
 {
 	EOutputs lampType = OutputLampOnline;
 	if (param_1 == 0) lampType = OutputLampStart; //LAMP_P1START,
-	else if (param_1 == 2) lampType = Output2pLampStart; //LAMP_P2START
-	else if (param_1 == 3) lampType = OutputBillboardLamp; //LAMP_DINOHEAD
-	else if (param_1 == 4) lampType = OutputBillboardBlue; //LAMP_LOGO
-	else if (param_1 == 5) lampType = OutputBillboardRed; //LAMP_DINOEYES
-	else if (param_1 == 6) lampType = OutputBillboardWhite; //LAMP_ROOF
-	else if (param_1 == 7) lampType = OutputBillboardLamp; //LAMP_MARQUEE
-	else if (param_1 == 8) lampType = OutputLampView3; //LAMP_DASH
-	else if (param_1 == 9) lampType = OutputLampGreen; //LAMP_FOLIAGE
-	else if (param_1 == 10) lampType = Output1pHolderLamp; //LAMP_P1GUN_R
-	else if (param_1 == 11) lampType = Output1pHolderLamp; //LAMP_P1GUN_G
-	else if (param_1 == 12) lampType = Output1pHolderLamp; //LAMP_P1GUN_B
-	else if (param_1 == 13) lampType = Output2pHolderLamp; //LAMP_P2GUN_R
-	else if (param_1 == 14) lampType = Output2pHolderLamp; //LAMP_P2GUN_G
-	else if (param_1 == 15) lampType = Output2pHolderLamp; //LAMP_P2GUN_B
-	else if (param_1 == 16) lampType = OutputBase0Left; //LAMP_SEAT_R
-	else if (param_1 == 17) lampType = OutputBase0Right; //LAMP_SEAT_G
-	else if (param_1 == 18) lampType = OutputBase1Left; //LAMP_SEAT_B
-	else if (param_1 == 19) lampType = OutputBase1Right; //LAMP_BENCH_LOGO
-	else if (param_1 == 20) lampType = OutputLampView1; //LAMP_P1GUN_MOUNT
-	else if (param_1 == 21) lampType = OutputLampView2; //LAMP_P2GUN_MOUNT
-	else if (param_1 == 22) lampType = OutputBillboardGreen; //LAMP_SEAT_BASE
-	else if (param_1 == 23) lampType = OutputLampRed; //LAMP_ESTOP
-	else if (param_1 == 24) lampType = OutputLampRed; //LAMP_COMPRESSOR
+	else if (param_1 == 1) lampType = Output2pLampStart; //LAMP_P2START
+	else if (param_1 == 2) lampType = OutputBillboardLamp; //LAMP_DINOHEAD
+	else if (param_1 == 3) lampType = OutputBillboardBlue; //LAMP_LOGO
+	else if (param_1 == 4) lampType = OutputBillboardRed; //LAMP_DINOEYES
+	else if (param_1 == 5) lampType = OutputBillboardWhite; //LAMP_ROOF
+	else if (param_1 == 6) lampType = OutputBillboardLamp; //LAMP_MARQUEE
+	else if (param_1 == 7) lampType = OutputLampView3; //LAMP_DASH
+	else if (param_1 == 8) lampType = OutputLampGreen; //LAMP_FOLIAGE
+	else if (param_1 == 9) lampType = OutputLampView1; //LAMP_P1GUN_R
+	else if (param_1 == 10) lampType = Output1pHolderLamp; //LAMP_P1GUN_G
+	else if (param_1 == 11) lampType = Output1pHolderLamp; //LAMP_P1GUN_B
+	else if (param_1 == 12) lampType = Output2pHolderLamp; //LAMP_P2GUN_R
+	else if (param_1 == 13) lampType = Output2pHolderLamp; //LAMP_P2GUN_G
+	else if (param_1 == 14) lampType = Output2pHolderLamp; //LAMP_P2GUN_B
+	else if (param_1 == 15) lampType = OutputBase0Left; //LAMP_SEAT_R
+	else if (param_1 == 16) lampType = OutputBase0Right; //LAMP_SEAT_G
+	else if (param_1 == 17) lampType = OutputBase1Left; //LAMP_SEAT_B
+	else if (param_1 == 18) lampType = OutputBase1Right; //LAMP_BENCH_LOGO
+	else if (param_1 == 19) lampType = OutputLampView1; //LAMP_P1GUN_MOUNT
+	else if (param_1 == 20) lampType = OutputLampView2; //LAMP_P2GUN_MOUNT
+	else if (param_1 == 21) lampType = OutputBillboardGreen; //LAMP_SEAT_BASE
+	else if (param_1 == 22) lampType = OutputLampRed; //LAMP_ESTOP
+	else if (param_1 == 23) lampType = OutputLampRed; //LAMP_COMPRESSOR
 
 	if (lampType) {
 		bool lampOn = false;
