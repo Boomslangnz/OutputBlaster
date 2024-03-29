@@ -18,26 +18,28 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 static int WindowsLoop()
 {
-	UINT8 Start = helpers->ReadByte(0x090F6760, false);
-	UINT8 RightStart = helpers->ReadByte(0x090F6764, false);
-	UINT8 Posts = helpers->ReadByte(0x090F6768, false);
-	UINT8 RearRed = helpers->ReadByte(0x090F676C, false);
-	UINT8 WalkerCeiling = helpers->ReadByte(0x090F6770, false);
-	UINT8 WalkerEyes = helpers->ReadByte(0x090F6774, false);
-	UINT8 WalkerAmbientBlue = helpers->ReadByte(0x090F67BC, false);
-	UINT8 WalkerAmbientGreen = helpers->ReadByte(0x090F67B8, false);
-	UINT8 WalkerAmbientRed = helpers->ReadByte(0x090F67B4, false);
-	UINT8 LeftGunMount = helpers->ReadByte(0x090F6790, false);
-	UINT8 RightGunMount = helpers->ReadByte(0x090F67C0, false);
-	UINT8 DashboardLeftGreen = helpers->ReadByte(0x090F6788, false);
-	UINT8 DashboardRightBlue = helpers->ReadByte(0x090F678C, false);
-	UINT8 RoofRed = helpers->ReadByte(0x090F6794, false);
-	UINT8 RoofGreen = helpers->ReadByte(0x090F6798, false);
-	UINT8 RoofBlue = helpers->ReadByte(0x090F679C, false);
-	UINT8 SquareMarquee = helpers->ReadByte(0x090F67B0, false);
-	UINT8 LeftCrossbowTop = helpers->ReadByte(0x08AC2188, false);
-	UINT8 RightCrossbowTop = helpers->ReadByte(0x08AC218C, false);
+	UINT8 Start = helpers->ReadByte(0x90F6760, false);
+	UINT8 RightStart = helpers->ReadByte(0x90F6764, false);
+	UINT8 Posts = helpers->ReadByte(0x90F6768, false);
+	UINT8 RearRed = helpers->ReadByte(0x90F676C, false);
+	UINT8 WalkerCeiling = helpers->ReadByte(0x90F6770, false);
+	UINT8 WalkerEyes = helpers->ReadByte(0x90F6774, false);
+	UINT8 WalkerAmbientBlue = helpers->ReadByte(0x90F67BC, false);
+	UINT8 WalkerAmbientGreen = helpers->ReadByte(0x90F67B8, false);
+	UINT8 WalkerAmbientRed = helpers->ReadByte(0x90F67B4, false);
+	UINT8 LeftGunMount = helpers->ReadByte(0x90F6790, false);
+	UINT8 RightGunMount = helpers->ReadByte(0x90F67C0, false);
+	UINT8 DashboardLeftGreen = helpers->ReadByte(0x90F6788, false);
+	UINT8 DashboardRightBlue = helpers->ReadByte(0x90F678C, false);
+	UINT8 RoofRed = helpers->ReadByte(0x90F6794, false);
+	UINT8 RoofGreen = helpers->ReadByte(0x90F6798, false);
+	UINT8 RoofBlue = helpers->ReadByte(0x90F679C, false);
+	UINT8 SquareMarquee = helpers->ReadByte(0x90F67B0, false);
+	UINT8 LeftCrossbowTop = helpers->ReadByte(0x8AC2188, false);
+	UINT8 RightCrossbowTop = helpers->ReadByte(0x8AC218C, false);
 
+	UINT8 Player1Ammo = helpers->ReadByte(0x901010C, false);
+	UINT8 Player2Ammo = helpers->ReadByte(0x90102E0, false);
 	Outputs->SetValue(OutputLampStart, !!(Start));
 	Outputs->SetValue(Output2pLampStart, !!(RightStart));
 	Outputs->SetValue(OutputBillboardLamp, !!(Posts));
@@ -57,6 +59,9 @@ static int WindowsLoop()
 	Outputs->SetValue(OutputLampWhite, !!(SquareMarquee));
 	Outputs->SetValue(OutputLampView1, !!(LeftCrossbowTop));
 	Outputs->SetValue(OutputLampView2, !!(RightCrossbowTop));
+	
+	Outputs->SetValue(OutputAmmo1pA, Player1Ammo);
+	Outputs->SetValue(OutputAmmo2pA, Player2Ammo);
 
 	return 0;
 }

@@ -46,6 +46,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/InitialD6Update.h"
 #include "Game Files/InitialD7.h"
 #include "Game Files/InitialD8.h"
+#include "Game Files/JurassicPark.h"
 #include "Game Files/LGI.h"
 #include "Game Files/LGI3D.h"
 #include "Game Files/M2Emulator.h"
@@ -283,6 +284,10 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		else if (ReadWithoutCrashing((uint32_t*)0x8320C69) == 0xC70000A4)
 		{
 			game = new CruisnBlast;
+		}
+		else if (ReadWithoutCrashing((uint32_t*)0x8320C69) == 0x000004B8)
+		{
+			game = new JurassicPark;
 		}
 
 		if (game != 0) //Load Lindbergh Game 
