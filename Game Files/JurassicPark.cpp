@@ -28,6 +28,12 @@ static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
 		Sleep(SleepA);
 	}
 }
+//Cab Types
+//GAME_CAB_TYPE_UNKNOWN = 0,
+//GAME_CAB_TYPE_UPRIGHT,
+//GAME_CAB_TYPE_DELUXE,
+//GAME_CAB_TYPE_SUPER_DELUXE,
+//GAME_CAB_TYPE_HOMEONLY,
 
 static void(__cdecl* CBLampSetOri)(int param_1, void* param_2);
 static void __cdecl CBLampSet(int param_1, void* param_2)
@@ -72,6 +78,23 @@ static void __cdecl CBLampSet(int param_1, void* param_2)
 }
 
 
+
+//hook this
+//undefined4 GameSetup(void)
+static void(__cdecl* Game2D_UI_LoopOrig)(void);
+static void __cdecl  Game2D_UI_Loop()
+{
+	UINT cabinetType = helpers->ReadByte(0x8b7b790, false);
+	if (cabinetType == 4)
+	{
+		helpers->WriteByte(0x8b7b790, 1, false); //set cab type to upright
+	}
+	return  Game2D_UI_LoopOrig();
+}
+
+
+
+
 void JurassicPark::OutputsGameLoop()
 {
 	if (!init)
@@ -85,8 +108,29 @@ void JurassicPark::OutputsGameLoop()
 		CreateThread(NULL, 0, OutputsAreGo, NULL, 0, NULL);
 
 		MH_Initialize();
-		MH_CreateHook((void*)(0x81c8a00), CBLampSet, (void**)&CBLampSetOri);
-		MH_EnableHook(MH_ALL_HOOKS);
+
+		if (MH_CreateHook((void*)(0x8167f00), Game2D_UI_Loop, (void**)&Game2D_UI_LoopOrig) != MH_OK) {
+			OutputDebugStringA("Failed to hook Lamp_set");
+		}
+
+		if (MH_CreateHook((void*)(0x81c8a00), CBLampSet, (void**)&CBLampSetOri) != MH_OK) {
+			OutputDebugStringA("Failed to hook Lamp_set");
+		}
+		if (MH_CreateHook((void*)(0x81c7270), CBLampSet, (void**)&CBLampSetOri) != MH_OK) { //Lamp_envSet
+			OutputDebugStringA("Failed to hook Lamp_envSet");
+		}
+		if (MH_CreateHook((void*)(0x81c7c70), CBLampSet, (void**)&CBLampSetOri) != MH_OK) { //Lamp_debugset
+			OutputDebugStringA("Failed to hook Lamp_debugset");
+		}
+		if (MH_CreateHook((void*)(0x81c7570), CBLampSet, (void**)&CBLampSetOri) != MH_OK) { //Lamp_MBNSET
+			OutputDebugStringA("Failed to hook Lamp_debugset");
+		}
+		if (MH_CreateHook((void*)(0x81c7860), CBLampSet, (void**)&CBLampSetOri) != MH_OK) { //Lamp_MBXSET
+			OutputDebugStringA("Failed to hook Lamp_debugset");
+		}
+		if (MH_EnableHook(MH_ALL_HOOKS) != MH_OK) {
+			OutputDebugStringA("Failed to enable hooks");
+		}
 
 		while (GetMessage(&Msg1, NULL, NULL, 0))
 		{
