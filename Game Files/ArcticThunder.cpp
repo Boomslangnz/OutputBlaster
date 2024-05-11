@@ -13,21 +13,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
-#include "SegaRally3.h"
+#include "ArcticThunder.h"
 
 static int WindowsLoop()
 {
-	float RPMfloat = helpers->ReadFloat32(0x5DBE84, true);
-	DWORD RPM = floor(RPMfloat + 0.5);
-	Outputs->SetValue(OutputRPM, RPM / 100.0);
 
-	UINT8 ViewButton = helpers->ReadByte(0x5DD104, true);
-	UINT8 StartButton = helpers->ReadByte(0x5D6DF8, true); 
-	
-	Outputs->SetValue(OutputLampView1, !!(ViewButton & 1));
-	Outputs->SetValue(OutputLampStart, !!(StartButton & 1));
-	Outputs->SetValue(OutputLampView2, !!(StartButton & 2));
-	
+	UINT8 LampsOut = helpers->ReadByte(0xA363B4, false);
+	Outputs->SetValue(OutputLampView1, !!(LampsOut & 0x04)); //Attack Button
+	Outputs->SetValue(OutputLampStart, !!(LampsOut & 0x08)); //Start Button
+
 	return 0;
 }
 
@@ -40,12 +34,13 @@ static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
 	}
 }
 
-void SR3::OutputsGameLoop()
+
+void ArcticThunder::OutputsGameLoop()
 {
 	if (!init)
 	{
 		Outputs = CreateOutputsFromConfig();
-		m_game.name = "Sega Rally 3";
+		m_game.name = "Arctic Thunder";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
 		Outputs->Attached();

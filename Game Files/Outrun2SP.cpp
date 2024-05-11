@@ -15,12 +15,21 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #include "Outrun2SP.h"
 
+static bool raceLeaderOn = false;
+
 static int WindowsLoop()
 {
 	UINT8 outputdata = helpers->ReadByte(0x8670E08, false);
+	UINT8 raceLeader = helpers->ReadByte(0x830430C, false);
 	float RPMfloat = helpers->ReadFloat32(0x827A174, false);
 	DWORD RPM = floor(RPMfloat + 0.5);
+	
 
+	
+	Outputs->SetValue(OutputLampLeader, !!(raceLeader & 0x01));
+	//little hack for oeople with two machines, but only one connected to lamps. Basically if the current machine is losing, light up a new LampLeader2 lamp.
+	//proper way to do this is grab the position of each player in the race, but this is a quick fix for this specific use case.
+	Outputs->SetValue(OutputLampLeader2, !!(raceLeader & 0x00));
 	Outputs->SetValue(OutputLampStart, !!(outputdata & 0x80));
 	Outputs->SetValue(OutputLampView1, !!(outputdata & 0x08));
 	Outputs->SetValue(OutputDriverLampL, !!(outputdata & 0x20));

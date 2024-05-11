@@ -4,7 +4,6 @@ Output Blaster is free software : you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
-
 Output Blaster is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
@@ -21,13 +20,19 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 //Game headers go here
 #include "Game Files/AfterburnerClimax.h"
 #include "Game Files/AliensExtermination.h"
+#include "Game Files/ArcticThunder.h"
 #include "Game Files/BattleGear4.h"
 #include "Game Files/BattleGear4Tuned.h"
 #include "Game Files/Cars.h"
 #include "Game Files/ChaseHQ2.h"
+#include "Game Files/CrazyRide.h"
+#include "Game Files/CruisnBlast.h"
 #include "Game Files/DaytonaChampionshipUSA.h"
 #include "Game Files/DaytonaChampionshipUSANSE.h"
 #include "Game Files/DirtyDrivin.h"
+#include "Game Files/DeadHeat.h"
+#include "Game Files/FNFDrift.h"
+#include "Game Files/FNFSupercars.h"
 #include "Game Files/GTIClubSuperminiFesta.h"
 #include "Game Files/GRID.h"
 #include "Game Files/H2Overdrive.h"
@@ -41,11 +46,13 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/InitialD6Update.h"
 #include "Game Files/InitialD7.h"
 #include "Game Files/InitialD8.h"
+#include "Game Files/JurassicPark.h"
 #include "Game Files/LGI.h"
 #include "Game Files/LGI3D.h"
 #include "Game Files/M2Emulator.h"
 #include "Game Files/Machstorm.h"
 #include "Game Files/MarioKartGPDXJP1.10.h"
+#include "Game Files/MotoGP.h"
 #include "Game Files/OperationGhost.h"
 #include "Game Files/Outrun2SP.h"
 #include "Game Files/R-Tuned.h"
@@ -53,6 +60,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/SegaRacingClassic.h"
 #include "Game Files/SegaRally3.h"
 #include "Game Files/SRG.h"
+#include "Game Files/TheWalkingDead.h"
 #include "Game Files/Transformers.h"
 #include "Game Files/SonicAllStarsRacing.h"
 #include "Game Files/VirtuaTennis4.h"
@@ -78,7 +86,6 @@ static uint32_t ReadWithoutCrashing(uint32_t* addr)
 DWORD WINAPI OutputsLoop(LPVOID lpParam)
 {
 	Sleep(2500);
-
 	// Craft CRC detection without virtual address
 	memcpy(newCrc, GetModuleHandle(nullptr), 0x400);
 	DWORD pePTR = *(DWORD*)(newCrc + 0x3C);
@@ -165,6 +172,7 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		game = new H2Overdrive;
 		break;
 	case 0xfac8a714:
+	case 0x01a76797:
 		game = new Cars;
 		break;
 	case 0x8456EEC1:
@@ -200,18 +208,30 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 	case 0xbfa0c985:
 		game = new GRID;
 		break;
+	case 0xdb7c9b6e:
+		game = new FNFDrift;
+		break;
+	 case 0x259812d7:
+	 	game = new FNFSupercars;
+		break;
+	//WIP
+	//case 0x648e6f7b: 
+	//	game = new FNF;
+	//	break;
+	case 0x790b4172:
+		game = new CrazyRide;
+		break;
+	case 0xc205c6Ac:
+		game = new ArcticThunder;
+		break;
 	default:
-#ifdef _DEBUG
-		static char test[256];
-		memset(test, 0, 256);
-		sprintf(test, "New CRC: %08x not implemented", newCrcResult);
-		OutputDebugStringA(test);
-#endif
 		break;
 	}
 
 	if (game != 0) //Load PC Based Arcade Game
 	{
+		OutputDebugStringA("Game Found");
+		OutputDebugStringA(std::to_string(newCrcResult).c_str());
 		game->OutputsGameLoop();
 		Sleep(16);
 	}
@@ -221,9 +241,21 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		{
 			game = new AfterburnerClimax;
 		}
+		else if (ReadWithoutCrashing((uint32_t*)0x804CA44) == 0x62726F76)
+		{
+			game = new WalkingDead;
+		}
 		else if (ReadWithoutCrashing((uint32_t*)0x804B850) == 0x82642C8)
 		{
 			game = new Outrun2SP;
+		}
+		else if (ReadWithoutCrashing((uint32_t*)0x804B840) == 0x0002A68)
+		{
+			game = new MotoGP;
+		}
+		else if (ReadWithoutCrashing((uint32_t*)0x804B840) == 0x0000012)
+		{
+			game = new DeadHeat;
 		}
 		else if (ReadWithoutCrashing((uint32_t*)0x804A908) == 0x12EE)
 		{
@@ -249,16 +281,28 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		{
 			game = new HOTD4VerC;
 		}
+		else if (ReadWithoutCrashing((uint32_t*)0x8320C69) == 0xC70000A4)
+		{
+			game = new CruisnBlast;
+		}
+		else if (ReadWithoutCrashing((uint32_t*)0x8320C69) == 0x000004B8)
+		{
+			game = new JurassicPark;
+		}
 
 		if (game != 0) //Load Lindbergh Game 
 		{
+
 			game->OutputsGameLoop();
 			Sleep(16);
 		}
-		else
-		{
-			MessageBoxA(NULL, "Output Blaster not supported!", "Error", NULL);
-		}
+	}
+	if (game == 0)
+	{
+		static char test[256];
+		memset(test, 0, 256);
+		sprintf(test, "New CRC: %08x not implemented", newCrcResult);
+		OutputDebugStringA(test);
 	}
 	return 0;
 }

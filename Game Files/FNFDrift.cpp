@@ -13,21 +13,24 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
-#include "SegaRally3.h"
+#include "FNFDrift.h"
 
 static int WindowsLoop()
 {
-	float RPMfloat = helpers->ReadFloat32(0x5DBE84, true);
-	DWORD RPM = floor(RPMfloat + 0.5);
-	Outputs->SetValue(OutputRPM, RPM / 100.0);
 
-	UINT8 ViewButton = helpers->ReadByte(0x5DD104, true);
-	UINT8 StartButton = helpers->ReadByte(0x5D6DF8, true); 
-	
-	Outputs->SetValue(OutputLampView1, !!(ViewButton & 1));
-	Outputs->SetValue(OutputLampStart, !!(StartButton & 1));
-	Outputs->SetValue(OutputLampView2, !!(StartButton & 2));
-	
+	DWORD Lamps = helpers->ReadInt32(0x41B86BC, true);
+
+	//View 1
+	Outputs->SetValue(OutputLampView1, !!(Lamps & 0x800000));
+	//View 2
+	Outputs->SetValue(OutputLampView2, !!(Lamps & 0x400000));
+	//View 3
+	Outputs->SetValue(OutputLampView3, !!(Lamps & 0x200000));
+	//Music
+	Outputs->SetValue(OutputLampView4, !!(Lamps & 0x100000));
+	//start
+	Outputs->SetValue(OutputLampStart, !!(Lamps & 0x90000));
+
 	return 0;
 }
 
@@ -40,12 +43,12 @@ static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
 	}
 }
 
-void SR3::OutputsGameLoop()
+void FNFDrift::OutputsGameLoop()
 {
 	if (!init)
 	{
 		Outputs = CreateOutputsFromConfig();
-		m_game.name = "Sega Rally 3";
+		m_game.name = "FNF Drift";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
 		Outputs->Attached();
