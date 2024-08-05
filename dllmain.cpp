@@ -233,8 +233,10 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 
 	if (game != 0) //Load PC Based Arcade Game
 	{
+#ifdef _DEBUG
 		OutputDebugStringA("Game Found");
 		OutputDebugStringA(std::to_string(newCrcResult).c_str());
+#endif
 		game->OutputsGameLoop();
 		Sleep(16);
 	}
@@ -302,10 +304,12 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 	}
 	if (game == 0)
 	{
+#ifdef _DEBUG
 		static char test[256];
 		memset(test, 0, 256);
 		sprintf(test, "New CRC: %08x not implemented", newCrcResult);
 		OutputDebugStringA(test);
+#endif
 	}
 	return 0;
 }
