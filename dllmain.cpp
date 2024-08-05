@@ -225,8 +225,9 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 	case 0xc205c6Ac:
 		game = new ArcticThunder;
 		break;
-	case 0xF3D3F699:
+	case 0x8505c794:
 		game = new BattlePod;
+		break;
 	default:
 		break;
 	}
