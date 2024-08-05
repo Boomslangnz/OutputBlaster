@@ -23,6 +23,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/ArcticThunder.h"
 #include "Game Files/BattleGear4.h"
 #include "Game Files/BattleGear4Tuned.h"
+#include "Game Files/BattlePod.h"
 #include "Game Files/Cars.h"
 #include "Game Files/ChaseHQ2.h"
 #include "Game Files/CrazyRide.h"
@@ -224,6 +225,8 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 	case 0xc205c6Ac:
 		game = new ArcticThunder;
 		break;
+	case 0xF3D3F699:
+		game = new BattlePod;
 	default:
 		break;
 	}
