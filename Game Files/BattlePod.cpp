@@ -19,7 +19,7 @@ uintptr_t gameAddress;
 
 static int WindowsLoop()
 {
-	int start = helpers->ReadInt32(gameAddress + 0x1EE7A48, false);
+	int fan = helpers->ReadInt32(gameAddress + 0x1EE7A48, false);
 	int vibration = helpers->ReadInt32(gameAddress + 0x1EE7A3C, false);
 	int view = helpers->ReadInt32(gameAddress + 0x1EE7A64, false);
 	int ledRearPanelA = helpers->ReadInt32(gameAddress + 0x1EE7A58, false);
@@ -36,7 +36,7 @@ static int WindowsLoop()
 	int ledRearCoverGreen = (ledRearCoverRGB >> 4) & 0xF;
 	int ledRearCoverBlue = ledRearCoverRGB & 0xF;
 
-	Outputs->SetValue(OutputLampStart, !!(start != 0));
+	Outputs->SetValue(Output1pAirFront, !!(fan != 0));
 	Outputs->SetValue(OutputLampView1, !!(view != 0));
 	Outputs->SetValue(OutputLampView2, !!(ledRearPanelA != 0));
 	Outputs->SetValue(OutputLampView3, !!(ledRearPanelB != 0));
