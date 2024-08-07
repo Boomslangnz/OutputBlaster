@@ -14,28 +14,6 @@ You should have received a copy of the GNU General Public License
 along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 
 #include "BattlePod.h"
-#include <TlHelp32.h>
-
-DWORD GetProcessIDByName(const std::wstring& processName) {
-	DWORD processID = 0;
-	HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-	if (hSnapshot != INVALID_HANDLE_VALUE) {
-		PROCESSENTRY32 pe;
-		pe.dwSize = sizeof(PROCESSENTRY32);
-		if (Process32First(hSnapshot, &pe)) {
-			do {
-				if (pe.szExeFile == processName) {
-					processID = pe.th32ProcessID;
-					break;
-				}
-			} while (Process32Next(hSnapshot, &pe));
-		}
-		CloseHandle(hSnapshot);
-	}
-	return processID;
-}
-static UINT64 baseAddress = 0x00007ff758ac0000;
-static HANDLE hProcess;
 
 static int WindowsLoop()
 {
@@ -48,29 +26,16 @@ static int WindowsLoop()
 	int ledRearWindowsRGB = 0;
 	int ledRearCoverRGB = 0;
 
-	uintptr_t targetAddress = baseAddress + 0x1EE7A48;
-	ReadProcessMemory(hProcess, (LPCVOID)targetAddress, &air, sizeof(air), NULL);
+	air = helpers->ReadInt32( 0x1EE7A48, true);
+	vibration = helpers->ReadInt32( 0x1EE7A3C, true);
+	view = helpers->ReadInt32( 0x1EE7A64, true);
+	ledRearPanelA = helpers->ReadInt32( 0x1EE7A58, true);
+	ledRearPanelB = helpers->ReadInt32( 0x1EE7A5C, true);
+	ledRearPanelC = helpers->ReadInt32( 0x1EE7A60, true);
+	ledRearWindowsRGB = helpers->ReadInt32( 0x1EE7A54, true);
+	ledRearCoverRGB = helpers->ReadInt32( 0x1EE7A50, true);
 
-	targetAddress = baseAddress + 0x1EE7A3C;
-	ReadProcessMemory(hProcess, (LPCVOID)targetAddress, &vibration, sizeof(vibration), NULL);
 
-	targetAddress = baseAddress + 0x1EE7A64;
-	ReadProcessMemory(hProcess, (LPCVOID)targetAddress, &view, sizeof(view), NULL);
-
-	targetAddress = baseAddress + 0x1EE7A58;
-	ReadProcessMemory(hProcess, (LPCVOID)targetAddress, &ledRearPanelA, sizeof(ledRearPanelA), NULL);
-
-	targetAddress = baseAddress + 0x1EE7A5C;
-	ReadProcessMemory(hProcess, (LPCVOID)targetAddress, &ledRearPanelB, sizeof(ledRearPanelB), NULL);
-
-	targetAddress = baseAddress + 0x1EE7A60;
-	ReadProcessMemory(hProcess, (LPCVOID)targetAddress, &ledRearPanelC, sizeof(ledRearPanelC), NULL);
-
-	targetAddress = baseAddress + 0x1EE7A54;
-	ReadProcessMemory(hProcess, (LPCVOID)targetAddress, &ledRearWindowsRGB, sizeof(ledRearWindowsRGB), NULL);
-
-	targetAddress = baseAddress + 0x1EE7A50;
-	ReadProcessMemory(hProcess, (LPCVOID)targetAddress, &ledRearCoverRGB, sizeof(ledRearCoverRGB), NULL);
 
 	int ledRearWindowsRed = (ledRearWindowsRGB >> 8) & 0xF;
 	int ledRearWindowsGreen = (ledRearWindowsRGB >> 4) & 0xF;
@@ -108,15 +73,6 @@ void BattlePod::OutputsGameLoop()
 {
 	if (!init)
 	{
-		std::wstring exeName = L"SWArcGame-Win64-Shipping.exe";
-		DWORD processID = GetProcessIDByName(exeName);
-		if (processID == 0) return;
-
-		hProcess = OpenProcess(PROCESS_VM_READ | PROCESS_VM_WRITE | PROCESS_VM_OPERATION, FALSE, processID);
-		if (hProcess == NULL) {
-			return;
-		}
-
 		Outputs = CreateOutputsFromConfig();
 		m_game.name = "BattlePod";
 		Outputs->SetGame(m_game);

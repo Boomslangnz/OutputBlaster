@@ -99,6 +99,7 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 #endif
 	* (DWORD*)(newCrc + pePTR + 54) = 0x00000000;
 	uint32_t newCrcResult = GetCRC32(newCrc, 0x400);
+
 	switch (newCrcResult)
 	{
 	case 0x4904b14d:
@@ -224,6 +225,10 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		break;
 	case 0xc205c6Ac:
 		game = new ArcticThunder;
+		break;
+	case 0xf3d3f699:
+		//battlepod launcher we dont care about
+		return 0;
 		break;
 	case 0x8505c794:
 		game = new BattlePod;
