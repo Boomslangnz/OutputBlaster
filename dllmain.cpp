@@ -34,6 +34,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/DeadHeat.h"
 #include "Game Files/FNFDrift.h"
 #include "Game Files/FNFSupercars.h"
+#include "Game Files/GhostSquadEvo.h"
 #include "Game Files/GTIClubSuperminiFesta.h"
 #include "Game Files/GRID.h"
 #include "Game Files/H2Overdrive.h"
@@ -251,6 +252,10 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		if (ReadWithoutCrashing((uint32_t*)0x804CA44) == 0x82EED98)
 		{
 			game = new AfterburnerClimax;
+		}
+		else if (ReadWithoutCrashing((uint32_t*)0x804CA44) == 0x454825FF)
+		{
+			game = new GhostSquadEvo;
 		}
 		else if (ReadWithoutCrashing((uint32_t*)0x804CA44) == 0x62726F76)
 		{
