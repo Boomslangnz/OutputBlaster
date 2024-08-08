@@ -234,9 +234,6 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 	case 0x8505c794:
 		game = new BattlePod;
 		break;
-	case 0x704a202d:
-		game = new GhostSquadEvo;
-		break;
 	default:
 		break;
 	}
@@ -255,6 +252,10 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		if (ReadWithoutCrashing((uint32_t*)0x804CA44) == 0x82EED98)
 		{
 			game = new AfterburnerClimax;
+		}
+		else if (ReadWithoutCrashing((uint32_t*)0x804CA44) == 0x454825FF)
+		{
+			game = new GhostSquadEvo;
 		}
 		else if (ReadWithoutCrashing((uint32_t*)0x804CA44) == 0x62726F76)
 		{
