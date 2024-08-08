@@ -34,6 +34,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/DeadHeat.h"
 #include "Game Files/FNFDrift.h"
 #include "Game Files/FNFSupercars.h"
+#include "Game Files/GhostSquadEvo.h"
 #include "Game Files/GTIClubSuperminiFesta.h"
 #include "Game Files/GRID.h"
 #include "Game Files/H2Overdrive.h"
@@ -232,6 +233,9 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		break;
 	case 0x8505c794:
 		game = new BattlePod;
+		break;
+	case 0x704a202d:
+		game = new GhostSquadEvo;
 		break;
 	default:
 		break;
