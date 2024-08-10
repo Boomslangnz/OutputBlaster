@@ -40,6 +40,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/H2Overdrive.h"
 #include "Game Files/HOTD4VerA.h"
 #include "Game Files/HOTD4VerC.h"
+#include "Game Files/HummerExtreme.h"
 #include "Game Files/ID0V131.h"
 #include "Game Files/ID0V211.h"
 #include "Game Files/InitialD4.h"
@@ -64,6 +65,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/SRG.h"
 #include "Game Files/TheWalkingDead.h"
 #include "Game Files/Transformers.h"
+#include "Game Files/TransformersShadowsRising.h"
 #include "Game Files/SonicAllStarsRacing.h"
 #include "Game Files/VirtuaTennis4.h"
 #include "Game Files/WackyRaces.h"
@@ -234,6 +236,13 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 	case 0x8505c794:
 		game = new BattlePod;
 		break;
+	case 0x55f66578:
+		game = new TransformersShadowsRising;
+		break;
+	case 0x81DB3153:
+		game = new HummerExtreme;
+		break;
+
 	default:
 		break;
 	}
