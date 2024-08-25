@@ -239,9 +239,6 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 	case 0x55f66578:
 		game = new TransformersShadowsRising;
 		break;
-	case 0x81DB3153:
-		game = new HummerExtreme;
-		break;
 
 	default:
 		break;
@@ -314,6 +311,11 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		{
 			game = new JurassicPark;
 		}
+		else if (ReadWithoutCrashing((uint32_t*)0x8320C69) == (0x81DB3153))
+		{
+			game = new HummerExtreme;
+		}
+		
 
 		if (game != 0) //Load Lindbergh Game 
 		{
