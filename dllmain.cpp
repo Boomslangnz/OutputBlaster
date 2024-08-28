@@ -55,6 +55,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/M2Emulator.h"
 #include "Game Files/Machstorm.h"
 #include "Game Files/MarioKartGPDXJP1.10.h"
+#include "Game Files/MarioKart1.18.h"
 #include "Game Files/MotoGP.h"
 #include "Game Files/OperationGhost.h"
 #include "Game Files/Outrun2SP.h"
@@ -116,6 +117,9 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		break;
 	case 0x7787da54:
 		game = new MarioKartGPDXJP110;
+		break;
+	case 0x6c9038be:
+		game = new MarioKart118;
 		break;
 	case 0x533f1a71:
 		game = new SonicAllStarsRacing;

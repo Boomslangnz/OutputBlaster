@@ -22,20 +22,20 @@ static int WindowsLoop()
 	UINT8 UnderLampData = helpers->ReadByte(0xAC72E8, true);
 
 
-	Outputs->SetValue(OutputItemButton, !!(ButtonData & 0x04));
-	Outputs->SetValue(OutputMarioButton, !!(ButtonData & 0x08));
-	Outputs->SetValue(OutputBillboardRed, !!(BillboardData & 0xF0));
-	Outputs->SetValue(OutputBillboardGreen, !!(BillboardData & 0x0F));
-	Outputs->SetValue(OutputBillboardBlue, !!(BillboardData2 & 0xF0));
-	Outputs->SetValue(OutputBillboardWhite, !!(BillboardData2 & 0xFF));
-	Outputs->SetValue(OutputSideRed, !!(MonitorSideData & 0xF0));
-	Outputs->SetValue(OutputSideGreen, !!(MonitorSideData & 0x0F));
-	Outputs->SetValue(OutputSideBlue, !!(MonitorSideData2 & 0xF0));
-	Outputs->SetValue(OutputSideWhite, !!(MonitorSideData2 & 0xFF));
-	Outputs->SetValue(OutputLampRed, !!(UnderLampData & 0xF0));
-	Outputs->SetValue(OutputLampGreen, !!(UnderLampData & 0x0F));
-	Outputs->SetValue(OutputLampBlue, !!(UnderLampData2 & 0xF0));
-	Outputs->SetValue(OutputLampWhite, !!(UnderLampData2 & 0xFF));
+	Outputs->SetValue(OutputLampStart, !!(ButtonData & 0x04));
+	Outputs->SetValue(OutputLampView1, !!(ButtonData & 0x08));
+	Outputs->SetValue(OutputBillboardRed, !!(KanbanSideLampData & 0x000000F0));
+	Outputs->SetValue(OutputBillboardGreen, !!(KanbanSideLampData & 0x0000000F));
+	Outputs->SetValue(OutputBillboardBlue, !!(KanbanSideLampData & 0x00F00000));
+	Outputs->SetValue(OutputBillboardWhite, !!(KanbanSideLampData & 0x00F0FF00));
+	Outputs->SetValue(OutputSideRed, !!(KanbanSideLampData & 0xF0000000));
+	Outputs->SetValue(OutputSideGreen, !!(KanbanSideLampData & 0x0F000000));
+	Outputs->SetValue(OutputSideBlue, !!(KanbanSideLampData & 0x00F000000));
+	Outputs->SetValue(OutputSideWhite, !!(KanbanSideLampData & 0xFFFF00000));
+	Outputs->SetValue(OutputLampRed, !!(UnderLampData & 0x00FF0000));
+	Outputs->SetValue(OutputLampGreen, !!(UnderLampData & 0x000F0000));
+	Outputs->SetValue(OutputLampBlue, !!(UnderLampData & 0xF0000000));
+	Outputs->SetValue(OutputLampWhite, !!(UnderLampData & 0xFFFF0000));
 	return 0;
 }
 
@@ -48,12 +48,12 @@ static DWORD WINAPI OutputsAreGo(LPVOID lpParam)
 	}
 }
 
-void MarioKartGPDXJP110::OutputsGameLoop()
+void MarioKart118::OutputsGameLoop()
 {
 	if (!init)
 	{
 		Outputs = CreateOutputsFromConfig();
-		m_game.name = "Mario Kart GP DX";
+		m_game.name = "Mario Kart 1.18";
 		Outputs->SetGame(m_game);
 		Outputs->Initialize();
 		Outputs->Attached();
