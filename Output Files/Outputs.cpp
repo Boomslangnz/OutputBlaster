@@ -25,6 +25,7 @@ const char *COutputs::s_outputNames[] =
 	"LampView3",
 	"LampView4",
 	"LampLeader",
+        "LampLeader2",
 	"RawDrive",
 	"RawLamps",
 	"LampAction",
