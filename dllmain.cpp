@@ -40,6 +40,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/H2Overdrive.h"
 #include "Game Files/HOTD4VerA.h"
 #include "Game Files/HOTD4VerC.h"
+#include "Game Files/HarleyDavidson.h"
 #include "Game Files/HummerExtreme.h"
 #include "Game Files/ID0V131.h"
 #include "Game Files/ID0V211.h"
@@ -242,6 +243,9 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		break;
 	case 0x55f66578:
 		game = new TransformersShadowsRising;
+		break;
+	case 0x84d7854b:
+		game = new HarleyDavidson;
 		break;
 
 	default:
