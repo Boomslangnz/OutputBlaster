@@ -102,6 +102,21 @@ UINT8 Helpers::WriteNop(INT_PTR offset, bool isRelativeOffset)
 	return nop;
 }
 
+UINT8 Helpers::WriteNopBytes(INT_PTR offset, int countBytes, bool isRelativeOffset)
+{
+	U8 nop = 0x90;
+	SIZE_T written;
+	for (int i = 0; i < countBytes; i++)
+	{
+		offset = offset + i;
+		LPVOID trueOffset = (isRelativeOffset ? GetTranslatedOffset(offset) : (LPVOID)offset);
+		WriteProcessMemory(GetCurrentProcess(), trueOffset, &nop, 1, &written);
+		offset = offset - i;
+	}
+	return nop;
+}
+
+
 int Helpers::ReadInt32(INT_PTR offset, bool isRelativeOffset)
 {
 	int val = 0;

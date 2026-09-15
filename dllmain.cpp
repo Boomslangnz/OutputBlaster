@@ -24,6 +24,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/BattleGear4.h"
 #include "Game Files/BattleGear4Tuned.h"
 #include "Game Files/BattlePod.h"
+#include "Game Files/Batman.h"
 #include "Game Files/Cars.h"
 #include "Game Files/ChaseHQ2.h"
 #include "Game Files/CrazyRide.h"
@@ -40,6 +41,8 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/H2Overdrive.h"
 #include "Game Files/HOTD4VerA.h"
 #include "Game Files/HOTD4VerC.h"
+#include "Game Files/HarleyDavidson.h"
+#include "Game Files/Hummer.h"
 #include "Game Files/HummerExtreme.h"
 #include "Game Files/ID0V131.h"
 #include "Game Files/ID0V211.h"
@@ -64,6 +67,7 @@ along with Output Blaster.If not, see < https://www.gnu.org/licenses/>.*/
 #include "Game Files/SegaRacingClassic.h"
 #include "Game Files/SegaRally3.h"
 #include "Game Files/SRG.h"
+#include "Game Files/SuperBikes2.h"
 #include "Game Files/TheWalkingDead.h"
 #include "Game Files/Transformers.h"
 #include "Game Files/TransformersShadowsRising.h"
@@ -240,10 +244,18 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 	case 0x8505c794:
 		game = new BattlePod;
 		break;
+	case 0xB818B0BD:
+		game = new Batman;
+		break;
 	case 0x55f66578:
 		game = new TransformersShadowsRising;
 		break;
-
+	case 0x84d7854b:
+		game = new HarleyDavidson;
+		break;
+	case 0xFE7AFFF4:
+		game = new SuperBikes2;
+		break;
 	default:
 		break;
 	}
@@ -318,6 +330,10 @@ DWORD WINAPI OutputsLoop(LPVOID lpParam)
 		else if (ReadWithoutCrashing((uint32_t*)0x8320C69) == (0x81DB3153))
 		{
 			game = new HummerExtreme;
+		}
+		else if (ReadWithoutCrashing((uint32_t*)0x8320C69) == (0x9AB3BC0))
+		{
+			game = new Hummer;
 		}
 		
 
